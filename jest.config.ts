@@ -2,7 +2,7 @@ import type { Config } from '@jest/types';
 
 const jestConfig: Config.InitialOptions = {
   preset: 'ts-jest',
-  testEnvironment: "node",
+  testEnvironment: 'node',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
   roots: ['<rootDir>/test'],
   moduleDirectories: ['node_modules', 'src'],

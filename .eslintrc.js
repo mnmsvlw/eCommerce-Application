@@ -6,7 +6,14 @@ module.exports = {
     browser: true,
     es2021: true
   },
-  extends: ['standard-with-typescript', 'eslint:recommended', 'plugin:@typescript-eslint/recommended'],
+  extends: [
+    "airbnb-base",
+    "airbnb-typescript/base",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "prettier"
+  ],
   overrides: [
   ],
   parserOptions: {
@@ -17,12 +24,16 @@ module.exports = {
   },
   rules: {
     '@typescript-eslint/no-explicit-any': 2,
-    '@typescript-eslint/no-var-requires': 'off',
-    "@typescript-eslint/no-empty-function": "off"
+    "prettier/prettier": "error",
+    "class-methods-use-this": "off",
+    "no-debugger": "off",
+    "no-console": 0,
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
   },
   plugins: [
-    '@typescript-eslint'
-
+    '@typescript-eslint',
+    "prettier", 
+    "import",
   ],
   ignorePatterns: [".eslintrc.js", "jest.config.ts"],
 }
