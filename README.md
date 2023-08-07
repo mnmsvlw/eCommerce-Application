@@ -29,7 +29,7 @@ The Single Page Application (SPA) is powered by CommerceTools.
 - [Prettier](https://prettier.io/)
 - [Jest](https://jestjs.io/)
 - [Husky](https://typicode.github.io/husky/)
-
+---
 ## Run Locally
 1. Install Node.js
 2. Clone the project
@@ -57,6 +57,11 @@ To run tests, run the following command
   npm run test
 ```
 
+To run tests with information about code covered by tests, run the following command
+```
+  npm run test:c
+```
+
 ## Running the Prettier
 To run Prettier, run the following command
 ```
@@ -68,8 +73,7 @@ For enable git hooks, run the following command
 ```
   npm run prepare
 ```
-
-
+---
 ## Team project
 -  [@mnmsvlw](https://github.com/mnmsvlw)
 -  [@VikaLubenets](https://github.com/vikalubenets)
