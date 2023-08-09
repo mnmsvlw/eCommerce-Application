@@ -31,7 +31,7 @@ export default class Router {
   renderPage(route: Route) {
     const root = document.querySelector('#root') as HTMLElement;
     root.innerHTML = '';
-    root.append(route.element.render());
+    root.append(route.element().render());
   }
 
   render404() {

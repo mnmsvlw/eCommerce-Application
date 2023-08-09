@@ -5,10 +5,10 @@ import ProfilePage from '../pages/ProfilePage/ProfilePage';
 import RegisterPage from '../pages/RegisterPage/RegisterPage';
 
 const routes: Route[] = [
-  { path: '/', element: new MainPage() },
-  { path: '/catalog/', element: new CatalogPage() },
-  { path: '/profile/', element: new ProfilePage() },
-  { path: '/register/', element: new RegisterPage() },
+  { path: '/', element: () => new MainPage() },
+  { path: '/catalog/', element: () => new CatalogPage() },
+  { path: '/profile/', element: () => new ProfilePage() },
+  { path: '/register/', element: () => new RegisterPage() },
 ];
 
 export default routes;

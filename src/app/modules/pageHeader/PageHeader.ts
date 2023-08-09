@@ -1,3 +1,4 @@
+import getProject from '../../api/Client';
 import DesktopHeader from '../../components/DesktopHeader/DesktopHeader';
 
 export default class PageHeader {
