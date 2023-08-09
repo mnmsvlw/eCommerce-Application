@@ -18,7 +18,7 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 'latest',
-    tsconfigRootDir: __dirname,
+    // tsconfigRootDir: __dirname,
     sourceType: "module",
     project: path.join(__dirname, "tsconfig.json"),
   },
@@ -29,6 +29,14 @@ module.exports = {
     "no-debugger": "off",
     "no-console": 0,
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "ts": "never"
+      }
+   ]
   },
   plugins: [
     '@typescript-eslint',
