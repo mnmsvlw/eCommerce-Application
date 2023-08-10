@@ -1,6 +1,6 @@
-import { ElementParams, IElementCreator } from '../../types/utilTypes';
+import { ElementParams } from '../../types/utilTypes';
 
-export default class ElementCreator implements IElementCreator {
+export default class ElementCreator {
   element: HTMLElement;
 
   constructor(params: ElementParams) {
@@ -34,9 +34,9 @@ export default class ElementCreator implements IElementCreator {
     }
   }
 
-  private addClassNames(element: HTMLElement, className?: string[]) {
+  private addClassNames(element: HTMLElement, className?: string) {
     if (className) {
-      element.classList.add(...className);
+      element.classList.add(...className.split(' '));
     }
   }
 

@@ -1,19 +1,16 @@
 import getProject from '../../api/Client';
+import Component from '../../components/Component';
 import DesktopHeader from '../../components/DesktopHeader/DesktopHeader';
+import ElementCreator from '../../utils/ElementCreator';
 
-export default class PageHeader {
-  element: HTMLElement;
-
-  constructor() {
-    this.element = this.createElement();
+export default class PageHeader extends Component {
+  init() {
+    getProject();
   }
 
-  createElement() {
-    const header = new DesktopHeader();
-    return header.render();
-  }
-
-  render() {
-    return this.element;
-  }
+  render = () => {
+    this.content = new ElementCreator({ tag: 'header' }).getElement();
+    this.content.appendChild(new DesktopHeader().render());
+    return this.content;
+  };
 }

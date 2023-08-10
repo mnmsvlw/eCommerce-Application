@@ -1,24 +1,30 @@
+import Component from '../components/Component';
 import ElementCreator from '../utils/ElementCreator';
 
-export default class Link {
-  linkElement: HTMLElement;
+export default class Link extends Component {
+  href: string;
 
-  constructor(href: string, classNames?: string[], text?: string) {
-    this.linkElement = this.createElement(href, classNames, text);
+  classNames?: string;
+
+  text?: string;
+
+  constructor(href: string, classNames?: string, text?: string) {
+    super();
+    this.href = href;
+    this.classNames = classNames;
+    this.text = text;
   }
 
-  private createElement(href: string, classNames?: string[], text?: string) {
-    return new ElementCreator({
+  public render = () => {
+    this.content = new ElementCreator({
       tag: 'a',
-      classNames,
-      text,
+      classNames: this.classNames,
+      text: this.text,
       attributes: {
-        href,
+        href: this.href,
+        id: this.id,
       },
     }).getElement();
-  }
-
-  public render() {
-    return this.linkElement;
-  }
+    return this.content;
+  };
 }

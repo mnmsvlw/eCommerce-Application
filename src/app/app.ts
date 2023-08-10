@@ -5,7 +5,7 @@ export default class App {
   router: Router;
 
   constructor() {
-    this.router = new Router();
+    this.router = new Router('history');
   }
 
   init() {
