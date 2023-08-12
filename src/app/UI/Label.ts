@@ -1,7 +1,7 @@
 import Component from '../components/Component';
 import ElementCreator from '../utils/ElementCreator';
 
-export default class Input extends Component {
+export default class Label extends Component {
   classNames?: string;
 
   labelFor: string;
