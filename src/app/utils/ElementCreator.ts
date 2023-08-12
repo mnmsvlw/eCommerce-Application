@@ -24,12 +24,20 @@ export default class ElementCreator {
   private setAttributes(
     element: HTMLElement,
     attr?: {
-      [index: string]: string;
+      [index: string]: string | boolean;
     }
   ) {
     if (attr) {
       Object.keys(attr).forEach((at) => {
-        element.setAttribute(at, attr[at]);
+        if (attr[at] !== false && attr[at] !== undefined) {
+          if (typeof attr[at] === 'boolean') {
+            if (attr[at]) {
+              element.setAttribute(at, '');
+            }
+          } else {
+            element.setAttribute(at, attr[at] as string);
+          }
+        }
       });
     }
   }
