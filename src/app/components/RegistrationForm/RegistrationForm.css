@@ -1,0 +1,42 @@
+.regform{
+    display: block;
+    margin: 1rem;
+}
+
+.regform-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.regform-header{
+    color: black
+}
+
+.regform-text{
+    color: black
+}
+
+.regform-label{
+    color: black
+}
+
+.regform-input{
+    color: black
+}
+
+.regform-btn{
+    color: black
+}
+
+.regform-adress__header{
+    color: black;
+    font-weight: bold;
+}
+
+.regform-container__address{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 10px;
+}
