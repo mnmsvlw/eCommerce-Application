@@ -32,7 +32,7 @@ export default class Router {
 
     if (!path.endsWith('/')) path += '/';
 
-    const route = this.routes.find((r) => r.path === path);
+    const route = this.routes.find((r) => r.path.test(path));
     if (route) {
       this.renderPage(route);
     } else {
