@@ -5,8 +5,8 @@ export default class CatalogPage extends Page {
   create() {
     this.page.appendChild(new PageHeader().render());
     this.page.innerHTML += 'Catalog Page';
-    if (window.location.pathname.replace('/items/', '')) {
-      this.page.innerHTML += ` for ID ${window.location.pathname.replace('/items/', '')}`;
+    if (window.location.pathname.replace(/^\/items\/?/, '')) {
+      this.page.innerHTML += ` for ID ${window.location.pathname.replace(/^\/items\/?/, '')}`;
     }
   }
 }
