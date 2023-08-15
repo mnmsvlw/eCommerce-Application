@@ -13,7 +13,11 @@ function hideError(el: string): void {
   error.style.display = 'none';
 }
 
-export default function isValidInput(elem: HTMLInputElement, errorClass: string, validator: (value: string) => string): boolean {
+export default function isValidInput(
+  elem: HTMLInputElement,
+  errorClass: string,
+  validator: (value: string) => string
+): boolean {
   const { value } = elem;
   const el = elem;
   let valid = false;
