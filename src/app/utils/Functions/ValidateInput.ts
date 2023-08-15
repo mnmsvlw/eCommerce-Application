@@ -1,17 +1,4 @@
-function showError(el: string, message: string, value: string): void {
-  const error = document.querySelector(el) as HTMLElement;
-  error.textContent = message;
-  error.style.display = 'block';
-  if (value === '') {
-    error.style.display = 'none';
-  }
-}
-
-function hideError(el: string): void {
-  const error = document.querySelector(el) as HTMLElement;
-  error.textContent = '';
-  error.style.display = 'none';
-}
+import { focucBlurInput, hideError, showError } from './functionForValidateInput';
 
 export default function isValidInput(
   elem: HTMLInputElement,
@@ -23,7 +10,7 @@ export default function isValidInput(
   let valid = false;
   if (value === '') {
     hideError(errorClass);
-    el.style.border = '2px solid black';
+    focucBlurInput(el);
   }
   const message = validator(value);
   if (message !== '') {
@@ -34,15 +21,8 @@ export default function isValidInput(
     el.style.border = '3px solid green';
     valid = true;
   }
-  el.onblur = () => {
-    if (el.value === '') {
-      el.style.border = '2px solid black';
-    }
-  };
-  el.onfocus = () => {
-    if (el.value === '') {
-      el.style.border = '2px solid black';
-    }
-  };
+  el.onblur = () => focucBlurInput(el);
+  el.onfocus = () => focucBlurInput(el);
+
   return valid;
 }
