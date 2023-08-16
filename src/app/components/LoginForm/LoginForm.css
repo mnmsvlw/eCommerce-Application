@@ -51,12 +51,13 @@
   width: 100px;
   border-radius: 3px;
   cursor: pointer;
+  font-size: 16px;
 }
 .loginBtn:hover {
   background-color: aquamarine;
 }
 .regBtn {
-  width: 150px;
+  width: 100px;
   border: none; 
   outline: none;
   background-color: white;
@@ -64,7 +65,9 @@
   text-decoration: underline;
   cursor: pointer;
   padding-top: 10px;
-  font-size: 16px;
+  font-size: 17px;
+  text-align: center;
+  letter-spacing: 0.5px;
 }
 .regBtn:hover {
   color: blue;

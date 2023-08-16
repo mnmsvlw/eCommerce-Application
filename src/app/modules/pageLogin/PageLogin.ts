@@ -1,9 +1,9 @@
 import Component from '../../components/Component';
 import LoginForm from '../../components/LoginForm/LoginForm';
-import { changeStyleBorder } from '../../utils/Functions/functionForValidateInput';
-import isValidInput from '../../utils/Functions/ValidateInput';
-import validateEmail from '../../utils/ValidateEmail';
-import validatePassword from '../../utils/ValidatePassword';
+import { changeStyleBorder } from './helpers/functionForValidateInput';
+import isValidInput from './helpers/ValidateInput';
+import validateEmail from './helpers/ValidateEmail';
+import validatePassword from './helpers/ValidatePassword';
 
 export default class PageLogin extends Component {
   render = () => {
@@ -13,8 +13,8 @@ export default class PageLogin extends Component {
     };
     this.content = new LoginForm().render();
     this.content.addEventListener('click', (e) => {
-      const mail = document.querySelector('.email-input') as HTMLInputElement;
-      const pass = document.querySelector('.pass-input') as HTMLInputElement;
+      const mail = this.content.querySelector('.email-input') as HTMLInputElement;
+      const pass = this.content.querySelector('.pass-input') as HTMLInputElement;
       const el = e.target as HTMLElement;
       if (el.classList.contains('loginBtn')) {
         if (valid.email && valid.pass) {
@@ -26,14 +26,15 @@ export default class PageLogin extends Component {
       }
       if (el.classList.contains('regBtn')) {
         e.preventDefault();
-        const path = window.location.href;
-        const newPath = path.replace(/login/i, 'login/register');
-        window.location.href = newPath;
+        const url = `${window.location.origin}/register/`;
+        console.log(url);
+        window.history.pushState(null, '', url);
+        window.dispatchEvent(new Event('popstate'));
       }
     });
 
     this.content.addEventListener('input', (e) => {
-      const pass = document.querySelector('.pass-input') as HTMLInputElement;
+      const pass = this.content.querySelector('.pass-input') as HTMLInputElement;
       const el = e.target as HTMLInputElement;
       if (el.classList.contains('email-input')) {
         valid.email = isValidInput(el, '.errorMail', validateEmail);
