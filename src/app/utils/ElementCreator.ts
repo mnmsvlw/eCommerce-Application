@@ -18,13 +18,6 @@ export default class ElementCreator {
     this.addClassNames(newElement, params.classNames);
     this.addTextContent(newElement, params.text);
 
-    if (params.children != null) {
-      params.children.forEach((childParams) => {
-        const childElement = new ElementCreator(childParams).getElement();
-        newElement.appendChild(childElement);
-      });
-    }
-
     return newElement;
   }
 
