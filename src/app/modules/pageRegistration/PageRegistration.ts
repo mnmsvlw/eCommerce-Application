@@ -1,4 +1,3 @@
-import EventEmitter from 'events';
 import { CreateCustomerData } from '../../../types/registrationTypes';
 import createCustomer from '../../api/Customer';
 import Component from '../../components/Component';
@@ -6,13 +5,10 @@ import RegistrationForm from '../../components/RegistrationForm/RegistrationForm
 import Validator from './validation/Validator';
 
 export default class PageRegistration extends Component {
-  emitter: EventEmitter;
-
   dataToSubmit: CreateCustomerData | null;
 
-  constructor(emitter: EventEmitter) {
+  constructor() {
     super();
-    this.emitter = emitter;
     this.dataToSubmit = null;
   }
 
