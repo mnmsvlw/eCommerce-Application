@@ -1,12 +1,16 @@
 .regform{
     display: block;
     margin: 1rem;
+    box-sizing: border-box;
 }
 
 .regform-container{
     display: flex;
     flex-direction: column;
     gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
 }
 
 .regform-header{
@@ -21,12 +25,18 @@
     color: black
 }
 
-.regform-input{
-    color: black
+.regform-input,
+.regform-select{
+    color: black;
+    position: relative;
+    padding: 5px;
 }
 
 .regform-btn{
-    color: black
+    color: black;
+    border-radius: 5px;
+    padding: 5px;
+    width: 30%;
 }
 
 .regform-adress__header{
@@ -34,9 +44,46 @@
     font-weight: bold;
 }
 
-.regform-container__address{
+.regform-container__shipping-address,
+.regform-container__billing-address,
+.regform-container__data{
     display: flex;
     flex-direction: column;
     gap: 5px;
-    margin-bottom: 10px;
+    margin: 10px;
+    border: 1px solid gray;
+    padding: 10px;
+    transition: all 2s ease;
+}
+
+.regform-container__billing-address.hidden{
+    display: none;
+    transition: all 2s ease;
+}
+
+.checkbox-container{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.reg-error{
+    color: red;
+    font-size: 9px;
+    display: inline-block;
+}
+
+.error{
+    outline: 0;
+    border: 2px solid red;
+}
+
+.success{
+    outline: 0;
+    border: 2px solid green;
+}
+
+.icon{
+    width: 30px;
+    height: 30px;
 }
