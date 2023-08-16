@@ -23,10 +23,10 @@ export default class BillingAddress extends Component {
     const cityInput = new Input('regcity', 50, 'regform-input').render();
 
     const postalCodeLabel = new Label('regpostalcode', 'Postal code', 'regform-label').render();
-    const postalCodeInput = new Input('regpostalcode', 50, 'regform-input').render();
+    const postalCodeInput = new Input('regpostalcode', 50, 'regform-input', '4-digit number').render();
 
     const countryLabel = new Label('regcountry', 'Country', 'regform-label').render();
-    const countryList = ['Georgia', 'Armenia', 'Belarus'];
+    const countryList = ['Georgia', 'Armenia', 'Austria'];
     const countrySelect = new Select('regcountry', countryList, 'Select country', 'regform-select').render();
 
     const checkboxContainer = new Container('checkbox-container').render();

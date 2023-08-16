@@ -12,13 +12,23 @@ export default class Input extends Component {
 
   inputSize: number;
 
-  constructor(inputName: string, inputSize: number, classNames?: string, inputPlaceholder = '', type = 'text') {
+  isRequired: boolean;
+
+  constructor(
+    inputName: string,
+    inputSize: number,
+    classNames?: string,
+    inputPlaceholder = '',
+    type = 'text',
+    isRequired = true
+  ) {
     super();
     this.classNames = classNames;
     this.type = type;
     this.inputName = inputName;
     this.inputSize = inputSize;
     this.inputPlaceholder = inputPlaceholder;
+    this.isRequired = isRequired;
   }
 
   public render = () => {
@@ -30,9 +40,10 @@ export default class Input extends Component {
         name: this.inputName,
         size: this.inputSize.toString(),
         placeholder: this.inputPlaceholder,
+        required: this.isRequired,
         id: this.id,
       },
     }).getElement();
-    return this.content as HTMLInputElement;
+    return this.content;
   };
 }

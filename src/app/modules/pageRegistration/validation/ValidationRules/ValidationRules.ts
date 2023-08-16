@@ -1,6 +1,6 @@
 export default class ValidationRules {
   email(value: string): boolean {
-    const mailPattern = /\S+@\S+\.\S+/;
+    const mailPattern = /^\S+@\S+\.\S+$/;
     return mailPattern.test(value);
   }
 
@@ -30,7 +30,7 @@ export default class ValidationRules {
   }
 
   postalCode(value: string): boolean {
-    return /^\d{5}$/.test(value);
+    return /^\d{4}$/.test(value);
   }
 
   country(value: string): boolean {
