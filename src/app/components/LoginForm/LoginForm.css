@@ -56,6 +56,16 @@
 .loginBtn:hover {
   background-color: aquamarine;
 }
+.reg-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.regText {
+  font-size: 17px;
+}
 .regBtn {
   width: 100px;
   border: none; 
@@ -64,9 +74,10 @@
   color: red;
   text-decoration: underline;
   cursor: pointer;
-  padding-top: 10px;
+  
+  font-weight: 700;
   font-size: 17px;
-  text-align: center;
+  padding-left: 10px;
   letter-spacing: 0.5px;
 }
 .regBtn:hover {
