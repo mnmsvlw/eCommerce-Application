@@ -31,7 +31,7 @@ export default class RegistrationForm extends Component {
 
     const btnContainer = new Container('regform-btn-container').render();
     const regButton = new Button('Register', 'submit', 'regform-btn').render();
-    const logButton = new Button('Login', 'submit', 'regform-login-btn').render();
+    const logButton = new Button('Login', 'button', 'regform-login-btn').render();
     btnContainer.append(regButton, logButton);
 
     formContainer.append(formHeader, formInstruction, dataFields, shippingAddress, billingAddress, btnContainer);

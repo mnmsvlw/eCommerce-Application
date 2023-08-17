@@ -17,7 +17,6 @@ export default class ErrorMessage extends Component {
     messageContainer.append(messageHeader);
 
     this.content.append(messageContainer);
-    console.log(this.content);
     return this.content;
   };
 }
