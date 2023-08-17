@@ -32,11 +32,37 @@
     padding: 5px;
 }
 
+.regform-btn-container{
+    display: flex;
+    gap: 7px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
 .regform-btn{
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    width: 30%;
+    background-color: blue;
+    cursor: pointer;
+}
+.regform-btn:hover{
+    background-color: rgb(9, 9, 187);
+}
+
+.regform-login-btn{
     color: black;
     border-radius: 5px;
     padding: 5px;
     width: 30%;
+    background-color: white;
+    cursor: pointer;
+}
+
+.regform-login-btn:hover{
+    background-color: rgb(179, 177, 177);
 }
 
 .regform-adress__header{

@@ -39,7 +39,7 @@ export default class PageRegistration extends Component {
     return this.content;
   };
 
-  registerUser = async (registrationData: CreateCustomerData, form: RegistrationForm) => {
+  private registerUser = async (registrationData: CreateCustomerData, form: RegistrationForm) => {
     try {
       await createCustomer(registrationData);
       form.showSuccessMessage();
@@ -50,7 +50,7 @@ export default class PageRegistration extends Component {
       ) {
         form.showErrorMessage('Your account has already been created! Use log in to access your account.');
       } else {
-        form.showErrorMessage('Registration failed.');
+        form.showErrorMessage('Registration failed. Please try again later.');
       }
     }
   };
