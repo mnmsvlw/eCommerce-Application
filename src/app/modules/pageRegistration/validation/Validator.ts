@@ -50,41 +50,13 @@ export default class Validator {
   validateOnSubmit(): CreateCustomerData | null {
     let isValid = true;
     this.fields.forEach((field) => {
-      if (!this.validateFields(field)) {
+      if (!this.validateField(field)) {
         isValid = false;
       }
     });
 
     if (isValid) {
-      const existingShippingIndex = this.createCustomerData.addresses.findIndex(
-        (address) => address.key === this.addressShip.key
-      );
-      if (existingShippingIndex !== -1) {
-        this.createCustomerData.addresses[existingShippingIndex] = { ...this.addressShip };
-      } else {
-        this.createCustomerData.addresses.push(this.addressShip);
-      }
-
-      const existingBillingIndex = this.createCustomerData.addresses.findIndex(
-        (address) => address.key === this.addressBill.key
-      );
-      if (existingBillingIndex !== -1) {
-        this.createCustomerData.addresses[existingBillingIndex] = { ...this.addressBill };
-      } else {
-        this.createCustomerData.addresses.push(this.addressBill);
-      }
-
-      const ShippingDefault = this.form.querySelector('input[name="ship-checkbox"]') as HTMLInputElement;
-      if (ShippingDefault.checked) {
-        this.createCustomerData.defaultShippingAddress = 0;
-      }
-
-      const BillingDefault = this.form.querySelector('input[name="bill-checkbox"]') as HTMLInputElement;
-      if (BillingDefault.checked) {
-        this.createCustomerData.defaultBillingAddress = 1;
-      }
-
-      return this.createCustomerData;
+      return this.gatherDataForSubmit();
     }
 
     return null;
@@ -93,11 +65,42 @@ export default class Validator {
   validateOnEntry(e: Event) {
     const field = e.target as HTMLInputElement | HTMLSelectElement;
     if ((field.tagName === 'INPUT' && field.getAttribute('type') !== 'checkbox') || field.tagName === 'SELECT') {
-      this.validateFields(field);
+      this.validateField(field);
     }
   }
 
-  private validateFields(field: HTMLInputElement | HTMLSelectElement): boolean {
+  private gatherDataForSubmit = (): CreateCustomerData => {
+    const existingShippingIndex = this.createCustomerData.addresses.findIndex(
+      (address) => address.key === this.addressShip.key
+    );
+    if (existingShippingIndex !== -1) {
+      this.createCustomerData.addresses[existingShippingIndex] = { ...this.addressShip };
+    } else {
+      this.createCustomerData.addresses.push(this.addressShip);
+    }
+
+    const existingBillingIndex = this.createCustomerData.addresses.findIndex(
+      (address) => address.key === this.addressBill.key
+    );
+    if (existingBillingIndex !== -1) {
+      this.createCustomerData.addresses[existingBillingIndex] = { ...this.addressBill };
+    } else {
+      this.createCustomerData.addresses.push(this.addressBill);
+    }
+
+    const ShippingDefault = this.form.querySelector('input[name="ship-checkbox"]') as HTMLInputElement;
+    if (ShippingDefault.checked) {
+      this.createCustomerData.defaultShippingAddress = 0;
+    }
+
+    const BillingDefault = this.form.querySelector('input[name="bill-checkbox"]') as HTMLInputElement;
+    if (BillingDefault.checked) {
+      this.createCustomerData.defaultBillingAddress = 1;
+    }
+    return this.createCustomerData;
+  };
+
+  private validateField(field: HTMLInputElement | HTMLSelectElement): boolean {
     let isValid = true;
     const shippingAddressContainer = field.closest('.regform-container__shipping-address');
     const billingAddressContainer = field.closest('.regform-container__billing-address');
