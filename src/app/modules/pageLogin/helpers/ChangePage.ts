@@ -3,4 +3,5 @@ const changePage = (namePage: string): void => {
   window.history.pushState(null, '', url);
   window.dispatchEvent(new Event('popstate'));
 };
+
 export default changePage;
