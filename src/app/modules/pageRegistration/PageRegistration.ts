@@ -1,5 +1,5 @@
 import { CreateCustomerData } from '../../../types/registrationTypes';
-import createCustomer from '../../api/Customer';
+import { createCustomer } from '../../api/Customer';
 import Component from '../../components/Component';
 import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
 import Validator from './validation/Validator';
@@ -32,6 +32,7 @@ export default class PageRegistration extends Component {
       }
       this.dataToSubmit = validator.validateOnSubmit();
       if (this.dataToSubmit !== null) {
+        console.log(this.dataToSubmit);
         this.registerUser(this.dataToSubmit, form);
       }
     });
@@ -48,7 +49,9 @@ export default class PageRegistration extends Component {
         error instanceof Error &&
         error.message.includes('There is already an existing customer with the provided email.')
       ) {
-        form.showErrorMessage('Your account has already been created! Use log in to access your account.');
+        form.showErrorMessage(
+          'Your account has already been created! Use login to access your account or register with another email.'
+        );
       } else {
         form.showErrorMessage('Registration failed. Please try again later.');
       }

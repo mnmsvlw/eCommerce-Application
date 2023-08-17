@@ -1,4 +1,4 @@
-import type { CreateCustomerData } from '../../types/registrationTypes';
+import type { CreateCustomerData, LoginData } from '../../types/registrationTypes';
 import { apiRoot } from './Client';
 
 const createCustomer = async (createDataReceived: CreateCustomerData) => {
@@ -13,4 +13,16 @@ const createCustomer = async (createDataReceived: CreateCustomerData) => {
   console.log('Customer created:', response.body.customer);
 };
 
-export default createCustomer;
+const loginCustomer = async (loginDataReceived: LoginData) => {
+  const response = await apiRoot
+    .me()
+    .login()
+    .post({
+      body: loginDataReceived,
+    })
+    .execute();
+
+  console.log('Customer logined:', response.body.customer);
+};
+
+export { createCustomer, loginCustomer };

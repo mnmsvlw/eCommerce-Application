@@ -1,16 +1,17 @@
+import { OptionKeyValuePair } from '../../types/registrationTypes';
 import Component from '../components/Component';
 import ElementCreator from '../utils/ElementCreator';
 
 export default class Select extends Component {
   name: string;
 
-  options: string[];
+  options: OptionKeyValuePair[];
 
   defaultText: string;
 
   classNames?: string;
 
-  constructor(name: string, options: string[], defaultText: string, classNames?: string) {
+  constructor(name: string, options: OptionKeyValuePair[], defaultText: string, classNames?: string) {
     super();
     this.name = name;
     this.options = options;
@@ -39,12 +40,12 @@ export default class Select extends Component {
     }).getElement();
     this.content.appendChild(defaultOption);
 
-    this.options.forEach((optionText) => {
+    this.options.forEach((optionData) => {
       const option = new ElementCreator({
         tag: 'option',
-        text: optionText,
+        text: optionData.text,
         attributes: {
-          value: optionText,
+          value: optionData.value,
         },
       }).getElement();
       this.content.appendChild(option);

@@ -5,6 +5,7 @@ import Input from '../../../UI/Input';
 import Label from '../../../UI/Label';
 import Container from '../../../UI/Container';
 import Select from '../../../UI/Select';
+import { OptionKeyValuePair } from '../../../../types/registrationTypes';
 
 export default class ShippingAddress extends Component {
   render = () => {
@@ -26,8 +27,16 @@ export default class ShippingAddress extends Component {
     const postalCodeInput = new Input('regpostalcode', 50, 'regform-input', '4-digit number').render();
 
     const countryLabel = new Label('regcountry', 'Country', 'regform-label').render();
-    const countryList = ['Georgia', 'Armenia', 'Austria'];
-    const countrySelect = new Select('regcountry', countryList, 'Select country', 'regform-select').render();
+    const countryCodes: { [countryName: string]: string } = {
+      Georgia: 'GE',
+      Armenia: 'AM',
+      Austria: 'AT',
+    };
+    const countryOptions: OptionKeyValuePair[] = Object.entries(countryCodes).map(([countryName, countryCode]) => ({
+      value: countryCode,
+      text: countryName,
+    }));
+    const countrySelect = new Select('regcountry', countryOptions, 'Select country', 'regform-select').render();
 
     const checkboxContainer = new Container('checkbox-container').render();
     const defaultShippingAddressLabel = new Label(

@@ -1,4 +1,4 @@
-import { CreateCustomerData, AddressReg } from '../../../../types/registrationTypes';
+import type { CreateCustomerData, AddressReg } from '../../../../types/registrationTypes';
 import RegistrationForm from '../../../components/RegistrationForm/RegistrationForm';
 import ValidationRules from './ValidationRules/ValidationRules';
 
@@ -28,14 +28,17 @@ export default class Validator {
       firstName: '',
       lastName: '',
       dateOfBirth: '',
+      addresses: [],
     };
     this.addressShip = {
+      key: 'KeyShipping',
       street: '',
       city: '',
       postalCode: '',
       country: '',
     };
     this.addressBill = {
+      key: 'KeyBilling',
       street: '',
       city: '',
       postalCode: '',
@@ -53,6 +56,34 @@ export default class Validator {
     });
 
     if (isValid) {
+      const existingShippingIndex = this.createCustomerData.addresses.findIndex(
+        (address) => address.key === this.addressShip.key
+      );
+      if (existingShippingIndex !== -1) {
+        this.createCustomerData.addresses[existingShippingIndex] = { ...this.addressShip };
+      } else {
+        this.createCustomerData.addresses.push(this.addressShip);
+      }
+
+      const existingBillingIndex = this.createCustomerData.addresses.findIndex(
+        (address) => address.key === this.addressBill.key
+      );
+      if (existingBillingIndex !== -1) {
+        this.createCustomerData.addresses[existingBillingIndex] = { ...this.addressBill };
+      } else {
+        this.createCustomerData.addresses.push(this.addressBill);
+      }
+
+      const ShippingDefault = this.form.querySelector('input[name="ship-checkbox"]') as HTMLInputElement;
+      if (ShippingDefault.checked) {
+        this.createCustomerData.defaultShippingAddress = 0;
+      }
+
+      const BillingDefault = this.form.querySelector('input[name="bill-checkbox"]') as HTMLInputElement;
+      if (BillingDefault.checked) {
+        this.createCustomerData.defaultBillingAddress = 1;
+      }
+
       return this.createCustomerData;
     }
 
@@ -68,6 +99,15 @@ export default class Validator {
 
   private validateFields(field: HTMLInputElement | HTMLSelectElement): boolean {
     let isValid = true;
+    const shippingAddressContainer = field.closest('.regform-container__shipping-address');
+    const billingAddressContainer = field.closest('.regform-container__billing-address');
+
+    const addressCheckbox = this.form.querySelector('input[name="address-checkbox"]') as HTMLInputElement;
+    field.addEventListener('input', () => {
+      if (addressCheckbox.checked) {
+        this.addressBill = { ...this.addressShip, key: this.addressBill.key };
+      }
+    });
 
     if (field.value === '') {
       const previousElementSibling = field.previousElementSibling as HTMLElement | null;
@@ -110,17 +150,29 @@ export default class Validator {
         case 'regstreet':
           validationFunction = this.VRules.street;
           message = 'Street must contain only letters';
-          this.addressShip.street = field.value;
+          if (shippingAddressContainer) {
+            this.addressShip.street = field.value;
+          } else if (billingAddressContainer) {
+            this.addressBill.street = field.value;
+          }
           break;
         case 'regcity':
           validationFunction = this.VRules.city;
           message = 'City must contain only letters';
-          this.addressShip.city = field.value;
+          if (shippingAddressContainer) {
+            this.addressShip.city = field.value;
+          } else if (billingAddressContainer) {
+            this.addressBill.city = field.value;
+          }
           break;
         case 'regpostalcode':
           validationFunction = this.VRules.postalCode;
           message = 'Invalid postal code';
-          this.addressShip.postalCode = field.value;
+          if (shippingAddressContainer) {
+            this.addressShip.postalCode = field.value;
+          } else if (billingAddressContainer) {
+            this.addressBill.postalCode = field.value;
+          }
           break;
         default:
           validationFunction = () => true;
@@ -145,7 +197,11 @@ export default class Validator {
           } else {
             this.setStatus(field, '', 'success');
             isValid = true;
-            this.addressShip.country = field.value;
+            if (shippingAddressContainer) {
+              this.addressShip.country = field.value;
+            } else if (billingAddressContainer) {
+              this.addressBill.country = field.value;
+            }
           }
           break;
         default:
@@ -181,6 +237,7 @@ export default class Validator {
       const target = event.target as HTMLInputElement;
       if (target && target.name === 'address-checkbox' && target.type === 'checkbox') {
         if (target.checked && this.fields !== null) {
+          this.addressBill = { ...this.addressShip, key: this.addressBill.key };
           this.fields = this.fields.filter((field) => {
             return (
               !(field.getAttribute('type') === 'checkbox') && !field.closest('.regform-container__billing-address')

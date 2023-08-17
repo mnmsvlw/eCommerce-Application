@@ -4,9 +4,13 @@ export interface CreateCustomerData {
   firstName: string;
   lastName: string;
   dateOfBirth: string;
+  addresses: AddressReg[];
+  defaultShippingAddress?: number;
+  defaultBillingAddress?: number;
 }
 
 export interface AddressReg {
+  key: string;
   street: string;
   city: string;
   postalCode: string;
@@ -14,3 +18,13 @@ export interface AddressReg {
 }
 
 export type RegisterUserFunction = (registrationData: CreateCustomerData) => void;
+
+export interface LoginData {
+  email: string;
+  password: string;
+}
+
+export interface OptionKeyValuePair {
+  value: string;
+  text: string;
+}
