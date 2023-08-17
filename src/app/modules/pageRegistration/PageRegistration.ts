@@ -32,14 +32,26 @@ export default class PageRegistration extends Component {
       }
       this.dataToSubmit = validator.validateOnSubmit();
       if (this.dataToSubmit !== null) {
-        this.registerUser(this.dataToSubmit);
+        this.registerUser(this.dataToSubmit, form);
       }
     });
 
     return this.content;
   };
 
-  registerUser = (registrationData: CreateCustomerData) => {
-    createCustomer(registrationData);
+  registerUser = async (registrationData: CreateCustomerData, form: RegistrationForm) => {
+    try {
+      await createCustomer(registrationData);
+      form.showSuccessMessage();
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        error.message.includes('There is already an existing customer with the provided email.')
+      ) {
+        form.showErrorMessage('Your account has already been created! Use log in to access your account.');
+      } else {
+        form.showErrorMessage('Registration failed.');
+      }
+    }
   };
 }

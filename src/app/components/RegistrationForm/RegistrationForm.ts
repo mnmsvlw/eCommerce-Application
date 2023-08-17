@@ -64,13 +64,32 @@ export default class RegistrationForm extends Component {
 
   showSuccessMessage = () => {
     const message = new SuccessfulMessage().render();
-    return message;
+    const body = document.querySelector('body');
+    const pageContainer = document.querySelector('.page-container') as HTMLElement;
+    if (pageContainer !== null && body !== null) {
+      pageContainer.append(message);
+      body.style.overflow = 'hidden';
+      this.closeModal(pageContainer, message, body);
+    }
   };
 
   showErrorMessage = (text: string) => {
     const message = new ErrorMessage().render(text);
-    console.log(message);
-    return message;
+    const body = document.querySelector('body');
+    const pageContainer = document.querySelector('.page-container') as HTMLElement;
+    if (pageContainer !== null && body !== null) {
+      pageContainer.append(message);
+      body.style.overflow = 'hidden';
+      this.closeModal(pageContainer, message, body);
+    }
+  };
+
+  private closeModal = (elClicked: HTMLElement, targetEL: HTMLElement, body: HTMLBodyElement) => {
+    const localBody = body;
+    elClicked.addEventListener('click', () => {
+      targetEL.classList.add('hidden');
+      localBody.style.overflow = 'initial';
+    });
   };
 
   private toggleBillingAddress = (parentElement: HTMLElement, changedElement: HTMLElement) => {
