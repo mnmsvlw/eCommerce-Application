@@ -32,7 +32,6 @@ export default class PageRegistration extends Component {
       }
       this.dataToSubmit = validator.validateOnSubmit();
       if (this.dataToSubmit !== null) {
-        console.log(this.dataToSubmit);
         this.registerUser(this.dataToSubmit);
       }
     });

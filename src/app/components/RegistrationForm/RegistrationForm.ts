@@ -7,6 +7,8 @@ import Container from '../../UI/Container';
 import ShippingAddress from './AddressFields/ShippingAddress';
 import BillingAddress from './AddressFields/BillingAddress';
 import DataFields from './DataFields/DataFields';
+import SuccessfulMessage from './SuccessfulMessage/SuccessfulMessage';
+import ErrorMessage from './ErrorMessage/ErrorMessage';
 
 export default class RegistrationForm extends Component {
   render = () => {
@@ -58,6 +60,17 @@ export default class RegistrationForm extends Component {
     if (errorContainer !== null && errorContainer.classList.contains('reg-error')) {
       errorContainer.textContent = '';
     }
+  };
+
+  showSuccessMessage = () => {
+    const message = new SuccessfulMessage().render();
+    return message;
+  };
+
+  showErrorMessage = (text: string) => {
+    const message = new ErrorMessage().render(text);
+    console.log(message);
+    return message;
   };
 
   private toggleBillingAddress = (parentElement: HTMLElement, changedElement: HTMLElement) => {
