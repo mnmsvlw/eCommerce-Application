@@ -3,7 +3,6 @@ import LogoutForm from '../../components/LoginForm/LogoutForm/LogoutForm';
 import navItems from '../../data/navItems';
 import changePage from '../../modules/pageLogin/helpers/ChangePage';
 
-
 export default class PageLogout extends Component {
   render = () => {
     this.content = new LogoutForm().render();
