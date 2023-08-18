@@ -1,15 +1,20 @@
 import './RegistrationForm.css';
 import ElementCreator from '../../utils/ElementCreator';
 import Component from '../Component';
-import Input from '../../UI/Input';
-import Label from '../../UI/Label';
 import Button from '../../UI/Button';
 import Form from '../../UI/Form';
 import Container from '../../UI/Container';
+import ShippingAddress from './AddressFields/ShippingAddress';
+import BillingAddress from './AddressFields/BillingAddress';
+import DataFields from './DataFields/DataFields';
+import SuccessfulMessage from './SuccessfulMessage/SuccessfulMessage';
+import ErrorMessage from './ErrorMessage/ErrorMessage';
 
 export default class RegistrationForm extends Component {
   render = () => {
-    this.content = new Form('insert action here', 'post', 'regform').render();
+    const form = new Form('/', 'post', 'regform');
+    this.content = form.render();
+    this.content.setAttribute('novalidate', '');
     const formContainer = new Container('regform-container').render();
 
     const formHeader = new ElementCreator({ tag: 'h2', classNames: 'regform-header', text: 'Register' }).getElement();
@@ -19,73 +24,87 @@ export default class RegistrationForm extends Component {
       text: 'Please fill in this form to create an account.',
     }).getElement();
 
-    const emailLabel = new Label('regemail', 'Email', 'regform-label').render();
-    const emailInput = new Input('regemail', 20, 'regform-input', '', 'email').render();
+    const dataFields = new DataFields().render();
+    const shippingAddress = new ShippingAddress().render();
+    const billingAddress = new BillingAddress().render();
+    this.toggleBillingAddress(shippingAddress, billingAddress);
 
-    const passwordLabel = new Label('regpassword', 'Password', 'regform-label').render();
-    const passwordInput = new Input('regpassword', 20, 'regform-input', '', 'password').render();
-
-    const firstNameLabel = new Label('regFirstName', 'First name', 'regform-label').render();
-    const firstNameInput = new Input('regFirstName', 20, 'regform-input').render();
-
-    const lastNameLabel = new Label('regLastName', 'Last name', 'regform-label').render();
-    const lastNameInput = new Input('regLastName', 20, 'regform-input').render();
-
-    const dateOfBirthLabel = new Label('regBirthDay', 'Date of birth', 'regform-label').render();
-    const dateOfBirthInput = new Input('regBirthDay', 20, 'regform-input', '', 'date').render();
-
-    const addressContainer = new Container('regform-container__address').render();
-
-    const addressHeader = new ElementCreator({
-      tag: 'p',
-      classNames: 'regform-adress__header',
-      text: 'Address',
-    }).getElement();
-
-    const streetLabel = new Label('regstreet', 'Street', 'regform-label').render();
-    const streetInput = new Input('regstreet', 20, 'regform-input').render();
-
-    const cityLabel = new Label('regcity', 'City', 'regform-label').render();
-    const cityInput = new Input('regcity', 20, 'regform-input').render();
-
-    const postalCodeLabel = new Label('regpostalcode', 'Postal code', 'regform-label').render();
-    const postalCodeInput = new Input('regpostalcode', 20, 'regform-input').render();
-
-    const countryLabel = new Label('regcountry', 'Country', 'regform-label').render();
-    const countryInput = new Input('regcountry', 20, 'regform-input').render();
-
-    addressContainer.append(
-      addressHeader,
-      streetLabel,
-      streetInput,
-      cityLabel,
-      cityInput,
-      postalCodeLabel,
-      postalCodeInput,
-      countryLabel,
-      countryInput
-    );
-
+    const btnContainer = new Container('regform-btn-container').render();
     const regButton = new Button('Register', 'submit', 'regform-btn').render();
+    const logButton = new Button('Login', 'button', 'regform-login-btn').render();
+    btnContainer.append(regButton, logButton);
 
-    formContainer.append(
-      formHeader,
-      formInstruction,
-      emailLabel,
-      emailInput,
-      passwordLabel,
-      passwordInput,
-      firstNameLabel,
-      firstNameInput,
-      lastNameLabel,
-      lastNameInput,
-      dateOfBirthLabel,
-      dateOfBirthInput,
-      addressContainer,
-      regButton
-    );
-
+    formContainer.append(formHeader, formInstruction, dataFields, shippingAddress, billingAddress, btnContainer);
     this.content.appendChild(formContainer);
+
     return this.content;
+  };
+
+  setError = (element: HTMLInputElement | HTMLSelectElement, message: string) => {
+    let errorContainer = element.nextElementSibling as HTMLElement;
+
+    if (!errorContainer || !errorContainer.classList.contains('reg-error')) {
+      errorContainer = new ElementCreator({
+        tag: 'span',
+        classNames: 'reg-error',
+      }).getElement();
+      element.after(errorContainer);
+    }
+    element.classList.remove('success');
+    element.classList.add('error');
+    errorContainer.textContent = message;
+    return errorContainer;
+  };
+
+  setSuccess = (element: HTMLInputElement | HTMLSelectElement) => {
+    element.classList.remove('error');
+    element.classList.add('success');
+    const errorContainer = element.nextElementSibling as HTMLElement;
+    if (errorContainer !== null && errorContainer.classList.contains('reg-error')) {
+      errorContainer.textContent = '';
+    }
+  };
+
+  showSuccessMessage = () => {
+    const message = new SuccessfulMessage().render();
+    const body = document.querySelector('body');
+    const pageContainer = document.querySelector('.page-container') as HTMLElement;
+    if (pageContainer !== null && body !== null) {
+      pageContainer.append(message);
+      body.style.overflow = 'hidden';
+      this.closeModal(pageContainer, message, body);
+    }
+  };
+
+  showErrorMessage = (text: string) => {
+    const message = new ErrorMessage().render(text);
+    const body = document.querySelector('body');
+    const pageContainer = document.querySelector('.page-container') as HTMLElement;
+    if (pageContainer !== null && body !== null) {
+      pageContainer.append(message);
+      body.style.overflow = 'hidden';
+      this.closeModal(pageContainer, message, body);
+    }
+  };
+
+  private closeModal = (elClicked: HTMLElement, targetEL: HTMLElement, body: HTMLBodyElement) => {
+    const localBody = body;
+    elClicked.addEventListener('click', () => {
+      targetEL.classList.add('hidden');
+      localBody.style.overflow = 'initial';
+    });
+  };
+
+  private toggleBillingAddress = (parentElement: HTMLElement, changedElement: HTMLElement) => {
+    parentElement.addEventListener('change', (event) => {
+      const target = event.target as HTMLInputElement;
+      if (target && target.name === 'address-checkbox' && target.type === 'checkbox') {
+        if (target.checked) {
+          changedElement.classList.add('hidden');
+        } else {
+          changedElement.classList.remove('hidden');
+        }
+      }
+    });
   };
 }
