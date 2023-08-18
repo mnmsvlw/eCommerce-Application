@@ -31,6 +31,7 @@ module.exports = {
     'class-methods-use-this': 'off',
     'no-debugger': 'off',
     'no-console': 0,
+    "no-control-regex": 0,
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
     'import/extensions': [
