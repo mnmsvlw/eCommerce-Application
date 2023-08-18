@@ -37,6 +37,17 @@ export default class PageRegistration extends Component {
       }
     });
 
+    this.content.addEventListener('click', (e) => {
+      const el = e.target as HTMLElement;
+      if (el.classList.contains('regform-login-btn')) {
+        e.preventDefault();
+        const url = `${window.location.origin}/login/`;
+        console.log(url);
+        window.history.pushState(null, '', url);
+        window.dispatchEvent(new Event('popstate'));
+      }
+    });
+
     return this.content;
   };
 

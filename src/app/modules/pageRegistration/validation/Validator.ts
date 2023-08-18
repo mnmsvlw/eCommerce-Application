@@ -157,9 +157,6 @@ export default class Validator {
           if (addressParts != null) {
             const streetNumber = addressParts.find((part) => /^\d+$/.test(part));
             const streetName = addressParts.filter((part) => !/^\d+$/.test(part)).join(' ');
-            console.log(addressParts);
-            console.log(streetNumber);
-            console.log(streetName);
 
             if (shippingAddressContainer) {
               this.addressShip.streetNumber = streetNumber !== undefined ? parseInt(streetNumber, 10).toString() : '';
