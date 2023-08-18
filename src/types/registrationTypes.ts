@@ -11,7 +11,8 @@ export interface CreateCustomerData {
 
 export interface AddressReg {
   key: string;
-  street: string;
+  streetName: string;
+  streetNumber?: string;
   city: string;
   postalCode: string;
   country: string;

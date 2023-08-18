@@ -22,7 +22,7 @@ export default class ValidationRules {
   }
 
   street(value: string): boolean {
-    return /^[a-zA-Zа-яА-Я]+$/.test(value);
+    return /^(\d+)?\s*([a-zA-Zа-яА-Я].*)$/.test(value);
   }
 
   city(value: string): boolean {

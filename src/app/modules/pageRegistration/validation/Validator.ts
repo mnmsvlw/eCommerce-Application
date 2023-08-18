@@ -32,14 +32,14 @@ export default class Validator {
     };
     this.addressShip = {
       key: 'KeyShipping',
-      street: '',
+      streetName: '',
       city: '',
       postalCode: '',
       country: '',
     };
     this.addressBill = {
       key: 'KeyBilling',
-      street: '',
+      streetName: '',
       city: '',
       postalCode: '',
       country: '',
@@ -104,6 +104,7 @@ export default class Validator {
     let isValid = true;
     const shippingAddressContainer = field.closest('.regform-container__shipping-address');
     const billingAddressContainer = field.closest('.regform-container__billing-address');
+    const addressParts = field.value.split(' ');
 
     const addressCheckbox = this.form.querySelector('input[name="address-checkbox"]') as HTMLInputElement;
     field.addEventListener('input', () => {
@@ -152,11 +153,21 @@ export default class Validator {
           break;
         case 'regstreet':
           validationFunction = this.VRules.street;
-          message = 'Street must contain only letters';
-          if (shippingAddressContainer) {
-            this.addressShip.street = field.value;
-          } else if (billingAddressContainer) {
-            this.addressBill.street = field.value;
+          message = 'Must contain at least one character';
+          if (addressParts != null) {
+            const streetNumber = addressParts.find((part) => /^\d+$/.test(part));
+            const streetName = addressParts.filter((part) => !/^\d+$/.test(part)).join(' ');
+            console.log(addressParts);
+            console.log(streetNumber);
+            console.log(streetName);
+
+            if (shippingAddressContainer) {
+              this.addressShip.streetNumber = streetNumber !== undefined ? parseInt(streetNumber, 10).toString() : '';
+              this.addressShip.streetName = streetName;
+            } else if (billingAddressContainer) {
+              this.addressBill.streetNumber = streetNumber !== undefined ? parseInt(streetNumber, 10).toString() : '';
+              this.addressBill.streetName = streetName;
+            }
           }
           break;
         case 'regcity':
