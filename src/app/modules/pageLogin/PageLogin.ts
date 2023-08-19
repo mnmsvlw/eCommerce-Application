@@ -30,12 +30,10 @@ export default class PageLogin extends Component {
                   if (a.title === 'Profile') {
                     a.title = `${data.body.customer.firstName} ${data.body.customer.lastName}`;
                   }
-                  if (a.title === 'Login') {
-                    a.title = 'Logout';
-                    a.href = '/logout/';
-                  }
                   return a;
                 });
+                const logout = { title: 'Logout', href: '/logout/' };
+                navItems.push(logout);
                 changePage('/');
               }
             })

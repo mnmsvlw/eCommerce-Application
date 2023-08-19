@@ -9,14 +9,11 @@ export default class PageLogout extends Component {
     this.content.addEventListener('click', (e) => {
       const el = e.target as HTMLElement;
       if (el.classList.contains('yesBtn')) {
+        navItems.pop();
         navItems.map((x) => {
           const a = x;
           if (a.href === 'Profile') {
             a.title = 'Profile';
-          }
-          if (a.title === 'Logout') {
-            a.title = 'Login';
-            a.href = '/Login/';
           }
           return a;
         });
