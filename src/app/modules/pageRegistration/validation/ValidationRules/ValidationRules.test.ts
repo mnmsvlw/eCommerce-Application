@@ -19,7 +19,7 @@ describe('ValidationRules', () => {
 
   describe('password', () => {
     it('should return true for a valid password', () => {
-      expect(validationRules.password('Test1234')).toBe(true);
+      expect(validationRules.password('Test1234!')).toBe(true);
     });
 
     it('should return false for an invalid password', () => {

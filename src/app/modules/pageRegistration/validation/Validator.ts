@@ -133,7 +133,7 @@ export default class Validator {
         case 'regpassword':
           validationFunction = this.VRules.password;
           message =
-            'Weak password! It must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, and 1 number';
+            'Weak password! It must contain at least 8 characters, including 1 uppercase and 1 lowercase letter, 1 number and 1 special character';
           this.createCustomerData.password = field.value;
           break;
         case 'regFirstName':
