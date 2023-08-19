@@ -26,7 +26,7 @@ export default class ValidationRules {
   }
 
   city(value: string): boolean {
-    return /^[a-zA-Zа-яА-Я]+$/.test(value);
+    return /^[a-zA-Zа-яА-Я\s]+$/.test(value);
   }
 
   postalCode(value: string): boolean {
