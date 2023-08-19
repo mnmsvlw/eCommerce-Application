@@ -1,0 +1,44 @@
+@import url(https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900);
+
+.wrapperNotFound {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-num {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 150px;
+  color: #f33155;
+  font-weight: 900;
+  line-height:210px;
+  padding-top: 0px;
+}
+
+.btnHome {
+  width: 120px;
+  border: 1px solid black;
+  border-radius: 5px;
+  text-decoration: none;
+  text-align: center;
+  color: black;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: aquamarine;
+  margin-top: 20px;
+  height: 22px;
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+}
+
+.btnHome:hover {
+  background-color: #f0657e;
+}
+
+@media (max-width: 576px) {
+  .text-num {
+    font-size: 100px;
+    padding-top: 0px;
+    line-height: 150px;
+  }
+}
