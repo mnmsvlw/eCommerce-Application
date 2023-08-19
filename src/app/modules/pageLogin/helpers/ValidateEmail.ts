@@ -10,7 +10,7 @@ export default function validateEmail(email: string): string {
   const domen = /[\w-]+\.[a-z]{2,3}$/i.test(domain);
   let message = '';
   if (!ename) message += `•Invalid characters in mail address name.\n`;
-  if (!edog) message += `•Email address must contain an '@' symbol separating local part\n and domain name.\n`;
+  if (!edog) message += `•Email address must contain an '@' symbol separating \nlocal part and domain name.\n`;
   if (!edog1 && edog) message += `•Email address must contain 1 an "@" symbol.\n`;
   if (!space) message += `•Email address must not contain leading or trailing whitespace.\n`;
   if (!domen) message += `•Wrong mail domain.\n`;

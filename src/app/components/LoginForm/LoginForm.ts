@@ -14,7 +14,7 @@ export default class LoginForm extends Component {
     const form = new Form('insert action here', 'post', 'loginForm').render();
     const formContainer = new Container('loginForm-container').render();
     const text = 'Login to your personal account';
-    const formHeader = new Heading(2, 'loginForm-header', text).render();
+    const formHeader = new Heading(3, 'loginForm-header', text).render();
     const formErrorLogin = new Container('errorLogin').render();
     const formErrorMail = new Container('errorMail').render();
     const formErrorPass = new Container('errorPass').render();
@@ -37,13 +37,13 @@ export default class LoginForm extends Component {
     const btnContainer = new Container('btn-container').render();
     const loginButton = new Button('LOGIN', 'submit', 'loginBtn').render();
     const regBox = new Container('reg-container').render();
-    const regText = new Heading(4, 'regText', 'First time here?').render();
-    const regBtn = new Link('/register/', 'regBtn', 'Register').render();
+    const regText = new Heading(4, 'regText', `Don't have an account?`).render();
+    const regBtn = new Link('/register/', 'regBtn', 'Register now').render();
     regBox.append(regText, regBtn);
     btnContainer.append(loginButton);
-    formContainer.append(formHeader, formErrorLogin, emailContainer, formErrorMail, passwordContainer, formErrorPass);
-    form.append(formContainer);
-    this.content.append(form, btnContainer, regBox);
+    form.append(formHeader, formErrorLogin, emailContainer, formErrorMail, passwordContainer, formErrorPass);
+    formContainer.append(form, btnContainer, regBox);
+    this.content.append(formContainer);
     return this.content;
   };
 }
