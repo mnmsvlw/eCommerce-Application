@@ -15,7 +15,7 @@ export default class App {
   }
 
   async authorization() {
-    sdkClient.setPasswordFlow('testing1@gmail.com', '12345678Qw!');
+    // sdkClient.setPasswordFlow('testing1@gmail.com', '12345678Qw!');
     // await authorizationHandler.apiRoot
     //   .me()
     //   .carts()

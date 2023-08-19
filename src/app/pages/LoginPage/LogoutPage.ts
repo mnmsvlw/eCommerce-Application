@@ -1,5 +1,5 @@
 import Header from '../../modules/Header/Header';
-import PageLogout from '../../modules/pageLogin/PageLogout';
+import PageLogout from '../../modules/LoginModule/PageLogout';
 import Page from '../Page';
 
 export default class LogoutPage extends Page {

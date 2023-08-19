@@ -9,7 +9,7 @@ import getCustomer from '../../api/Customer/GetCustomer';
 import navItems from '../../data/navItems';
 import changePage from './helpers/ChangePage';
 
-export default class PageLogin extends Component {
+export default class LoginModule extends Component {
   render = () => {
     const valid = {
       email: false,

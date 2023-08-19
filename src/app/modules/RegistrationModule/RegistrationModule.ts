@@ -4,7 +4,7 @@ import Component from '../../components/Component';
 import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
 import Validator from './validation/Validator';
 
-export default class PageRegistration extends Component {
+export default class RegistrationModule extends Component {
   dataToSubmit: CreateCustomerData | null;
 
   constructor() {

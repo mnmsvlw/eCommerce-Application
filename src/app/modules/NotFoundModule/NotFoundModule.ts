@@ -1,8 +1,8 @@
 import Component from '../../components/Component';
 import NotFound from '../../components/NotFound/NotFound';
-import changePage from '../pageLogin/helpers/ChangePage';
+import changePage from '../LoginModule/helpers/ChangePage';
 
-export default class PageNotFound extends Component {
+export default class NotFoundModule extends Component {
   render = () => {
     this.content = new NotFound().render();
     this.content.addEventListener('click', (e) => {

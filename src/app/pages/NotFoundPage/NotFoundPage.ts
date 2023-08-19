@@ -1,5 +1,5 @@
 import Header from '../../modules/Header/Header';
-import PageNotFound from '../../modules/pageNotFound/PageNotFound';
+import PageNotFound from '../../modules/NotFoundModule/NotFoundModule';
 import Page from '../Page';
 
 export default class NotFoundPage extends Page {
