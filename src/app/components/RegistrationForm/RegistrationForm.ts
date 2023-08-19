@@ -24,17 +24,31 @@ export default class RegistrationForm extends Component {
       text: 'Please fill in this form to create an account.',
     }).getElement();
 
+    const loginContainer = new Container('login-btn-container').render();
+    const loginInstruction = new ElementCreator({
+      tag: 'p',
+      classNames: 'regform-text',
+      text: 'Already have an account?',
+    }).getElement();
+    const logButton = new Button('Login', 'button', 'regform-login-btn').render();
+    loginContainer.append(loginInstruction, logButton);
+
     const dataFields = new DataFields().render();
     const shippingAddress = new ShippingAddress().render();
     const billingAddress = new BillingAddress().render();
     this.toggleBillingAddress(shippingAddress, billingAddress);
 
-    const btnContainer = new Container('regform-btn-container').render();
     const regButton = new Button('Register', 'submit', 'regform-btn').render();
-    const logButton = new Button('Login', 'button', 'regform-login-btn').render();
-    btnContainer.append(regButton, logButton);
 
-    formContainer.append(formHeader, formInstruction, dataFields, shippingAddress, billingAddress, btnContainer);
+    formContainer.append(
+      formHeader,
+      formInstruction,
+      loginContainer,
+      dataFields,
+      shippingAddress,
+      billingAddress,
+      regButton
+    );
     this.content.appendChild(formContainer);
 
     return this.content;
