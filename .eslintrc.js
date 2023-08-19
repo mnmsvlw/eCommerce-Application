@@ -22,7 +22,12 @@ module.exports = {
   },
   rules: {
     '@typescript-eslint/no-explicit-any': 2,
-    'prettier/prettier': 'error',
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      },
+    ],
     'class-methods-use-this': 'off',
     'no-debugger': 'off',
     'no-console': 0,

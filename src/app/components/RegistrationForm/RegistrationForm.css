@@ -1,12 +1,16 @@
 .regform{
     display: block;
     margin: 1rem;
+    box-sizing: border-box;
 }
 
 .regform-container{
     display: flex;
     flex-direction: column;
     gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
 }
 
 .regform-header{
@@ -21,12 +25,44 @@
     color: black
 }
 
-.regform-input{
-    color: black
+.regform-input,
+.regform-select{
+    color: black;
+    position: relative;
+    padding: 5px;
+}
+
+.login-btn-container{
+    display: flex;
+    gap: 7px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
 .regform-btn{
-    color: black
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    width: 30%;
+    background-color: blue;
+    cursor: pointer;
+}
+.regform-btn:hover{
+    background-color: rgb(9, 9, 187);
+}
+
+.regform-login-btn{
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    width: 20%;
+    background-color: green;
+    cursor: pointer;
+}
+
+.regform-login-btn:hover{
+    background-color: rgb(1, 85, 1);
 }
 
 .regform-adress__header{
@@ -34,9 +70,64 @@
     font-weight: bold;
 }
 
-.regform-container__address{
+.regform-container__shipping-address,
+.regform-container__billing-address,
+.regform-container__data{
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 5px;
-    margin-bottom: 10px;
+    margin: 10px;
+    border: 1px solid gray;
+    padding: 10px;
+    transition: all 2s ease;
+    width: 40vw;
 }
+
+.regform-container__billing-address.hidden{
+    display: none;
+    transition: all 2s ease;
+}
+
+.checkbox-container{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.reg-error{
+    color: red;
+    font-size: 9px;
+    display: inline-block;
+    width: 30vw;
+}
+
+.error{
+    outline: 0;
+    border: 2px solid red;
+}
+
+.success{
+    outline: 0;
+    border: 2px solid green;
+}
+
+.icon{
+    width: 30px;
+    height: 30px;
+}
+
+@media (max-width: 500px) {
+
+    .regform-container__shipping-address,
+    .regform-container__billing-address,
+    .regform-container__data{
+        width: 80vw;
+    }
+
+}
+  
+  
+  
+  
+  

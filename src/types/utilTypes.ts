@@ -5,4 +5,5 @@ export interface ElementParams {
   };
   classNames?: string;
   text?: string;
+  children?: ElementParams[];
 }
