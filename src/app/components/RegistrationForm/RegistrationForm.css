@@ -75,11 +75,13 @@
 .regform-container__data{
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 5px;
     margin: 10px;
     border: 1px solid gray;
     padding: 10px;
     transition: all 2s ease;
+    width: 40vw;
 }
 
 .regform-container__billing-address.hidden{
@@ -114,3 +116,18 @@
     width: 30px;
     height: 30px;
 }
+
+@media (max-width: 500px) {
+
+    .regform-container__shipping-address,
+    .regform-container__billing-address,
+    .regform-container__data{
+        width: 80vw;
+    }
+
+}
+  
+  
+  
+  
+  
