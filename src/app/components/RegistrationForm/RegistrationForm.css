@@ -1,73 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+.page-container{
+    background-color: #050214;
+    align-items: flex-end;
+}
+
 .regform{
     display: block;
-    margin: 1rem;
+    margin-top: 12vh;
     box-sizing: border-box;
+    background: #050214;
+    padding-right: 6vw;
+    padding-left: 6vw;
 }
 
 .regform-container{
     display: flex;
     flex-direction: column;
-    gap: 10px;
     justify-content: center;
-    align-items: center;
-    margin: 10px;
+    align-items: flex-start;
+    margin-bottom: 12vh;
 }
 
 .regform-header{
-    color: black
+    color: #FFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-bottom: 1.5rem;
 }
 
 .regform-text{
-    color: black
+    color: #FFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 6px;
 }
 
 .regform-label{
-    color: black
+    color: #FFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-bottom: 0.5vh;
+    margin-top: 6vh;
 }
 
 .regform-input,
 .regform-select{
-    color: black;
     position: relative;
-    padding: 5px;
+    background-color:#050214;
+    color: #FFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    margin-bottom: 1vh;
+    border: none;
+    border-bottom: 2px solid #FFF; 
+}
+
+input::placeholder{
+    background-color:#050214;
+    color: #FFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+input:active{
+    border: none;
+}
+
+input::-webkit-calendar-picker-indicator {
+    filter: invert(1);
 }
 
 .login-btn-container{
     display: flex;
-    gap: 7px;
+    gap: 10px;
     width: 100%;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    margin-bottom: 2vh;
 }
 
 .regform-btn{
-    color: white;
-    border-radius: 5px;
-    padding: 5px;
-    width: 30%;
-    background-color: blue;
+    border-radius: 32px;
+    background: #C10C99;
+    box-shadow: 0px 4px 26px 0px rgba(0, 0, 0, 0.25);
     cursor: pointer;
+    width: 40vw;
+    height: 8vh;
+    color: #FFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-top: 8vh;
 }
 .regform-btn:hover{
-    background-color: rgb(9, 9, 187);
+    background-color: white;
+    color: #C10C99;
 }
 
 .regform-login-btn{
-    color: white;
-    border-radius: 5px;
-    padding: 5px;
-    width: 20%;
-    background-color: green;
+    border-radius: 32px;
+    background: #C10C99;
+    box-shadow: 0px 4px 26px 0px rgba(0, 0, 0, 0.25);
     cursor: pointer;
+    width: 8vw;
+    height: 5vh;
+    color: #FFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
 }
 
 .regform-login-btn:hover{
-    background-color: rgb(1, 85, 1);
+    background-color: white;
+    color: #C10C99;
 }
 
 .regform-adress__header{
-    color: black;
-    font-weight: bold;
+    color: #FFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin: 0px auto;
+    margin-top: 6vh;
 }
 
 .regform-container__shipping-address,
@@ -76,10 +154,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 5px;
-    margin: 10px;
-    border: 1px solid gray;
-    padding: 10px;
     transition: all 2s ease;
     width: 40vw;
 }
@@ -93,36 +167,64 @@
     display: flex;
     gap: 10px;
     align-items: center;
+    justify-content: space-between;
+    margin-top: 2vh;
+}
+
+input[type='checkbox']{
+    margin-top: 1vh;
+}
+
+.regform-label-checkbox{
+    color: #FFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
 }
 
 .reg-error{
-    color: red;
-    font-size: 9px;
+    color: #C10C99;
+    font-size: 11px;
     display: inline-block;
-    width: 30vw;
 }
 
 .error{
     outline: 0;
-    border: 2px solid red;
+    border-bottom: 2px solid #C10C99; 
 }
 
 .success{
     outline: 0;
-    border: 2px solid green;
+    border-bottom: 2px solid green;
 }
 
-.icon{
-    width: 30px;
-    height: 30px;
-}
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
+
+    .page-container{
+        align-items: center;
+    }
+
+    .regform{
+        padding-left: 6vw
+    }
 
     .regform-container__shipping-address,
     .regform-container__billing-address,
     .regform-container__data{
         width: 80vw;
+    }
+
+    .regform-login-btn{
+        width: 16vw;
+        height: 5vh;
+    }
+
+    .regform-btn{
+        width: 80vw;
+        height: 8vh;
     }
 
 }

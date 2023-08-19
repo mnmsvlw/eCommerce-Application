@@ -42,7 +42,7 @@ export default class ShippingAddress extends Component {
     const defaultShippingAddressLabel = new Label(
       'ship-checkbox',
       'Make this address the default shipping address?',
-      'regform-label'
+      'regform-label-checkbox'
     ).render();
     const defaultShippingAddress = new Input('ship-checkbox', 5, 'regform-input', '', 'checkbox').render();
     checkboxContainer.append(defaultShippingAddressLabel, defaultShippingAddress);
@@ -51,7 +51,7 @@ export default class ShippingAddress extends Component {
     const addBillingAddressLabel = new Label(
       'address-checkbox',
       'Make this address as your billing address?',
-      'regform-label'
+      'regform-label-checkbox'
     ).render();
     const addBillingAddress = new Input('address-checkbox', 5, 'regform-input', '', 'checkbox').render();
     defaultAddressCheckbox.append(addBillingAddressLabel, addBillingAddress);
