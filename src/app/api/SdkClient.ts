@@ -23,12 +23,14 @@ class SdkClient {
   getClientCredentialsOptions = () => {
     const tokenStore = JSON.parse(localStorage.getItem('tokenStore') as string) as TokenStore;
     myTokenCache.store = tokenStore;
+
     if (tokenStore) {
       return {
         ...clientCredentialsAuthMiddlewareOptions,
         tokenCache: myTokenCache,
       };
     }
+
     return clientCredentialsAuthMiddlewareOptions;
   };
 

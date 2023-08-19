@@ -64,6 +64,7 @@ export default class RegistrationForm extends Component {
       }).getElement();
       element.after(errorContainer);
     }
+
     element.classList.remove('success');
     element.classList.add('error');
     errorContainer.textContent = message;
@@ -74,6 +75,7 @@ export default class RegistrationForm extends Component {
     element.classList.remove('error');
     element.classList.add('success');
     const errorContainer = element.nextElementSibling as HTMLElement;
+
     if (errorContainer !== null && errorContainer.classList.contains('reg-error')) {
       errorContainer.textContent = '';
     }
@@ -83,6 +85,7 @@ export default class RegistrationForm extends Component {
     const message = new SuccessfulMessage().render();
     const body = document.querySelector('body');
     const pageContainer = document.querySelector('.page-container') as HTMLElement;
+
     if (pageContainer !== null && body !== null) {
       pageContainer.append(message);
       body.style.overflow = 'hidden';
@@ -94,6 +97,7 @@ export default class RegistrationForm extends Component {
     const message = new ErrorMessage().render(text);
     const body = document.querySelector('body');
     const pageContainer = document.querySelector('.page-container') as HTMLElement;
+
     if (pageContainer !== null && body !== null) {
       pageContainer.append(message);
       body.style.overflow = 'hidden';
@@ -112,6 +116,7 @@ export default class RegistrationForm extends Component {
   private toggleBillingAddress = (parentElement: HTMLElement, changedElement: HTMLElement) => {
     parentElement.addEventListener('change', (event) => {
       const target = event.target as HTMLInputElement;
+
       if (target && target.name === 'address-checkbox' && target.type === 'checkbox') {
         if (target.checked) {
           changedElement.classList.add('hidden');
