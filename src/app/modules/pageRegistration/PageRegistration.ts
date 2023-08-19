@@ -19,18 +19,23 @@ export default class PageRegistration extends Component {
 
     this.content.addEventListener('input', (e) => {
       e.preventDefault();
+
       if (typeof validator === 'undefined') {
         validator = new Validator(form);
       }
+
       validator.validateOnEntry(e);
     });
 
     this.content.addEventListener('submit', (e) => {
       e.preventDefault();
+
       if (typeof validator === 'undefined') {
         validator = new Validator(form);
       }
+
       this.dataToSubmit = validator.validateOnSubmit();
+
       if (this.dataToSubmit !== null) {
         console.log(this.dataToSubmit);
         this.registerUser(this.dataToSubmit, form);
@@ -39,6 +44,7 @@ export default class PageRegistration extends Component {
 
     this.content.addEventListener('click', (e) => {
       const el = e.target as HTMLElement;
+
       if (el.classList.contains('regform-login-btn')) {
         e.preventDefault();
         const url = `${window.location.origin}/login/`;

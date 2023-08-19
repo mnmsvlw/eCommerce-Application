@@ -1,11 +1,11 @@
 import { ClientResponse, CustomerSignInResult } from '@commercetools/platform-sdk';
-import { apiRoot } from '../Client';
+import sdkClient from '../SdkClient';
 
 const getCustomer = async (
   customerEmail: string,
   customerPassword: string
 ): Promise<ClientResponse<CustomerSignInResult>> => {
-  const response = await apiRoot
+  const response = await sdkClient.apiRoot
     .me()
     .login()
     .post({

@@ -7,6 +7,7 @@ export default class PageNotFound extends Component {
     this.content = new NotFound().render();
     this.content.addEventListener('click', (e) => {
       const el = e.target as HTMLElement;
+
       if (el.classList.contains('btnHome')) {
         e.preventDefault();
         changePage('/');

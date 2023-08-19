@@ -1,10 +1,11 @@
-import PageHeader from '../../modules/pageHeader/PageHeader';
+import Header from '../../modules/Header/Header';
 import Page from '../Page';
 
 export default class CatalogPage extends Page {
   create() {
-    this.page.appendChild(new PageHeader().render());
+    this.page.appendChild(new Header().render());
     this.page.innerHTML += 'Catalog Page';
+
     if (window.location.pathname.replace(/^\/items\/?/, '')) {
       this.page.innerHTML += ` for ID ${window.location.pathname.replace(/^\/items\/?/, '')}`;
     }

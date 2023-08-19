@@ -3,6 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
+
 
 module.exports = {
   mode: 'development',
@@ -42,6 +44,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [{ from: './public' }],
     }),
+    new Dotenv()
   ],
   devServer: {
     historyApiFallback: {

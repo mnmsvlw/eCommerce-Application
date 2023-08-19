@@ -1,4 +1,5 @@
 import { Route } from '../../types/routerTypes';
+import sdkClient from '../api/SdkClient';
 import { listenersList, resetList } from '../data/listenersList';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
 import routes from './routes';
@@ -15,6 +16,7 @@ export default class Router {
 
   start() {
     window.addEventListener('load', this.navigate.bind(this));
+
     if (this.mode === 'hash') {
       window.addEventListener('hashchange', this.navigate.bind(this));
     } else {
@@ -24,6 +26,7 @@ export default class Router {
 
   navigate() {
     let path: string;
+
     if (this.mode === 'hash') {
       path = window.location.hash.slice(1) || '/';
     } else {
@@ -33,6 +36,7 @@ export default class Router {
     if (!path.endsWith('/')) path += '/';
 
     const route = this.routes.find((r) => r.path.test(path));
+
     if (route) {
       this.renderPage(route);
     } else {
@@ -41,10 +45,20 @@ export default class Router {
   }
 
   renderPage(route: Route) {
-    const root = document.querySelector('#root') as HTMLElement;
-    root.innerHTML = '';
-    root.append(route.element().render());
-    this.addPageListeners();
+    const hasAccess =
+      !route.accessRules ||
+      (route.accessRules?.isForAuthorizedOnly && sdkClient.isAuthorizedUser) ||
+      (route.accessRules?.isForUnauthorizedOnly && !sdkClient.isAuthorizedUser);
+
+    if (hasAccess) {
+      const root = document.querySelector('#root') as HTMLElement;
+      root.innerHTML = '';
+      root.append(route.element().render());
+      this.addPageListeners();
+    } else {
+      window.history.pushState(null, '', window.location.origin + route.redirect);
+      window.dispatchEvent(new Event('popstate'));
+    }
   }
 
   render404() {

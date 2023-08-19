@@ -8,17 +8,21 @@ export default class PageLogout extends Component {
     this.content = new LogoutForm().render();
     this.content.addEventListener('click', (e) => {
       const el = e.target as HTMLElement;
+
       if (el.classList.contains('yesBtn')) {
         navItems.pop();
         navItems.map((x) => {
           const a = x;
+
           if (a.href === 'Profile') {
             a.title = 'Profile';
           }
+
           return a;
         });
         changePage('/login/');
       }
+
       if (el.classList.contains('noBtn')) {
         e.preventDefault();
         changePage('/');

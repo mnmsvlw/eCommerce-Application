@@ -10,9 +10,24 @@ const routes: Route[] = [
   { path: /^\/$/, element: () => new MainPage() },
   { path: /^\/items\/$/, element: () => new CatalogPage() },
   { path: /^\/profile\/$/, element: () => new ProfilePage() },
-  { path: /^\/register\/$/, element: () => new RegisterPage() },
-  { path: /^\/login\/$/, element: () => new LoginPage() },
-  { path: /^\/logout\/$/, element: () => new LogoutPage() },
+  {
+    path: /^\/register\/$/,
+    element: () => new RegisterPage(),
+    accessRules: { isForUnauthorizedOnly: true },
+    redirect: '/',
+  },
+  {
+    path: /^\/login\/$/,
+    element: () => new LoginPage(),
+    accessRules: { isForUnauthorizedOnly: true },
+    redirect: '/',
+  },
+  {
+    path: /^\/logout\/$/,
+    element: () => new LogoutPage(),
+    accessRules: { isForAuthorizedOnly: true },
+    redirect: '/',
+  },
   {
     path: /^\/items\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\/$/,
     element: () => new CatalogPage(),
