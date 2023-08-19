@@ -1,4 +1,4 @@
-import { focucBlurInput, hideError, showError } from './functionForValidateInput';
+import { focucBlurInput, hideError, showError } from './animation';
 
 export default function isValidInput(
   elem: HTMLInputElement,

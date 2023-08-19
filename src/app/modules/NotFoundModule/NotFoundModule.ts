@@ -1,6 +1,6 @@
 import Component from '../../components/Component';
 import NotFound from '../../components/NotFound/NotFound';
-import changePage from '../LoginModule/helpers/ChangePage';
+import changePage from '../LoginModule/helpers/changePage';
 
 export default class NotFoundModule extends Component {
   render = () => {

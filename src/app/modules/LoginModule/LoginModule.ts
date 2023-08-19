@@ -1,13 +1,13 @@
 import { ClientResponse, CustomerSignInResult } from '@commercetools/platform-sdk';
 import Component from '../../components/Component';
 import LoginForm from '../../components/LoginForm/LoginForm';
-import { changeStyleBorder, hideError, showError } from './helpers/functionForValidateInput';
-import isValidInput from './helpers/ValidateInput';
-import validateEmail from './helpers/ValidateEmail';
-import validatePassword from './helpers/ValidatePassword';
+import { changeStyleBorder, hideError, showError } from './helpers/animation';
+import isValidInput from './helpers/validateInput';
+import validateEmail from './helpers/validateEmail';
+import validatePassword from './helpers/validatePassword';
 import getCustomer from '../../api/Customer/GetCustomer';
 import navItems from '../../data/navItems';
-import changePage from './helpers/ChangePage';
+import changePage from './helpers/changePage';
 
 export default class LoginModule extends Component {
   render = () => {

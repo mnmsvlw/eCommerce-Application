@@ -1,7 +1,7 @@
 import Component from '../../components/Component';
 import LogoutForm from '../../components/LoginForm/LogoutForm/LogoutForm';
 import navItems from '../../data/navItems';
-import changePage from './helpers/ChangePage';
+import changePage from './helpers/changePage';
 
 export default class PageLogout extends Component {
   render = () => {
