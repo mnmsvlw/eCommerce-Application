@@ -15,6 +15,8 @@ export default class RegistrationForm extends Component {
     const form = new Form('/', 'post', 'regform');
     this.content = form.render();
     this.content.setAttribute('novalidate', '');
+    const regWrapper = new Container('reg-wrapper').render();
+    const regImage = new Container('reg-image').render();
     const formContainer = new Container('regform-container').render();
 
     const formHeader = new ElementCreator({ tag: 'h2', classNames: 'regform-header', text: 'Sign up' }).getElement();
@@ -49,7 +51,8 @@ export default class RegistrationForm extends Component {
       billingAddress,
       regButton
     );
-    this.content.appendChild(formContainer);
+    regWrapper.append(regImage, formContainer);
+    this.content.appendChild(regWrapper);
 
     return this.content;
   };
