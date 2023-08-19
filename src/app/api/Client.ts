@@ -8,4 +8,5 @@ export const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({
 const getProject = () => {
   return apiRoot.productProjections().get().execute();
 };
+
 export default getProject;

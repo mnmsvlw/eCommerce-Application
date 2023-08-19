@@ -1,0 +1,47 @@
+.wrapperLogaut {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.logoutForm-container {
+  margin-top: 50px;
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-left: 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+}
+
+.logoutForm-header {
+  padding-top: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.btn-container {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.noBtn, .yesBtn{
+  width: 50px;
+  text-align: center;
+  border: 2px solid black;
+  border-radius: 5px;
+  font-size: 17px;
+  font-weight: 600;
+  text-decoration: none;
+  color: black
+}
+.noBtn:hover, .yesBtn:hover {
+  background-color: aquamarine;
+}

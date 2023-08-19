@@ -1,24 +1,27 @@
 .wrapper {
-  width: 30%;
-  margin: 50px auto;
-  border: 1px solid black;
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-bottom: 10px;
-}
-
-.loginForm-container {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 20px 0 20px;
+}
+
+.loginForm-container {
+  margin-top: 50px;
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-left: 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
 }
 
 .loginForm-header {
+  padding-top: 10px;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .checkbox-container {
@@ -37,6 +40,7 @@
 .login-label{
   margin-bottom: 1px;
   padding-top: 10px;
+  font-size: 16px;
 }
 
 .email-input, .pass-input {
@@ -44,6 +48,7 @@
   outline: none;
   border-radius: 3px;
   cursor: pointer;
+  font-size: 16px;
 }
 .loginBtn {
   margin-top: 20px;
@@ -51,39 +56,57 @@
   width: 100px;
   border-radius: 3px;
   cursor: pointer;
-  font-size: 16px;
+  box-shadow: 1px 1px 2px 0px rgba(34, 60, 80, 0.2);
 }
+
 .loginBtn:hover {
   background-color: aquamarine;
 }
+.reg-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 10px;
+  
+}
+.regText {
+  font-size: 14px;
+}
 .regBtn {
-  width: 100px;
   border: none; 
   outline: none;
   background-color: white;
   color: red;
-  text-decoration: underline;
+  text-decoration: none;
   cursor: pointer;
-  padding-top: 10px;
-  font-size: 17px;
-  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+  padding-left: 10px;
   letter-spacing: 0.5px;
 }
 .regBtn:hover {
   color: blue;
 }
 .rem-label, .show-label {
-  margin-left: -10px;
-}
-.rem-input, .show-input {
-  margin-bottom: 3px;
-  cursor: pointer;
+  width: 30%;
+  font-size: 14px;
+  margin-left: 3px;
 }
 
-.errorMail, .errorPass {
-  width: 100%;
-  white-space: pre;
+
+.rem-input, .show-input {
+  margin-bottom: 2px;
+  cursor: pointer;
   font-size: 14px;
+  margin-left: 5px;
+}
+
+
+.errorMail, .errorPass {
+  width: 60%;
+  white-space: pre;
+  font-size: 12px;
   color: red;
   display: none;
 }

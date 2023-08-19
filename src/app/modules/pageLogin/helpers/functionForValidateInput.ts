@@ -8,10 +8,12 @@ export const changeStyleBorder = (elem: HTMLInputElement): void => {
   }
 };
 
-export const showError = (el: string, message: string, value: string): void => {
+export const showError = (el: string, message?: string, value?: string): void => {
   const error = document.querySelector(el) as HTMLElement;
-  error.textContent = message;
-  error.style.display = 'block';
+  if (message) {
+    error.textContent = message;
+    error.style.display = 'block';
+  }
   if (value === '') {
     error.style.display = 'none';
   }

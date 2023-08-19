@@ -1,6 +1,7 @@
 import { Route } from '../../types/routerTypes';
 import CatalogPage from '../pages/CatalogPage/CatalogPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
+import LogoutPage from '../pages/LoginPage/LogoutPage';
 import MainPage from '../pages/MainPage/MainPage';
 import ProfilePage from '../pages/ProfilePage/ProfilePage';
 import RegisterPage from '../pages/RegisterPage/RegisterPage';
@@ -11,7 +12,7 @@ const routes: Route[] = [
   { path: /^\/profile\/$/, element: () => new ProfilePage() },
   { path: /^\/register\/$/, element: () => new RegisterPage() },
   { path: /^\/login\/$/, element: () => new LoginPage() },
-  // { path: /^\/login\/register\/$/, element: () => new RegisterPage() },
+  { path: /^\/logout\/$/, element: () => new LogoutPage() },
   {
     path: /^\/items\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\/$/,
     element: () => new CatalogPage(),

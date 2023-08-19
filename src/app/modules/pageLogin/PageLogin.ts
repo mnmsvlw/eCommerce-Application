@@ -1,9 +1,13 @@
+import { ClientResponse, CustomerSignInResult } from '@commercetools/platform-sdk';
 import Component from '../../components/Component';
 import LoginForm from '../../components/LoginForm/LoginForm';
-import { changeStyleBorder } from './helpers/functionForValidateInput';
+import { changeStyleBorder, hideError, showError } from './helpers/functionForValidateInput';
 import isValidInput from './helpers/ValidateInput';
 import validateEmail from './helpers/ValidateEmail';
 import validatePassword from './helpers/ValidatePassword';
+import getCustomer from '../../api/Castomer/GetCastomer';
+import navItems from '../../data/navItems';
+import changePage from './helpers/ChangePage';
 
 export default class PageLogin extends Component {
   render = () => {
@@ -18,7 +22,28 @@ export default class PageLogin extends Component {
       const el = e.target as HTMLElement;
       if (el.classList.contains('loginBtn')) {
         if (valid.email && valid.pass) {
-          console.log('SUBMIT');
+          getCustomer(mail.value, pass.value)
+            .then((data: ClientResponse<CustomerSignInResult>) => {
+              if (data.body.customer.version === 1) {
+                navItems.map((x) => {
+                  const a = x;
+                  if (a.title === 'Profile') {
+                    a.title = `${data.body.customer.firstName} ${data.body.customer.lastName}`;
+                  }
+                  return a;
+                });
+                const logout = { title: 'Logout', href: '/logout/' };
+                navItems.push(logout);
+                changePage('/');
+              }
+            })
+            .catch((err) => {
+              if (err.code === 400) {
+                showError('.errorLogin', '⚠️ Wrong login or password');
+                this.content.addEventListener('input', () => hideError('.errorLogin'));
+                this.content.removeEventListener('input', () => hideError('.errorLogin'));
+              }
+            });
         } else {
           changeStyleBorder(mail);
           changeStyleBorder(pass);
@@ -26,10 +51,7 @@ export default class PageLogin extends Component {
       }
       if (el.classList.contains('regBtn')) {
         e.preventDefault();
-        const url = `${window.location.origin}/register/`;
-        console.log(url);
-        window.history.pushState(null, '', url);
-        window.dispatchEvent(new Event('popstate'));
+        changePage('/register/');
       }
     });
 
