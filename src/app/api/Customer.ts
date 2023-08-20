@@ -23,6 +23,7 @@ const loginCustomer = async (loginDataReceived: LoginData) => {
     .execute();
 
   console.log('Customer logined:', response.body.customer);
+  return response;
 };
 
 export { createCustomer, loginCustomer };

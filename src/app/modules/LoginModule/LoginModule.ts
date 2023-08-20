@@ -1,15 +1,17 @@
-import { ClientResponse, CustomerSignInResult } from '@commercetools/platform-sdk';
+// import { ClientResponse, CustomerSignInResult } from '@commercetools/platform-sdk';
 import Component from '../../components/Component';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import { changeStyleBorder, hideError, showError } from './helpers/animation';
 import isValidInput from './helpers/validateInput';
 import validateEmail from './helpers/validateEmail';
 import validatePassword from './helpers/validatePassword';
-import getCustomer from '../../api/Customer/GetCustomer';
+// import getCustomer from '../../api/Customer/GetCustomer';
 // import navItems from '../../data/navItems';
 import redirect from '../../utils/redirect';
 import Path from '../../../types/enum';
 import sdkClient from '../../api/SdkClient';
+import { loginCustomer } from '../../api/Customer';
+import { ApiError } from '../../../types/sdkTypes';
 // import sdkClient from '../../api/SdkClient';
 
 export default class LoginModule extends Component {
@@ -26,22 +28,24 @@ export default class LoginModule extends Component {
 
       if (el.classList.contains('loginBtn')) {
         if (valid.email && valid.pass) {
-          getCustomer(mail.value, pass.value)
-            .then((data: ClientResponse<CustomerSignInResult>) => {
-              if (data.statusCode === 200) {
-                sdkClient.setPasswordFlow(mail.value, pass.value);
-                sdkClient.apiRoot.me().get().execute();
-                sdkClient.userEmail = data.body.customer.email;
-                redirect(Path.MAIN_PAGE);
-              }
-            })
-            .catch((err) => {
-              if (err.code === 400) {
-                showError('.errorLogin', '⚠️ Wrong login or password');
-                this.content.addEventListener('input', () => hideError('.errorLogin'));
-                this.content.removeEventListener('input', () => hideError('.errorLogin'));
-              }
-            });
+          try {
+            const loginResponse = await loginCustomer({ email: mail.value, password: pass.value });
+
+            if (loginResponse.statusCode === 200) {
+              sdkClient.setPasswordFlow(mail.value, pass.value);
+              sdkClient.apiRoot.me().get().execute();
+              sdkClient.userEmail = loginResponse.body.customer.email;
+              redirect(Path.MAIN_PAGE);
+            }
+          } catch (err) {
+            const apiError = err as ApiError;
+
+            if (apiError.statusCode === 400) {
+              showError('.errorLogin', '⚠️ Wrong login or password');
+              this.content.addEventListener('input', () => hideError('.errorLogin'));
+              this.content.removeEventListener('input', () => hideError('.errorLogin'));
+            }
+          }
         } else {
           changeStyleBorder(mail);
           changeStyleBorder(pass);

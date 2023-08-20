@@ -1,7 +1,10 @@
+import Path from '../../../types/enum';
 import { CreateCustomerData } from '../../../types/registrationTypes';
-import { createCustomer } from '../../api/Customer';
+import { createCustomer, loginCustomer } from '../../api/Customer';
+import sdkClient from '../../api/SdkClient';
 import Component from '../../components/Component';
 import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
+import redirect from '../../utils/redirect';
 import Validator from './validation/Validator';
 
 export default class RegistrationModule extends Component {
@@ -61,6 +64,17 @@ export default class RegistrationModule extends Component {
     try {
       await createCustomer(registrationData);
       form.showSuccessMessage();
+
+      setTimeout(async () => {
+        await loginCustomer({
+          email: registrationData.email,
+          password: registrationData.password,
+        });
+        sdkClient.setPasswordFlow(registrationData.email, registrationData.password);
+        await sdkClient.apiRoot.me().get().execute();
+        sdkClient.userEmail = registrationData.email;
+        redirect(Path.MAIN_PAGE);
+      }, 1000);
     } catch (error) {
       if (
         error instanceof Error &&
