@@ -7,7 +7,6 @@ import './NotFound.css';
 export default class NotFound extends Component {
   render = () => {
     this.content = new Container('wrapperNotFound').render();
-    // const container = new Container('error-box').render();
     const headerNum = new Heading(1, 'text-num', '404').render();
     const headerText = new Heading(3, 'text-text', 'Page Not Found !').render();
     const btnHome = new Link('/', 'btnHome', 'Back to home').render();

@@ -179,11 +179,13 @@ input::placeholder{
     width: 40%;
   }
 }
+
 @media (max-width: 900px) {
   .loginForm-container {
     width: 50%;
   }
 }
+
 @media (max-width: 767px) {
   .wrapper {
     width: 100%;
@@ -199,8 +201,8 @@ input::placeholder{
   .login-label{
     margin-top: 30px;
   }
-
 }
+
 @media (max-width: 550px) {
   .loginForm-container {
     width: 70%;

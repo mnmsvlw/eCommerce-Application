@@ -11,7 +11,6 @@ import './LoginForm.css';
 export default class LoginForm extends Component {
   render = () => {
     this.content = new Container('wrapper').render();
-    // const form = new Form('insert action here', 'post', 'loginForm').render();
     const formContainer = new Container('loginForm-container').render();
     const text = 'Sign in';
     const formHeader = new Heading(3, 'loginForm-header', text).render();
@@ -24,15 +23,12 @@ export default class LoginForm extends Component {
     const rememberBox = new Container('box-remember').render();
     const rememberLabel = new Label('loginRemember', 'Remember me', 'rem-label').render();
     const rememberInput = new Input('loginRemember', 0, 'rem-input', '', 'checkbox', false).render();
-    // const emailContainer = new Container('checkbox-container').render();
     rememberBox.append(rememberInput, rememberLabel);
     const passwordLabel = new Label('loginPassword', 'Password', 'login-label').render();
     const passwordInput = new Input('loginPass', 50, 'pass-input', 'Enter your Password', 'password', false).render();
     const passwordBox = new Container('box-pass').render();
-
     const showLabel = new Label('loginShow', 'Show password', 'show-label').render();
     const showInput = new Input('loginShow', 0, 'show-input', '', 'checkbox', false).render();
-    // const passwordContainer = new Container('checkbox-container').render();
     passwordBox.append(showInput, showLabel);
     const checkBox = new Container('box').render();
     checkBox.append(rememberBox, passwordBox);

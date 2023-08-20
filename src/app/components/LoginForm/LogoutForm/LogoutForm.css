@@ -59,6 +59,7 @@
   letter-spacing: 0em;
   text-align: center;
 }
+
 .noBtn:hover, .yesBtn:hover {
   background-color: #ff00c8;
 }
@@ -67,4 +68,3 @@
   background-color: #FFFFFF;
   color: #C10C99;
 }
-

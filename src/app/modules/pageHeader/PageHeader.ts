@@ -11,16 +11,7 @@ export default class PageHeader extends Component {
   render = () => {
     this.content = new ElementCreator({ tag: 'header' }).getElement();
     this.content.appendChild(new DesktopHeader().render());
-    const burger = this.content.querySelector('.burger-btn');
-    if (burger) {
-      burger.addEventListener('click', () => {
-        const menu = this.content.querySelector('.nav-desktop');
-        if (menu) {
-          menu.classList.toggle('show');
-          burger.classList.toggle('show');
-        }
-      });
-    }
+
     return this.content;
   };
 }
