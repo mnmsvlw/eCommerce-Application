@@ -1,18 +1,14 @@
-// import { ClientResponse, CustomerSignInResult } from '@commercetools/platform-sdk';
 import Component from '../../components/Component';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import { changeStyleBorder, hideError, showError } from './helpers/animation';
 import isValidInput from './helpers/validateInput';
 import validateEmail from './helpers/validateEmail';
 import validatePassword from './helpers/validatePassword';
-// import getCustomer from '../../api/Customer/GetCustomer';
-// import navItems from '../../data/navItems';
 import redirect from '../../utils/redirect';
 import Path from '../../../types/enum';
 import sdkClient from '../../api/SdkClient';
-import { loginCustomer } from '../../api/Customer';
+import { loginCustomer } from '../../api/authorization/Customer';
 import { ApiError } from '../../../types/sdkTypes';
-// import sdkClient from '../../api/SdkClient';
 
 export default class LoginModule extends Component {
   render = () => {

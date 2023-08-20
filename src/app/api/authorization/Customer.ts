@@ -1,5 +1,5 @@
-import type { CreateCustomerData, LoginData } from '../../types/registrationTypes';
-import sdkClient from './SdkClient';
+import type { CreateCustomerData, LoginData } from '../../../types/registrationTypes';
+import sdkClient from '../SdkClient';
 
 const createCustomer = async (createDataReceived: CreateCustomerData) => {
   const response = await sdkClient.apiRoot

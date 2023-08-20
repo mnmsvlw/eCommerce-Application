@@ -1,6 +1,6 @@
 import Path from '../../../types/enum';
 import { CreateCustomerData } from '../../../types/registrationTypes';
-import { createCustomer, loginCustomer } from '../../api/Customer';
+import { createCustomer, loginCustomer } from '../../api/authorization/Customer';
 import sdkClient from '../../api/SdkClient';
 import Component from '../../components/Component';
 import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
