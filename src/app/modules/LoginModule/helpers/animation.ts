@@ -2,9 +2,9 @@ export const changeStyleBorder = (elem: HTMLInputElement): void => {
   const el = elem;
 
   if (el.value === '') {
-    el.style.border = '2px solid red';
+    el.style.borderBottom = '2px solid #C10C99';
     setTimeout(() => {
-      el.style.border = '1px solid black';
+      el.style.borderBottom = '1px solid #FFFFFF';
     }, 1000);
   }
 };
@@ -32,6 +32,6 @@ export const focucBlurInput = (elem: HTMLInputElement): void => {
   const el = elem;
 
   if (el.value === '') {
-    el.style.border = '2px solid black';
+    el.style.borderBottom = '2px solid #FFFFFF';
   }
 };

@@ -11,6 +11,6 @@ export default function validatePassword(password: string): string {
   if (!numbers) message += `•Password must contain at least one digit (0-9).\n`;
   if (!length) message += `•Password must be at least 8 characters long.\n`;
   if (!space) message += `•Password must not contain leading or trailing whitespace\n`;
-  if (!symbol) message += `•Password must contain at least one special \ncharacter (e.g., !@#$%^&*).`;
+  if (!symbol) message += `•Password must contain at least one special character (e.g., !@#$%^&*).`;
   return message;
 }

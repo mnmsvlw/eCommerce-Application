@@ -9,28 +9,30 @@ import BillingAddress from './AddressFields/BillingAddress';
 import DataFields from './DataFields/DataFields';
 import SuccessfulMessage from './SuccessfulMessage/SuccessfulMessage';
 import ErrorMessage from './ErrorMessage/ErrorMessage';
+import Link from '../../UI/Link';
 
 export default class RegistrationForm extends Component {
   render = () => {
     const form = new Form('/', 'post', 'regform');
     this.content = form.render();
     this.content.setAttribute('novalidate', '');
+    const regWrapper = new Container('reg-wrapper').render();
     const formContainer = new Container('regform-container').render();
 
-    const formHeader = new ElementCreator({ tag: 'h2', classNames: 'regform-header', text: 'Register' }).getElement();
+    const formHeader = new ElementCreator({ tag: 'h2', classNames: 'regform-header', text: 'Sign up' }).getElement();
     const formInstruction = new ElementCreator({
       tag: 'p',
       classNames: 'regform-text',
-      text: 'Please fill in this form to create an account.',
+      text: 'Fill in this form to create an account.',
     }).getElement();
 
     const loginContainer = new Container('login-btn-container').render();
     const loginInstruction = new ElementCreator({
       tag: 'p',
       classNames: 'regform-text',
-      text: 'Already have an account?',
+      text: 'Already have an account? ',
     }).getElement();
-    const logButton = new Button('Login', 'button', 'regform-login-btn').render();
+    const logButton = new Link('/login/', 'regform-login-btn', 'Login now').render();
     loginContainer.append(loginInstruction, logButton);
 
     const dataFields = new DataFields().render();
@@ -49,7 +51,8 @@ export default class RegistrationForm extends Component {
       billingAddress,
       regButton
     );
-    this.content.appendChild(formContainer);
+    regWrapper.append(formContainer);
+    this.content.appendChild(regWrapper);
 
     return this.content;
   };

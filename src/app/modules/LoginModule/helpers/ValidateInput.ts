@@ -18,10 +18,10 @@ export default function isValidInput(
 
   if (message !== '') {
     showError(errorClass, message, value);
-    el.style.border = '3px solid red';
+    el.style.borderBottom = '3px solid #C10C99';
   } else if (message === '') {
     hideError(errorClass);
-    el.style.border = '3px solid green';
+    el.style.borderBottom = '3px solid green';
     valid = true;
   }
 
