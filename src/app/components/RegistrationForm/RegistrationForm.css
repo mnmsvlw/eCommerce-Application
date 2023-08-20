@@ -1,14 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
-.reg-wrapper{
-    display: flex;
-    margin-top: 12vh;
-    box-sizing: border-box;
-    background: #050214;
-    padding-right: 6vw;
-    padding-left: 6vw;
-}
-
 .regform{
     background-color: #050214;
     display: flex;
@@ -18,12 +9,22 @@
     height: 100%;
 }
 
+.reg-wrapper{
+    display: flex;
+    margin-top: 12vh;
+    box-sizing: border-box;
+    background: #050214;
+    margin-right: 3vw;
+    margin-left: 3vw;
+    width: 40vw;
+    margin-bottom: 12vh;
+}
+
 .regform-container{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
-    margin-bottom: 12vh;
+    align-items: center;
 }
 
 .regform-header{
@@ -33,17 +34,19 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+    margin: 0 auto;
     margin-bottom: 1.5rem;
 }
 
 .regform-text{
-    color: #FFF;
+    color: #FFFFFF;
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
-    font-style: normal;
     font-weight: 400;
-    line-height: normal;
-    margin-bottom: 6px;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-bottom: 0.5rem;
 }
 
 .regform-label{
@@ -54,7 +57,7 @@
     font-weight: 500;
     line-height: normal;
     margin-bottom: 0.5vh;
-    margin-top: 6vh;
+    margin-top: 4vh;
 }
 
 .regform-input,
@@ -76,7 +79,7 @@
 
 .regform-input::placeholder{
     background-color:#050214;
-    color: #FFF;
+    color: rgba(255, 255, 255, 0.708);
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
     font-style: normal;
@@ -84,7 +87,7 @@
     line-height: normal;
 }
 
-input:active{
+.regform-input:active{
     border: none;
 }
 
@@ -96,8 +99,7 @@ input::-webkit-calendar-picker-indicator {
     display: flex;
     gap: 10px;
     width: 100%;
-    justify-content: flex-start;
-    align-items: center;
+    justify-content: center;
     margin-bottom: 2vh;
 }
 
@@ -110,35 +112,43 @@ input::-webkit-calendar-picker-indicator {
     height: 8vh;
     color: #FFF;
     font-family: 'Poppins', sans-serif;
-    font-size: 13px;
+    font-size: 17px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
     margin-top: 8vh;
 }
+
+
 .regform-btn:hover{
+    background-color: #ff00c8;
+    color: #FFF;
+}
+
+.regform-btn:active{
     background-color: white;
     color: #C10C99;
 }
 
 .regform-login-btn{
-    border-radius: 32px;
-    background: #C10C99;
-    box-shadow: 0px 4px 26px 0px rgba(0, 0, 0, 0.25);
-    cursor: pointer;
-    width: 8vw;
-    height: 5vh;
-    color: #FFF;
+    outline: none;
+    text-decoration: none;
+    color: #C10C99;
     font-family: 'Poppins', sans-serif;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-left: 10px;
 }
 
 .regform-login-btn:hover{
-    background-color: white;
-    color: #C10C99;
+    color: #ff00c8;
+}
+
+.regform-login-btn:active{
+    color: #FFFFFF;
 }
 
 .regform-adress__header{
@@ -149,7 +159,7 @@ input::-webkit-calendar-picker-indicator {
     font-weight: 500;
     line-height: normal;
     margin: 0px auto;
-    margin-top: 6vh;
+    margin-top: 8vh;
 }
 
 .regform-container__shipping-address,
@@ -175,7 +185,7 @@ input::-webkit-calendar-picker-indicator {
     margin-top: 2vh;
 }
 
-input[type='checkbox']{
+.regform-input[type='checkbox']{
     margin-top: 1vh;
 }
 
@@ -205,34 +215,64 @@ input[type='checkbox']{
 }
 
 
-@media (max-width: 600px) {
-
-    .page-container{
+@media (max-width: 767px) {
+    .regform{
         align-items: center;
+        justify-content: center;
     }
 
-    .regform{
-        padding-left: 6vw
+    .reg-wrapper{
+        width: 60vw;
     }
 
     .regform-container__shipping-address,
     .regform-container__billing-address,
     .regform-container__data{
-        width: 80vw;
-    }
-
-    .regform-login-btn{
-        width: 16vw;
-        height: 5vh;
+        width: 60vw;
     }
 
     .regform-btn{
-        width: 80vw;
+        width: 60vw;
         height: 8vh;
+        font-size: 16px;
     }
 
 }
-  
+
+@media (max-width: 550px) {
+    .regform{
+        align-items: center;
+        justify-content: center;
+    }
+
+    .reg-wrapper{
+        width: 70vw;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .regform-container__shipping-address,
+    .regform-container__billing-address,
+    .regform-container__data{
+        width: 70vw;
+    }
+
+    .regform-text{
+        text-align: center;
+    }
+
+    .login-btn-container{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .regform-btn{
+        width: 70vw;
+        height: 8vh;
+        font-size: 14px;
+    }
+}
   
   
   
