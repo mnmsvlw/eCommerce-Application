@@ -10,8 +10,8 @@ const navItemsUnauthorized: NavItem[] = [
 const navItemsAuthorized: NavItem[] = [
   { title: 'Home', href: '/' },
   { title: 'Catalog', href: '/items/' },
-  { title: 'Log In', href: '/login/' },
-  { title: 'Register', href: '/register/' },
+  { title: 'Profile', href: '/profile/' },
+  { title: 'Log Out', href: '/logout/' },
 ];
 
 export { navItemsUnauthorized, navItemsAuthorized };
