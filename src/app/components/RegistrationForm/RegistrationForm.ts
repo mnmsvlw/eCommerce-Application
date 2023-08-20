@@ -15,9 +15,11 @@ export default class RegistrationForm extends Component {
     const form = new Form('/', 'post', 'regform');
     this.content = form.render();
     this.content.setAttribute('novalidate', '');
+    const regWrapper = new Container('reg-wrapper').render();
+    const regImage = new Container('reg-image').render();
     const formContainer = new Container('regform-container').render();
 
-    const formHeader = new ElementCreator({ tag: 'h2', classNames: 'regform-header', text: 'Register' }).getElement();
+    const formHeader = new ElementCreator({ tag: 'h2', classNames: 'regform-header', text: 'Sign up' }).getElement();
     const formInstruction = new ElementCreator({
       tag: 'p',
       classNames: 'regform-text',
@@ -28,7 +30,7 @@ export default class RegistrationForm extends Component {
     const loginInstruction = new ElementCreator({
       tag: 'p',
       classNames: 'regform-text',
-      text: 'Already have an account?',
+      text: 'If you already have an account, you can ',
     }).getElement();
     const logButton = new Button('Login', 'button', 'regform-login-btn').render();
     loginContainer.append(loginInstruction, logButton);
@@ -49,7 +51,8 @@ export default class RegistrationForm extends Component {
       billingAddress,
       regButton
     );
-    this.content.appendChild(formContainer);
+    regWrapper.append(regImage, formContainer);
+    this.content.appendChild(regWrapper);
 
     return this.content;
   };

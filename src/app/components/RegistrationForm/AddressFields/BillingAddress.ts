@@ -42,7 +42,7 @@ export default class BillingAddress extends Component {
     const defaultBillingAddressLabel = new Label(
       'bill-checkbox',
       'Make this address the default billing address?',
-      'regform-label'
+      'regform-label-checkbox'
     ).render();
     const defaultBillingAddress = new Input('bill-checkbox', 5, 'regform-input', '', 'checkbox').render();
     checkboxContainer.append(defaultBillingAddressLabel, defaultBillingAddress);

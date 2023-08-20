@@ -9,16 +9,16 @@ export default class DataFields extends Component {
     const dataContainer = new Container('regform-container__data').render();
 
     const emailLabel = new Label('regemail', 'Email', 'regform-label').render();
-    const emailInput = new Input('regemail', 50, 'regform-input', 'example@mail.com', 'email').render();
+    const emailInput = new Input('regemail', 50, 'regform-input', 'Enter your email', 'email').render();
 
     const passwordLabel = new Label('regpassword', 'Password', 'regform-label').render();
-    const passwordInput = new Input('regpassword', 50, 'regform-input', '', 'password').render();
+    const passwordInput = new Input('regpassword', 50, 'regform-input', 'Enter your password', 'password').render();
 
     const firstNameLabel = new Label('regFirstName', 'First name', 'regform-label').render();
-    const firstNameInput = new Input('regFirstName', 50, 'regform-input').render();
+    const firstNameInput = new Input('regFirstName', 50, 'regform-input', 'Enter your name').render();
 
     const lastNameLabel = new Label('regLastName', 'Last name', 'regform-label').render();
-    const lastNameInput = new Input('regLastName', 50, 'regform-input').render();
+    const lastNameInput = new Input('regLastName', 50, 'regform-input', 'Enter your surname').render();
 
     const dateOfBirthLabel = new Label('regBirthDay', 'Date of birth', 'regform-label').render();
     const dateOfBirthInput = new Input('regBirthDay', 50, 'regform-input', '', 'date').render();
