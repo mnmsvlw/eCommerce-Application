@@ -1,7 +1,7 @@
-import Container from '../../../UI/Container';
-import Heading from '../../../UI/Heading';
-import Link from '../../../UI/Link';
-import Component from '../../Component';
+import Container from '../../UI/Container';
+import Heading from '../../UI/Heading';
+import Link from '../../UI/Link';
+import Component from '../Component';
 import './LogoutForm.css';
 
 export default class LogoutForm extends Component {

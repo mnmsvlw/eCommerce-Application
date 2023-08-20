@@ -1,7 +1,7 @@
 import { Route } from '../../types/routerTypes';
 import CatalogPage from '../pages/CatalogPage/CatalogPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
-import LogoutPage from '../pages/LoginPage/LogoutPage';
+import LogoutPage from '../pages/LogoutPage/LogoutPage';
 import MainPage from '../pages/MainPage/MainPage';
 import ProfilePage from '../pages/ProfilePage/ProfilePage';
 import RegisterPage from '../pages/RegisterPage/RegisterPage';

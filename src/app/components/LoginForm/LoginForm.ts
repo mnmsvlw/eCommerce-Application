@@ -25,10 +25,10 @@ export default class LoginForm extends Component {
     const emailBox = new Container('box').render();
     emailBox.append(emailLabel, emailInput);
 
-    const rememberLabel = new Label('loginRemember', 'Remember me', 'rem-label').render();
-    const rememberInput = new Input('loginRemember', 0, 'rem-input', '', 'checkbox').render();
+    // const rememberLabel = new Label('loginRemember', 'Remember me', 'rem-label').render();
+    // const rememberInput = new Input('loginRemember', 0, 'rem-input', '', 'checkbox').render();
     const emailContainer = new Container('checkbox-container').render();
-    emailContainer.append(emailBox, rememberInput, rememberLabel);
+    emailContainer.append(emailBox);
 
     const passwordLabel = new Label('loginPassword', 'Password', 'login-label').render();
     const passwordInput = new Input('loginPass', 50, 'pass-input', 'Enter your Password', 'password').render();

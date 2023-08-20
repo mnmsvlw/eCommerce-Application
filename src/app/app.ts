@@ -1,4 +1,5 @@
 // import MainPage from './pages/MainPage/MainPage';
+// import sdkClient from './api/SdkClient';
 import sdkClient from './api/SdkClient';
 import Router from './router/Router';
 
@@ -11,6 +12,7 @@ export default class App {
 
   init() {
     this.router.start();
+    sdkClient.init();
     this.authorization();
   }
 
@@ -25,6 +27,11 @@ export default class App {
     //     },
     //   })
     //   .execute();
-    await sdkClient.apiRoot.me().activeCart().get().execute();
+    // sdkClient.setAnonymousSessionFlow();
+    // try {
+    //   await sdkClient.apiRoot.me().get().execute();
+    // } catch {
+    //   console.log('from app');
+    // }
   }
 }

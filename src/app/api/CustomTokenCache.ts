@@ -15,6 +15,14 @@ class MyTokenCache implements TokenCache {
     this.store = cache;
     localStorage.setItem('tokenStore', JSON.stringify(this.store));
   }
+
+  reset() {
+    this.store = {
+      token: '',
+      expirationTime: 0,
+      refreshToken: '',
+    };
+  }
 }
 
 const myTokenCache = new MyTokenCache();

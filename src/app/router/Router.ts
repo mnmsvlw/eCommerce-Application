@@ -2,6 +2,7 @@ import { Route } from '../../types/routerTypes';
 import sdkClient from '../api/SdkClient';
 import { listenersList, resetList } from '../data/listenersList';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
+import redirect from '../utils/redirect';
 import routes from './routes';
 
 export default class Router {
@@ -56,8 +57,7 @@ export default class Router {
       root.append(route.element().render());
       this.addPageListeners();
     } else {
-      window.history.pushState(null, '', window.location.origin + route.redirect);
-      window.dispatchEvent(new Event('popstate'));
+      redirect(route.redirect as string);
     }
   }
 

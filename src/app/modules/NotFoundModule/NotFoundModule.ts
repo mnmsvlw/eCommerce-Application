@@ -1,6 +1,7 @@
+import Path from '../../../types/enum';
 import Component from '../../components/Component';
 import NotFound from '../../components/NotFound/NotFound';
-import changePage from '../LoginModule/helpers/changePage';
+import redirect from '../../utils/redirect';
 
 export default class NotFoundModule extends Component {
   render = () => {
@@ -10,7 +11,7 @@ export default class NotFoundModule extends Component {
 
       if (el.classList.contains('btnHome')) {
         e.preventDefault();
-        changePage('/');
+        redirect(Path.MAIN_PAGE);
       }
     });
     return this.content;

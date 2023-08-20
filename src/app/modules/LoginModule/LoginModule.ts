@@ -6,8 +6,11 @@ import isValidInput from './helpers/validateInput';
 import validateEmail from './helpers/validateEmail';
 import validatePassword from './helpers/validatePassword';
 import getCustomer from '../../api/Customer/GetCustomer';
-import navItems from '../../data/navItems';
-import changePage from './helpers/changePage';
+// import navItems from '../../data/navItems';
+import redirect from '../../utils/redirect';
+import Path from '../../../types/enum';
+import sdkClient from '../../api/SdkClient';
+// import sdkClient from '../../api/SdkClient';
 
 export default class LoginModule extends Component {
   render = () => {
@@ -16,7 +19,7 @@ export default class LoginModule extends Component {
       pass: false,
     };
     this.content = new LoginForm().render();
-    this.content.addEventListener('click', (e) => {
+    this.content.addEventListener('click', async (e) => {
       const mail = this.content.querySelector('.email-input') as HTMLInputElement;
       const pass = this.content.querySelector('.pass-input') as HTMLInputElement;
       const el = e.target as HTMLElement;
@@ -25,19 +28,11 @@ export default class LoginModule extends Component {
         if (valid.email && valid.pass) {
           getCustomer(mail.value, pass.value)
             .then((data: ClientResponse<CustomerSignInResult>) => {
-              if (data.body.customer.version === 1) {
-                navItems.map((x) => {
-                  const a = x;
-
-                  if (a.title === 'Profile') {
-                    a.title = `${data.body.customer.firstName} ${data.body.customer.lastName}`;
-                  }
-
-                  return a;
-                });
-                const logout = { title: 'Logout', href: '/logout/' };
-                navItems.push(logout);
-                changePage('/');
+              if (data.statusCode === 200) {
+                sdkClient.setPasswordFlow(mail.value, pass.value);
+                sdkClient.apiRoot.me().get().execute();
+                sdkClient.userEmail = data.body.customer.email;
+                redirect(Path.MAIN_PAGE);
               }
             })
             .catch((err) => {
@@ -55,7 +50,7 @@ export default class LoginModule extends Component {
 
       if (el.classList.contains('regBtn')) {
         e.preventDefault();
-        changePage('/register/');
+        redirect(Path.REGISTRATION_PAGE);
       }
     });
 

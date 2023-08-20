@@ -9,34 +9,40 @@ import {
   projectKey,
   scopes,
 } from './sdkOptions';
+import { ApiError } from '../../types/sdkTypes';
 
 class SdkClient {
   apiRoot: ByProjectKeyRequestBuilder;
 
   isAuthorizedUser: boolean;
 
+  userEmail: string;
+
   constructor() {
-    this.apiRoot = this.setClientCredentialsFlow();
     this.isAuthorizedUser = false;
+    this.userEmail = '';
+    this.apiRoot = this.setClientCredentialsFlow();
+  }
+
+  init() {
+    this.checkPreviousToken();
   }
 
   getClientCredentialsOptions = () => {
     const tokenStore = JSON.parse(localStorage.getItem('tokenStore') as string) as TokenStore;
-    myTokenCache.store = tokenStore;
 
     if (tokenStore) {
-      return {
-        ...clientCredentialsAuthMiddlewareOptions,
-        tokenCache: myTokenCache,
-      };
+      myTokenCache.store = tokenStore;
     }
 
-    return clientCredentialsAuthMiddlewareOptions;
+    console.log(this.isAuthorizedUser, this.userEmail);
+    return {
+      ...clientCredentialsAuthMiddlewareOptions,
+      tokenCache: myTokenCache,
+    };
   };
 
   setClientCredentialsFlow = () => {
-    this.isAuthorizedUser = false;
-
     const ctpClient = new ClientBuilder()
       .withProjectKey(projectKey)
       .withClientCredentialsFlow(this.getClientCredentialsOptions())
@@ -61,6 +67,7 @@ class SdkClient {
   };
 
   getPasswordOptions = (username: string, password: string) => {
+    myTokenCache.reset();
     const passwordAuthMiddlewareOptions: PasswordAuthMiddlewareOptions = {
       host: process.env.AUTH_MIDDLEWARE_HOST as string,
       projectKey,
@@ -94,6 +101,29 @@ class SdkClient {
 
   updateRoot = (client: Client) => {
     this.apiRoot = createApiBuilderFromCtpClient(client).withProjectKey({ projectKey });
+  };
+
+  checkPreviousToken = async () => {
+    if (myTokenCache.store.refreshToken) {
+      try {
+        const userInfo = await this.apiRoot.me().get().execute();
+        this.userEmail = userInfo.body.email;
+        this.isAuthorizedUser = true;
+      } catch (e) {
+        const error = e as ApiError;
+
+        if (error.statusCode === 403) {
+          console.log('Anonymous session initialized');
+        }
+      }
+    }
+  };
+
+  reset = () => {
+    this.isAuthorizedUser = false;
+    this.userEmail = '';
+    localStorage.removeItem('tokenStore');
+    this.apiRoot = this.setClientCredentialsFlow();
   };
 }
 
