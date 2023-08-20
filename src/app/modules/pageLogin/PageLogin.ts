@@ -29,10 +29,13 @@ export default class PageLogin extends Component {
                   const a = x;
                   if (a.title === 'Profile') {
                     a.title = `${data.body.customer.firstName} ${data.body.customer.lastName}`;
+                    if (a.title === '') {
+                      a.title = 'Profile';
+                    }
                   }
                   return a;
                 });
-                const logout = { title: 'Logout', href: '/logout/' };
+                const logout = { title: 'Exit', href: '/logout/' };
                 navItems.push(logout);
                 changePage('/');
               }

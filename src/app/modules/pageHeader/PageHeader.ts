@@ -11,6 +11,7 @@ export default class PageHeader extends Component {
   render = () => {
     this.content = new ElementCreator({ tag: 'header' }).getElement();
     this.content.appendChild(new DesktopHeader().render());
+
     return this.content;
   };
 }
