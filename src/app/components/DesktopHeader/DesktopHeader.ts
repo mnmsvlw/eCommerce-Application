@@ -5,6 +5,7 @@ import Component from '../Component';
 import Link from '../../UI/Link';
 import sdkClient from '../../api/SdkClient';
 import Container from '../../UI/Container';
+import Heading from '../../UI/Heading';
 
 export default class DesktopHeader extends Component {
   linkOnClick = (e: Event) => {
@@ -23,15 +24,15 @@ export default class DesktopHeader extends Component {
     const navItems = sdkClient.isAuthorizedUser ? navItemsAuthorized : navItemsUnauthorized;
     navItems.forEach((item) => {
       const li = new ElementCreator({ tag: 'li', classNames: 'nav-item' }).getElement();
-      let linkElement: Link;
+      let linkElement: Link | Heading;
 
       if (item.title === 'Profile') {
-        linkElement = new Link(item.href, 'nav-link', sdkClient.userEmail);
+        linkElement = new Heading(6, '', sdkClient.userEmail);
       } else {
         linkElement = new Link(item.href, 'nav-link', item.title);
+        linkElement.addListener('click', this.linkOnClick);
       }
 
-      linkElement.addListener('click', this.linkOnClick);
       li.appendChild(linkElement.render());
       ul.appendChild(li);
     });
