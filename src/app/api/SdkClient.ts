@@ -35,7 +35,6 @@ class SdkClient {
       myTokenCache.store = tokenStore;
     }
 
-    console.log(this.isAuthorizedUser, this.userEmail);
     return {
       ...clientCredentialsAuthMiddlewareOptions,
       tokenCache: myTokenCache,
@@ -69,11 +68,11 @@ class SdkClient {
   getPasswordOptions = (username: string, password: string) => {
     myTokenCache.reset();
     const passwordAuthMiddlewareOptions: PasswordAuthMiddlewareOptions = {
-      host: process.env.AUTH_MIDDLEWARE_HOST as string,
+      host: 'https://auth.europe-west1.gcp.commercetools.com/',
       projectKey,
       credentials: {
-        clientId: process.env.CLIENT_ID as string,
-        clientSecret: process.env.CLIENT_SECRET as string,
+        clientId: 'a4FczAx7NFmmmCPXTTK76v45',
+        clientSecret: 'vVwqTPublkZvFJbojd3QgCFIHBj2L4Az',
         user: {
           username,
           password,
