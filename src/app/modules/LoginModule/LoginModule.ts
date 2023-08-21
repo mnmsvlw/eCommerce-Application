@@ -30,16 +30,7 @@ export default class LoginModule extends Component {
             if (loginResponse.statusCode === 200) {
               sdkClient.setPasswordFlow(mail.value, pass.value);
               sdkClient.apiRoot.me().get().execute();
-              const { firstName } = loginResponse.body.customer;
-              const { lastName } = loginResponse.body.customer;
-
-              if (firstName && lastName) {
-                localStorage.setItem('name', `${firstName} ${lastName}`);
-                sdkClient.userEmail = `${firstName} ${lastName}`;
-              } else {
-                sdkClient.userEmail = loginResponse.body.customer.email;
-              }
-
+              sdkClient.userEmail = loginResponse.body.customer.email;
               redirect(Path.MAIN_PAGE);
             }
           } catch (err) {
