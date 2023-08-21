@@ -5,29 +5,31 @@ import {
 } from '@commercetools/sdk-client-v2';
 import myTokenCache from './CustomTokenCache';
 
-const projectKey = process.env.PROJECT_KEY as string;
-const scopes = [process.env.SCOPES as string];
+const projectKey = 'ecommerce-application-jsfe2023q1';
+const scopes = [
+  'manage_my_orders:ecommerce-application-jsfe2023q1 manage_my_quote_requests:ecommerce-application-jsfe2023q1 manage_my_quotes:ecommerce-application-jsfe2023q1 manage_my_business_units:ecommerce-application-jsfe2023q1 view_published_products:ecommerce-application-jsfe2023q1 manage_my_shopping_lists:ecommerce-application-jsfe2023q1 create_anonymous_token:ecommerce-application-jsfe2023q1 manage_my_profile:ecommerce-application-jsfe2023q1 view_categories:ecommerce-application-jsfe2023q1 manage_my_payments:ecommerce-application-jsfe2023q1',
+];
 
 const httpMiddlewareOptions: HttpMiddlewareOptions = {
-  host: process.env.HTTP_MIDDLEWARE_HOST as string,
+  host: 'https://api.europe-west1.gcp.commercetools.com/',
 };
 
 const clientCredentialsAuthMiddlewareOptions: AuthMiddlewareOptions = {
-  host: process.env.AUTH_MIDDLEWARE_HOST as string,
+  host: 'https://auth.europe-west1.gcp.commercetools.com/',
   projectKey,
   credentials: {
-    clientId: process.env.CLIENT_ID as string,
-    clientSecret: process.env.CLIENT_SECRET as string,
+    clientId: 'a4FczAx7NFmmmCPXTTK76v45',
+    clientSecret: 'vVwqTPublkZvFJbojd3QgCFIHBj2L4Az',
   },
   scopes,
 };
 
 const anonymousAuthMiddlewareOptions: AnonymousAuthMiddlewareOptions = {
-  host: process.env.AUTH_MIDDLEWARE_HOST as string,
+  host: 'https://auth.europe-west1.gcp.commercetools.com/',
   projectKey,
   credentials: {
-    clientId: process.env.CLIENT_ID as string,
-    clientSecret: process.env.CLIENT_SECRET as string,
+    clientId: 'a4FczAx7NFmmmCPXTTK76v45',
+    clientSecret: 'vVwqTPublkZvFJbojd3QgCFIHBj2L4Az',
   },
   tokenCache: myTokenCache,
   scopes,
