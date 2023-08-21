@@ -9,10 +9,7 @@ const jestConfig: Config.InitialOptions = {
     '\\.(css|less)$': 'jest-css-modules-transform',
   },
   collectCoverage: true,
-  collectCoverageFrom: [
-    'src/**/*.ts',
-    '!src/types/*.ts',
-  ],
+  collectCoverageFrom: ['src/**/*.ts', '!src/types/*.ts'],
   coverageReporters: ['json', 'lcov', 'text', 'clover'],
 };
 

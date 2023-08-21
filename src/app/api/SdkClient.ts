@@ -24,8 +24,8 @@ class SdkClient {
     this.apiRoot = this.setClientCredentialsFlow();
   }
 
-  init() {
-    this.checkPreviousToken();
+  async init() {
+    await this.checkPreviousToken();
   }
 
   getClientCredentialsOptions = () => {

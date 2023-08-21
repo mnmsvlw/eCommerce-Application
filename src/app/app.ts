@@ -8,8 +8,8 @@ export default class App {
     this.router = new Router('history');
   }
 
-  init() {
+  async init() {
+    await sdkClient.init();
     this.router.start();
-    sdkClient.init();
   }
 }
