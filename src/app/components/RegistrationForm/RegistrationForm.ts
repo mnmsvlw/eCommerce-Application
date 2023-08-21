@@ -91,7 +91,6 @@ export default class RegistrationForm extends Component {
 
     if (pageContainer !== null && body !== null) {
       pageContainer.append(message);
-      body.style.overflow = 'hidden';
       this.closeModal(pageContainer, message, body);
     }
   };
