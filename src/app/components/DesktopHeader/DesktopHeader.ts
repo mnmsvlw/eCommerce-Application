@@ -21,7 +21,6 @@ export default class DesktopHeader extends Component {
     const container = new ElementCreator({ tag: 'nav', classNames: 'nav-desktop' }).getElement();
     const ul = new ElementCreator({ tag: 'ul', classNames: 'nav-list' }).getElement();
     const navItems = sdkClient.isAuthorizedUser ? navItemsAuthorized : navItemsUnauthorized;
-    console.log(navItems);
     navItems.forEach((item) => {
       const li = new ElementCreator({ tag: 'li', classNames: 'nav-item' }).getElement();
       let linkElement: Link;

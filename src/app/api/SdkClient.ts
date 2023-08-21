@@ -19,8 +19,16 @@ class SdkClient {
   userEmail: string;
 
   constructor() {
-    this.isAuthorizedUser = false;
-    this.userEmail = '';
+    const name = localStorage.getItem('name');
+
+    if (name) {
+      this.isAuthorizedUser = true;
+      this.userEmail = name;
+    } else {
+      this.isAuthorizedUser = false;
+      this.userEmail = 'Profile';
+    }
+
     this.apiRoot = this.setClientCredentialsFlow();
   }
 
@@ -35,7 +43,6 @@ class SdkClient {
       myTokenCache.store = tokenStore;
     }
 
-    console.log(this.isAuthorizedUser, this.userEmail);
     return {
       ...clientCredentialsAuthMiddlewareOptions,
       tokenCache: myTokenCache,
@@ -107,7 +114,15 @@ class SdkClient {
     if (myTokenCache.store.refreshToken) {
       try {
         const userInfo = await this.apiRoot.me().get().execute();
-        this.userEmail = userInfo.body.email;
+        const { firstName } = userInfo.body;
+        const { lastName } = userInfo.body;
+
+        if (firstName && lastName) {
+          this.userEmail = `${firstName} ${lastName}`;
+        } else {
+          this.userEmail = 'Profile';
+        }
+
         this.isAuthorizedUser = true;
       } catch (e) {
         const error = e as ApiError;
@@ -121,8 +136,9 @@ class SdkClient {
 
   reset = () => {
     this.isAuthorizedUser = false;
-    this.userEmail = '';
+    this.userEmail = 'Profile';
     localStorage.removeItem('tokenStore');
+    localStorage.removeItem('name');
     this.apiRoot = this.setClientCredentialsFlow();
   };
 }
