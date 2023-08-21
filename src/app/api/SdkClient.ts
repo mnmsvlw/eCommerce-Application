@@ -35,7 +35,6 @@ class SdkClient {
       myTokenCache.store = tokenStore;
     }
 
-    console.log(this.isAuthorizedUser, this.userEmail);
     return {
       ...clientCredentialsAuthMiddlewareOptions,
       tokenCache: myTokenCache,
