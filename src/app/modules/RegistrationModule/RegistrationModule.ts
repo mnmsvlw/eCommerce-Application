@@ -40,7 +40,6 @@ export default class RegistrationModule extends Component {
       this.dataToSubmit = validator.validateOnSubmit();
 
       if (this.dataToSubmit !== null) {
-        console.log(this.dataToSubmit);
         this.registerUser(this.dataToSubmit, form);
       }
     });
@@ -51,7 +50,6 @@ export default class RegistrationModule extends Component {
       if (el.classList.contains('regform-login-btn')) {
         e.preventDefault();
         const url = `${window.location.origin}/login/`;
-        console.log(url);
         window.history.pushState(null, '', url);
         window.dispatchEvent(new Event('popstate'));
       }
