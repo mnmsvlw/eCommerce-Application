@@ -14,21 +14,23 @@ export default class LoginForm extends Component {
     const formContainer = new Container('loginForm-container').render();
     const text = 'Sign in';
     const formHeader = new Heading(3, 'loginForm-header', text).render();
+
     const formErrorLogin = new Container('errorLogin').render();
     const formErrorMail = new Container('errorMail').render();
     const formErrorPass = new Container('errorPass').render();
+
     const emailLabel = new Label('loginEmail', 'Email', 'login-label').render();
-    const emailInput = new Input('loginEmail', 50, 'email-input', 'Enter your Email', 'text', false).render();
+    const emailInput = new Input('loginEmail', 50, 'email-input', 'Enter your Email', 'text').render();
     emailInput.autocapitalize = 'off';
     const rememberBox = new Container('box-remember').render();
     const rememberLabel = new Label('loginRemember', 'Remember me', 'rem-label').render();
-    const rememberInput = new Input('loginRemember', 0, 'rem-input', '', 'checkbox', false).render();
+    const rememberInput = new Input('loginRemember', 0, 'rem-input', '', 'checkbox').render();
     rememberBox.append(rememberInput, rememberLabel);
     const passwordLabel = new Label('loginPassword', 'Password', 'login-label').render();
-    const passwordInput = new Input('loginPass', 50, 'pass-input', 'Enter your Password', 'password', false).render();
+    const passwordInput = new Input('loginPass', 50, 'pass-input', 'Enter your Password', 'password').render();
     const passwordBox = new Container('box-pass').render();
     const showLabel = new Label('loginShow', 'Show password', 'show-label').render();
-    const showInput = new Input('loginShow', 0, 'show-input', '', 'checkbox', false).render();
+    const showInput = new Input('loginShow', 0, 'show-input', '', 'checkbox').render();
     passwordBox.append(showInput, showLabel);
     const checkBox = new Container('box').render();
     checkBox.append(rememberBox, passwordBox);
@@ -36,6 +38,7 @@ export default class LoginForm extends Component {
     const regBox = new Container('reg-container').render();
     const regText = new Heading(4, 'regText', `Don't have an account?`).render();
     const regBtn = new Link('/register/', 'regBtn', 'Register now').render();
+
     regBox.append(regText, regBtn);
     formContainer.append(
       formHeader,
@@ -51,6 +54,7 @@ export default class LoginForm extends Component {
       loginButton
     );
     this.content.append(formContainer);
+
     return this.content;
   };
 }

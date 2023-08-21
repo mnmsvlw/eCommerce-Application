@@ -1,4 +1,4 @@
-import { focucBlurInput, hideError, showError } from './functionForValidateInput';
+import { focucBlurInput, hideError, showError } from './animation';
 
 export default function isValidInput(
   elem: HTMLInputElement,
@@ -8,11 +8,14 @@ export default function isValidInput(
   const { value } = elem;
   const el = elem;
   let valid = false;
+
   if (value === '') {
     hideError(errorClass);
     focucBlurInput(el);
   }
+
   const message = validator(value);
+
   if (message !== '') {
     showError(errorClass, message, value);
     el.style.borderBottom = '3px solid #C10C99';
@@ -21,6 +24,7 @@ export default function isValidInput(
     el.style.borderBottom = '3px solid green';
     valid = true;
   }
+
   el.onblur = () => focucBlurInput(el);
   el.onfocus = () => focucBlurInput(el);
 

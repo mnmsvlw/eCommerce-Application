@@ -1,8 +1,8 @@
-import type { CreateCustomerData, LoginData } from '../../types/registrationTypes';
-import { apiRoot } from './Client';
+import type { CreateCustomerData, LoginData } from '../../../types/registrationTypes';
+import sdkClient from '../SdkClient';
 
 const createCustomer = async (createDataReceived: CreateCustomerData) => {
-  const response = await apiRoot
+  const response = await sdkClient.apiRoot
     .me()
     .signup()
     .post({
@@ -14,7 +14,7 @@ const createCustomer = async (createDataReceived: CreateCustomerData) => {
 };
 
 const loginCustomer = async (loginDataReceived: LoginData) => {
-  const response = await apiRoot
+  const response = await sdkClient.apiRoot
     .me()
     .login()
     .post({
@@ -23,6 +23,7 @@ const loginCustomer = async (loginDataReceived: LoginData) => {
     .execute();
 
   console.log('Customer logined:', response.body.customer);
+  return response;
 };
 
 export { createCustomer, loginCustomer };

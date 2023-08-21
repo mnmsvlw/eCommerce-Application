@@ -64,6 +64,7 @@ export default class Validator {
 
   validateOnEntry(e: Event) {
     const field = e.target as HTMLInputElement | HTMLSelectElement;
+
     if ((field.tagName === 'INPUT' && field.getAttribute('type') !== 'checkbox') || field.tagName === 'SELECT') {
       this.validateField(field);
     }
@@ -73,6 +74,7 @@ export default class Validator {
     const existingShippingIndex = this.createCustomerData.addresses.findIndex(
       (address) => address.key === this.addressShip.key
     );
+
     if (existingShippingIndex !== -1) {
       this.createCustomerData.addresses[existingShippingIndex] = { ...this.addressShip };
     } else {
@@ -82,6 +84,7 @@ export default class Validator {
     const existingBillingIndex = this.createCustomerData.addresses.findIndex(
       (address) => address.key === this.addressBill.key
     );
+
     if (existingBillingIndex !== -1) {
       this.createCustomerData.addresses[existingBillingIndex] = { ...this.addressBill };
     } else {
@@ -89,14 +92,17 @@ export default class Validator {
     }
 
     const ShippingDefault = this.form.querySelector('input[name="ship-checkbox"]') as HTMLInputElement;
+
     if (ShippingDefault.checked) {
       this.createCustomerData.defaultShippingAddress = 0;
     }
 
     const BillingDefault = this.form.querySelector('input[name="bill-checkbox"]') as HTMLInputElement;
+
     if (BillingDefault.checked) {
       this.createCustomerData.defaultBillingAddress = 1;
     }
+
     return this.createCustomerData;
   };
 
@@ -115,6 +121,7 @@ export default class Validator {
 
     if (field.value === '') {
       const previousElementSibling = field.previousElementSibling as HTMLElement | null;
+
       if (previousElementSibling instanceof HTMLElement) {
         this.setStatus(field, `${previousElementSibling.innerText} cannot be blank`, 'error');
         isValid = false;
@@ -140,11 +147,13 @@ export default class Validator {
         case 'regLastName':
           validationFunction = this.VRules.name;
           message = 'Last name must contain only letters';
+
           if (fieldName === 'regFirstName') {
             this.createCustomerData.firstName = field.value;
           } else {
             this.createCustomerData.lastName = field.value;
           }
+
           break;
         case 'regBirthDay':
           validationFunction = this.VRules.dateOfBirth;
@@ -154,6 +163,7 @@ export default class Validator {
         case 'regstreet':
           validationFunction = this.VRules.street;
           message = 'Must contain at least one character';
+
           if (addressParts != null) {
             const streetNumber = addressParts.find((part) => /^\d+$/.test(part));
             const streetName = addressParts.filter((part) => !/^\d+$/.test(part)).join(' ');
@@ -166,24 +176,29 @@ export default class Validator {
               this.addressBill.streetName = streetName;
             }
           }
+
           break;
         case 'regcity':
           validationFunction = this.VRules.city;
           message = 'City must contain only letters';
+
           if (shippingAddressContainer) {
             this.addressShip.city = field.value;
           } else if (billingAddressContainer) {
             this.addressBill.city = field.value;
           }
+
           break;
         case 'regpostalcode':
           validationFunction = this.VRules.postalCode;
           message = 'Invalid postal code';
+
           if (shippingAddressContainer) {
             this.addressShip.postalCode = field.value;
           } else if (billingAddressContainer) {
             this.addressBill.postalCode = field.value;
           }
+
           break;
         default:
           validationFunction = () => true;
@@ -200,6 +215,7 @@ export default class Validator {
       }
     } else if (field.tagName === 'SELECT') {
       const fieldName = field.getAttribute('name');
+
       switch (fieldName) {
         case 'regcountry':
           if (!this.VRules.country(field.value)) {
@@ -208,12 +224,14 @@ export default class Validator {
           } else {
             this.setStatus(field, '', 'success');
             isValid = true;
+
             if (shippingAddressContainer) {
               this.addressShip.country = field.value;
             } else if (billingAddressContainer) {
               this.addressBill.country = field.value;
             }
           }
+
           break;
         default:
           this.setStatus(field, '', 'success');
@@ -221,6 +239,7 @@ export default class Validator {
           break;
       }
     }
+
     return isValid;
   }
 
@@ -246,6 +265,7 @@ export default class Validator {
   private countFieldsToBeSubmitted = () => {
     this.form.addEventListener('change', (event) => {
       const target = event.target as HTMLInputElement;
+
       if (target && target.name === 'address-checkbox' && target.type === 'checkbox') {
         if (target.checked && this.fields !== null) {
           this.addressBill = { ...this.addressShip, key: this.addressBill.key };

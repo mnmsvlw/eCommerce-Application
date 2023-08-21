@@ -6,7 +6,6 @@
       "strict": true,                                      
       "skipLibCheck": true,
       "noImplicitAny": true,
-      // "baseUrl": "./src",
       "module": "commonjs", 
       "resolveJsonModule": true                    
     },

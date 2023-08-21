@@ -1,4 +1,4 @@
-// import MainPage from './pages/MainPage/MainPage';
+import sdkClient from './api/SdkClient';
 import Router from './router/Router';
 
 export default class App {
@@ -10,5 +10,6 @@ export default class App {
 
   init() {
     this.router.start();
+    sdkClient.init();
   }
 }

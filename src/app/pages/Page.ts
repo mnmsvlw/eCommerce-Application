@@ -1,10 +1,10 @@
-import ElementCreator from '../utils/ElementCreator';
+import Container from '../UI/Container';
 
 export default class Page {
   page: HTMLElement;
 
   constructor() {
-    this.page = new ElementCreator({ tag: 'div', classNames: 'page-container' }).getElement();
+    this.page = new Container('page-container').render();
     this.create();
   }
 

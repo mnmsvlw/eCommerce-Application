@@ -1,11 +1,17 @@
 import { NavItem } from '../../types/dataTypes';
 
-const navItems: NavItem[] = [
+const navItemsUnauthorized: NavItem[] = [
   { title: 'Home', href: '/' },
   { title: 'Catalog', href: '/items/' },
-  { title: 'Profile', href: '/profile/' },
-  { title: 'Login', href: '/login/' },
+  { title: 'Log In', href: '/login/' },
   { title: 'Register', href: '/register/' },
 ];
 
-export default navItems;
+const navItemsAuthorized: NavItem[] = [
+  { title: 'Home', href: '/' },
+  { title: 'Catalog', href: '/items/' },
+  { title: 'Profile', href: '/profile/' },
+  { title: 'Log Out', href: '/logout/' },
+];
+
+export { navItemsUnauthorized, navItemsAuthorized };
