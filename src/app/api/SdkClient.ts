@@ -19,16 +19,8 @@ class SdkClient {
   userEmail: string;
 
   constructor() {
-    const name = localStorage.getItem('name');
-
-    if (name) {
-      this.isAuthorizedUser = true;
-      this.userEmail = name;
-    } else {
-      this.isAuthorizedUser = false;
-      this.userEmail = 'Profile';
-    }
-
+    this.isAuthorizedUser = false;
+    this.userEmail = '';
     this.apiRoot = this.setClientCredentialsFlow();
   }
 
@@ -114,15 +106,7 @@ class SdkClient {
     if (myTokenCache.store.refreshToken) {
       try {
         const userInfo = await this.apiRoot.me().get().execute();
-        const { firstName } = userInfo.body;
-        const { lastName } = userInfo.body;
-
-        if (firstName && lastName) {
-          this.userEmail = `${firstName} ${lastName}`;
-        } else {
-          this.userEmail = 'Profile';
-        }
-
+        this.userEmail = userInfo.body.email;
         this.isAuthorizedUser = true;
       } catch (e) {
         const error = e as ApiError;
@@ -136,9 +120,8 @@ class SdkClient {
 
   reset = () => {
     this.isAuthorizedUser = false;
-    this.userEmail = 'Profile';
+    this.userEmail = '';
     localStorage.removeItem('tokenStore');
-    localStorage.removeItem('name');
     this.apiRoot = this.setClientCredentialsFlow();
   };
 }
