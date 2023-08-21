@@ -1,4 +1,4 @@
-import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import { Customer, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk/dist/declarations/src/generated/client/by-project-key-request-builder';
 import { ClientBuilder, PasswordAuthMiddlewareOptions, TokenStore, Client } from '@commercetools/sdk-client-v2';
 import myTokenCache from './CustomTokenCache';
@@ -16,11 +16,11 @@ class SdkClient {
 
   isAuthorizedUser: boolean;
 
-  userEmail: string;
+  userInfo: Partial<Customer>;
 
   constructor() {
     this.isAuthorizedUser = false;
-    this.userEmail = '';
+    this.userInfo = {};
     this.apiRoot = this.setClientCredentialsFlow();
   }
 
@@ -105,8 +105,8 @@ class SdkClient {
   checkPreviousToken = async () => {
     if (myTokenCache.store.refreshToken) {
       try {
-        const userInfo = await this.apiRoot.me().get().execute();
-        this.userEmail = userInfo.body.email;
+        const userRequest = await this.apiRoot.me().get().execute();
+        this.userInfo = userRequest.body;
         this.isAuthorizedUser = true;
       } catch (e) {
         const error = e as ApiError;
@@ -120,7 +120,7 @@ class SdkClient {
 
   reset = () => {
     this.isAuthorizedUser = false;
-    this.userEmail = '';
+    this.userInfo = {};
     localStorage.removeItem('tokenStore');
     this.apiRoot = this.setClientCredentialsFlow();
   };

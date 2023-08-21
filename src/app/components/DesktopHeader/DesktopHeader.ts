@@ -6,19 +6,20 @@ import Link from '../../UI/Link';
 import sdkClient from '../../api/SdkClient';
 import Container from '../../UI/Container';
 import Heading from '../../UI/Heading';
+import redirect from '../../utils/redirect';
 
 export default class DesktopHeader extends Component {
   linkOnClick = (e: Event) => {
     e.preventDefault();
     const tar = e.target as HTMLElement;
     const path = tar.getAttribute('href') as string;
-    window.history.pushState(null, '', window.location.origin + path);
-    window.dispatchEvent(new Event('popstate'));
+    redirect(path);
   };
 
   render = () => {
     this.content = new Container('wrapp').render();
-    const logo = new Link('/', 'logo', 'Cool Name Pending...').render();
+    const logo = new Link('/', 'logo', 'Cool Name Pending...');
+    logo.addListener('click', this.linkOnClick);
     const container = new ElementCreator({ tag: 'nav', classNames: 'nav-desktop' }).getElement();
     const ul = new ElementCreator({ tag: 'ul', classNames: 'nav-list' }).getElement();
     const navItems = sdkClient.isAuthorizedUser ? navItemsAuthorized : navItemsUnauthorized;
@@ -27,7 +28,7 @@ export default class DesktopHeader extends Component {
       let linkElement: Link | Heading;
 
       if (item.title === 'Profile') {
-        linkElement = new Heading(6, '', sdkClient.userEmail);
+        linkElement = new Heading(6, '', `${sdkClient.userInfo.firstName} ${sdkClient.userInfo.lastName}`);
       } else {
         linkElement = new Link(item.href, 'nav-link', item.title);
         linkElement.addListener('click', this.linkOnClick);
@@ -42,7 +43,7 @@ export default class DesktopHeader extends Component {
     const span3 = new ElementCreator({ tag: 'span', classNames: 'span' }).getElement();
     burger.append(span1, span2, span3);
     container.appendChild(ul);
-    this.content.append(logo, container, burger);
+    this.content.append(logo.render(), container, burger);
 
     return this.content;
   };
