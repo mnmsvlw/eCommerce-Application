@@ -22,18 +22,12 @@ export default class LoginForm extends Component {
     const emailLabel = new Label('loginEmail', 'Email', 'login-label').render();
     const emailInput = new Input('loginEmail', 50, 'email-input', 'Enter your Email', 'text').render();
     emailInput.autocapitalize = 'off';
-    const rememberBox = new Container('box-remember').render();
-    const rememberLabel = new Label('loginRemember', 'Remember me', 'rem-label').render();
-    const rememberInput = new Input('loginRemember', 0, 'rem-input', '', 'checkbox').render();
-    rememberBox.append(rememberInput, rememberLabel);
     const passwordLabel = new Label('loginPassword', 'Password', 'login-label').render();
     const passwordInput = new Input('loginPass', 50, 'pass-input', 'Enter your Password', 'password').render();
     const passwordBox = new Container('box-pass').render();
     const showLabel = new Label('loginShow', 'Show password', 'show-label').render();
     const showInput = new Input('loginShow', 0, 'show-input', '', 'checkbox').render();
     passwordBox.append(showInput, showLabel);
-    const checkBox = new Container('box').render();
-    checkBox.append(rememberBox, passwordBox);
     const loginButton = new Button('Login', 'submit', 'loginBtn').render();
     const regBox = new Container('reg-container').render();
     const regText = new Heading(4, 'regText', `Don't have an account?`).render();
@@ -50,7 +44,7 @@ export default class LoginForm extends Component {
       passwordLabel,
       passwordInput,
       formErrorPass,
-      checkBox,
+      passwordBox,
       loginButton
     );
     this.content.append(formContainer);

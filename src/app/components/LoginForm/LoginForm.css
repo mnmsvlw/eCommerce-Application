@@ -110,20 +110,13 @@
   line-height: normal;
 }
 
-.box {
-  width: 80%;
+.box-pass {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   margin-top: 30px;
 }
 
-.box-remember, .box-pass {
-  display: flex;
-  align-items: center;
-}
-
-.rem-label, .show-label {
+.show-label {
   width: 90%;
   margin-left: 5px;
   color: #FFFFFF;
@@ -135,7 +128,7 @@
   text-align: left;
 }
 
-.rem-input, .show-input {
+.show-input {
   cursor: pointer;
   font-size: 14px;
   margin-left: 5px;
@@ -225,11 +218,11 @@
     font-size: 13px;
   }
 
-  .box {
+  .box-pass {
     width: 100%;
   }
 
-  .rem-label, .show-label {
+  .show-label {
     font-size: 10px;
     width: 100%;
   }
