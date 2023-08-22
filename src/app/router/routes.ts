@@ -5,23 +5,26 @@ import MainPage from '../pages/MainPage/MainPage';
 import RegisterPage from '../pages/RegisterPage/RegisterPage';
 
 const routes: Route[] = [
-  { path: /^\/$/, element: () => new MainPage() },
+  { title: 'Main | E-Commerce Application', path: /^\/$/, element: () => new MainPage() },
   // For Sprint#3
   // { path: /^\/items\/$/, element: () => new CatalogPage() },
   // { path: /^\/profile\/$/, element: () => new ProfilePage() },
   {
+    title: 'Register | E-Commerce Application',
     path: /^\/register\/$/,
     element: () => new RegisterPage(),
     accessRules: { isForUnauthorizedOnly: true },
     redirect: '/',
   },
   {
+    title: 'Log In | E-Commerce Application',
     path: /^\/login\/$/,
     element: () => new LoginPage(),
     accessRules: { isForUnauthorizedOnly: true },
     redirect: '/',
   },
   {
+    title: 'Log Out | E-Commerce Application',
     path: /^\/logout\/$/,
     element: () => new LogoutPage(),
     accessRules: { isForAuthorizedOnly: true },

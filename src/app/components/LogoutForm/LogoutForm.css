@@ -68,3 +68,10 @@
   background-color: #FFFFFF;
   color: #C10C99;
 }
+
+
+@media (max-width: 767px) {
+  .logoutForm-container{
+    height: 250px;
+  }
+}

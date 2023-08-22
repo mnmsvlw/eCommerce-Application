@@ -1,6 +1,7 @@
 import Page from '../app/pages/Page';
 
 export type Route = {
+  title: string;
   path: RegExp;
   element: () => Page;
   accessRules?: {

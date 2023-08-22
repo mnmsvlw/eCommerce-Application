@@ -9,7 +9,7 @@ export default class DataFields extends Component {
     const dataContainer = new Container('regform-container__data').render();
 
     const emailLabel = new Label('regemail', 'Email', 'regform-label').render();
-    const emailInput = new Input('regemail', 50, 'regform-input', 'Enter your email', 'email').render();
+    const emailInput = new Input('regemail', 50, 'regform-input', 'Enter your email', 'text').render();
 
     const passwordLabel = new Label('regpassword', 'Password', 'regform-label').render();
     const passwordInput = new Input('regpassword', 50, 'regform-input', 'Enter your password', 'password').render();

@@ -29,8 +29,8 @@ export default class LoginModule extends Component {
 
             if (loginResponse.statusCode === 200) {
               sdkClient.setPasswordFlow(mail.value, pass.value);
-              sdkClient.apiRoot.me().get().execute();
-              sdkClient.userEmail = loginResponse.body.customer.email;
+              const userRequest = await sdkClient.apiRoot.me().get().execute();
+              sdkClient.userInfo = userRequest.body;
               redirect(Path.MAIN_PAGE);
             }
           } catch (err) {

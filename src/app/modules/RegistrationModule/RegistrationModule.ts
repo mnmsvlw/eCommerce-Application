@@ -69,8 +69,8 @@ export default class RegistrationModule extends Component {
           password: registrationData.password,
         });
         sdkClient.setPasswordFlow(registrationData.email, registrationData.password);
-        await sdkClient.apiRoot.me().get().execute();
-        sdkClient.userEmail = registrationData.email;
+        const userRequest = await sdkClient.apiRoot.me().get().execute();
+        sdkClient.userInfo = userRequest.body;
         redirect(Path.MAIN_PAGE);
       }, 1000);
     } catch (error) {
