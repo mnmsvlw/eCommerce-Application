@@ -1,7 +1,10 @@
+import validateEmail from '../../../LoginModule/helpers/validateEmail';
+
 export default class ValidationRules {
   email(value: string): boolean {
-    const mailPattern = /^\S+@\S+\.\S+$/;
-    return mailPattern.test(value);
+    // const mailPattern = /^\S+@\S+\.\S+$/;
+    // return mailPattern.test(value);
+    return validateEmail(value) === '';
   }
 
   password(value: string): boolean {

@@ -7,6 +7,8 @@ export interface CreateCustomerData {
   addresses: AddressReg[];
   defaultShippingAddress?: number;
   defaultBillingAddress?: number;
+  shippingAddresses?: number[];
+  billingAddresses?: number[];
 }
 
 export interface AddressReg {

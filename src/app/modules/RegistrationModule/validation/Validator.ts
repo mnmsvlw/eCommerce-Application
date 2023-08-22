@@ -91,6 +91,19 @@ export default class Validator {
       this.createCustomerData.addresses.push(this.addressBill);
     }
 
+    const addressCheckbox = this.form.querySelector('input[name="address-checkbox"]') as HTMLInputElement;
+
+    if (addressCheckbox.checked) {
+      const shippingAddress = this.createCustomerData.addresses.find((add) => add.key === 'KeyShipping') as AddressReg;
+      this.createCustomerData.addresses = [];
+      this.createCustomerData.addresses.push(shippingAddress);
+      this.createCustomerData.shippingAddresses = [0];
+      this.createCustomerData.billingAddresses = [0];
+    } else {
+      this.createCustomerData.shippingAddresses = [0];
+      this.createCustomerData.billingAddresses = [1];
+    }
+
     const ShippingDefault = this.form.querySelector('input[name="ship-checkbox"]') as HTMLInputElement;
 
     if (ShippingDefault.checked) {
@@ -99,7 +112,9 @@ export default class Validator {
 
     const BillingDefault = this.form.querySelector('input[name="bill-checkbox"]') as HTMLInputElement;
 
-    if (BillingDefault.checked) {
+    if (BillingDefault.checked && addressCheckbox.checked) {
+      this.createCustomerData.defaultBillingAddress = 0;
+    } else if (BillingDefault.checked) {
       this.createCustomerData.defaultBillingAddress = 1;
     }
 
@@ -112,12 +127,12 @@ export default class Validator {
     const billingAddressContainer = field.closest('.regform-container__billing-address');
     const addressParts = field.value.split(' ');
 
-    const addressCheckbox = this.form.querySelector('input[name="address-checkbox"]') as HTMLInputElement;
-    field.addEventListener('input', () => {
-      if (addressCheckbox.checked) {
-        this.addressBill = { ...this.addressShip, key: this.addressBill.key };
-      }
-    });
+    // const addressCheckbox = this.form.querySelector('input[name="address-checkbox"]') as HTMLInputElement;
+    // field.addEventListener('input', () => {
+    //   if (addressCheckbox.checked) {
+    //     this.addressBill = { ...this.addressShip, key: this.addressBill.key };
+    //   }
+    // });
 
     if (field.value === '') {
       const previousElementSibling = field.previousElementSibling as HTMLElement | null;

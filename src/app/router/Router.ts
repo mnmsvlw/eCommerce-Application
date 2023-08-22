@@ -51,6 +51,8 @@ export default class Router {
       (route.accessRules?.isForAuthorizedOnly && sdkClient.isAuthorizedUser) ||
       (route.accessRules?.isForUnauthorizedOnly && !sdkClient.isAuthorizedUser);
 
+    document.title = route.title;
+
     if (hasAccess) {
       const root = document.querySelector('#root') as HTMLElement;
       root.innerHTML = '';
