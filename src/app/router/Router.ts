@@ -16,12 +16,21 @@ export default class Router {
   }
 
   start() {
-    window.addEventListener('load', this.navigate.bind(this));
+    window.addEventListener('load', () => {
+      console.log('1');
+      this.navigate.bind(this);
+    });
 
     if (this.mode === 'hash') {
-      window.addEventListener('hashchange', this.navigate.bind(this));
+      window.addEventListener('hashchange', () => {
+        console.log('2');
+        this.navigate.bind(this);
+      });
     } else {
-      window.addEventListener('popstate', this.navigate.bind(this));
+      window.addEventListener('popstate', () => {
+        console.log('3');
+        this.navigate.bind(this);
+      });
     }
   }
 
@@ -35,8 +44,9 @@ export default class Router {
     }
 
     if (!path.endsWith('/')) path += '/';
-
+    console.log('path', path);
     const route = this.routes.find((r) => r.path.test(path));
+    console.log('route', route);
 
     if (route) {
       this.renderPage(route);
