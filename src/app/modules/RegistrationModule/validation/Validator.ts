@@ -229,16 +229,15 @@ export default class Validator {
         this.createCustomerData.password = field.value;
         break;
       case 'regFirstName':
+        validationFunction = this.VRules.name;
+        message = 'First name must contain only letters';
+        this.createCustomerData.firstName = field.value;
+        break;
+
       case 'regLastName':
         validationFunction = this.VRules.name;
         message = 'Last name must contain only letters';
-
-        if (fieldName === 'regFirstName') {
-          this.createCustomerData.firstName = field.value;
-        } else {
-          this.createCustomerData.lastName = field.value;
-        }
-
+        this.createCustomerData.lastName = field.value;
         break;
       case 'regBirthDay':
         validationFunction = this.VRules.dateOfBirth;
