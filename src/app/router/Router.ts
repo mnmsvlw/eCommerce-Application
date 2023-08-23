@@ -16,16 +16,20 @@ export default class Router {
   }
 
   start() {
-    window.addEventListener('load', this.navigate.bind(this));
-
     if (this.mode === 'hash') {
-      window.addEventListener('hashchange', this.navigate.bind(this));
+      window.addEventListener('hashchange', this.navigate);
     } else {
-      window.addEventListener('popstate', this.navigate.bind(this));
+      window.addEventListener('popstate', this.navigate);
+    }
+
+    if (document.readyState === 'complete') {
+      this.navigate();
+    } else {
+      window.addEventListener('load', this.navigate);
     }
   }
 
-  navigate() {
+  navigate = () => {
     let path: string;
 
     if (this.mode === 'hash') {
@@ -43,7 +47,7 @@ export default class Router {
     } else {
       this.render404();
     }
-  }
+  };
 
   renderPage(route: Route) {
     const hasAccess =
