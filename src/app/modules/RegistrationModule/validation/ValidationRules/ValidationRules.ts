@@ -1,4 +1,5 @@
 import validateEmail from '../../../LoginModule/helpers/validateEmail';
+import validatePassword from '../../../LoginModule/helpers/validatePassword';
 
 export default class ValidationRules {
   email(value: string): boolean {
@@ -8,12 +9,12 @@ export default class ValidationRules {
   }
 
   password(value: string): boolean {
-    const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}[\]:;<>,.?~]).{8,}$/;
-    return passwordPattern.test(value);
+    // const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}[\]:;<>,.?~]).{8,}$/;
+    return validatePassword(value) === '';
   }
 
   name(value: string): boolean {
-    return /^[a-zA-Zа-яА-Я]+$/.test(value);
+    return /^[a-zA-Zа-яА-Я\s]+$/.test(value);
   }
 
   dateOfBirth(data: string): boolean {
@@ -34,6 +35,10 @@ export default class ValidationRules {
 
   postalCode(value: string): boolean {
     return /^\d{4}$/.test(value);
+  }
+
+  postalCodeAZ(value: string): boolean {
+    return /^AZ\s?\d{4}$/.test(value);
   }
 
   country(value: string): boolean {
