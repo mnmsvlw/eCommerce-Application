@@ -23,16 +23,22 @@ export default class Router {
 
     window.addEventListener('load', this.navigate.bind(this));
 
+    // if (this.mode === 'hash') {
+    //   window.addEventListener('hashchange', () => {
+    //     console.log('2');
+    //     this.navigate.bind(this)();
+    //   });
+    // } else {
+    //   window.addEventListener('popstate', () => {
+    //     console.log('3');
+    //     this.navigate.bind(this)();
+    //   });
+    // }
+
     if (this.mode === 'hash') {
-      window.addEventListener('hashchange', () => {
-        console.log('2');
-        this.navigate.bind(this)();
-      });
+      window.addEventListener('hashchange', this.navigate.bind(this));
     } else {
-      window.addEventListener('popstate', () => {
-        console.log('3');
-        this.navigate.bind(this)();
-      });
+      window.addEventListener('popstate', this.navigate.bind(this));
     }
   }
 
