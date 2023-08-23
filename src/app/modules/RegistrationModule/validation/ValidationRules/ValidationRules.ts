@@ -14,7 +14,7 @@ export default class ValidationRules {
   }
 
   name(value: string): boolean {
-    return /^[a-zA-Zа-яА-Я\s]+$/.test(value);
+    return /^(?!\s)(?!.*\s$)[a-zA-Zа-яА-Я\s]+$/.test(value);
   }
 
   dateOfBirth(data: string): boolean {
