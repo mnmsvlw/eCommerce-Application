@@ -18,18 +18,18 @@ export default class Router {
   start() {
     window.addEventListener('load', () => {
       console.log('1');
-      this.navigate.bind(this);
+      this.navigate.bind(this)();
     });
 
     if (this.mode === 'hash') {
       window.addEventListener('hashchange', () => {
         console.log('2');
-        this.navigate.bind(this);
+        this.navigate.bind(this)();
       });
     } else {
       window.addEventListener('popstate', () => {
         console.log('3');
-        this.navigate.bind(this);
+        this.navigate.bind(this)();
       });
     }
   }
@@ -43,6 +43,7 @@ export default class Router {
       path = window.location.pathname;
     }
 
+    console.log('navigate', path);
     if (!path.endsWith('/')) path += '/';
     console.log('path', path);
     const route = this.routes.find((r) => r.path.test(path));
