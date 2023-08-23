@@ -45,6 +45,7 @@ export default class Validator {
       country: '',
     };
     this.countFieldsToBeSubmitted();
+    this.updatePostalCodeValidation();
   }
 
   validateOnSubmit(): CreateCustomerData | null {
@@ -69,6 +70,20 @@ export default class Validator {
       this.validateField(field);
     }
   }
+
+  private updatePostalCodeValidation = () => {
+    const countriesElements = this.form.querySelectorAll('select[name="regcountry"]');
+    const postalCodeElements = this.form.querySelectorAll('input[name="regpostalcode"]');
+
+    if (countriesElements != null && postalCodeElements != null) {
+      countriesElements.forEach((element, index) => {
+        element.addEventListener('change', () => {
+          const correspondingPostalCodeElement = postalCodeElements[index] as HTMLInputElement;
+          this.validateField(correspondingPostalCodeElement);
+        });
+      });
+    }
+  };
 
   private gatherDataForSubmit = (): CreateCustomerData => {
     const existingShippingIndex = this.createCustomerData.addresses.findIndex(
