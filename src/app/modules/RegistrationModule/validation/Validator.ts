@@ -79,7 +79,10 @@ export default class Validator {
       countriesElements.forEach((element, index) => {
         element.addEventListener('change', () => {
           const correspondingPostalCodeElement = postalCodeElements[index] as HTMLInputElement;
-          this.validateField(correspondingPostalCodeElement);
+
+          if (correspondingPostalCodeElement.value !== '') {
+            this.validateField(correspondingPostalCodeElement);
+          }
         });
       });
     }
