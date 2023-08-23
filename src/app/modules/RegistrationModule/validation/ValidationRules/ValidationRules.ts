@@ -38,7 +38,7 @@ export default class ValidationRules {
   }
 
   postalCodeAZ(value: string): boolean {
-    return /^AZ\s?\d{4}$/.test(value);
+    return /^(AZ\s?)?\d{4}$/.test(value);
   }
 
   country(value: string): boolean {
