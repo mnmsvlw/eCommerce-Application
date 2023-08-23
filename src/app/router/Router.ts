@@ -16,10 +16,12 @@ export default class Router {
   }
 
   start() {
-    window.addEventListener('load', () => {
-      console.log('1');
-      this.navigate.bind(this)();
-    });
+    // window.addEventListener('load', () => {
+    //   console.log('1');
+    //   this.navigate.bind(this)();
+    // });
+
+    window.addEventListener('load', this.navigate.bind(this));
 
     if (this.mode === 'hash') {
       window.addEventListener('hashchange', () => {
