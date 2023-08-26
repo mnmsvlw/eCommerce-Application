@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap%27');
+
+.wrapperLogaut {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  background-color: #050214;
+}
+
+.logoutForm-container {
+  background-color: #050214;
+  margin-top: 50px;
+  height: 150px;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #FFFFFF;
+  border-radius: 10px;
+  box-shadow: 4px 4px 8px 0px #C10C99;
+}
+
+.logoutForm-header {
+  color: #FFFFFF;
+  font-family: Poppins;
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 45px;
+  letter-spacing: 0em;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.btn-container {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.noBtn, .yesBtn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  text-decoration: none;
+  width: 50px;
+  height: 30px;
+  background-color: #C10C99;
+  border-radius: 32px;
+  color: #FFFFFF;
+  cursor: pointer;
+  box-shadow: 0px 4px 26px 0px #00000040;
+  font-family: Poppins;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.noBtn:hover, .yesBtn:hover {
+  background-color: #ff00c8;
+}
+
+.noBtn:active, .yesBtn:active {
+  background-color: #FFFFFF;
+  color: #C10C99;
+}
+
+
+@media (max-width: 767px) {
+  .logoutForm-container{
+    height: 250px;
+  }
+}
