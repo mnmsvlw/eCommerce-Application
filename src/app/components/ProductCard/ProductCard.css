@@ -1,0 +1,11 @@
+.product-card__container{
+    width: 100%;
+}
+
+.product-card__slider-container{
+    width: 60wv;
+}
+
+.product-card__details-container{
+    width: 40wv;
+}

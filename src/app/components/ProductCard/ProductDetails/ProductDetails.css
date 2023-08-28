@@ -1,0 +1,52 @@
+.product-card__header{
+  font-size: 35px;
+}
+
+.product-card__model{
+    font-size: 20px;
+}
+
+.product-card__price{
+    font-size: 25px;
+
+}
+
+.product-card__description-header{
+    font-size: 20px;
+}
+
+.product-card__description{
+    font-size: 20px;
+}
+
+.product-card__btn-container{
+    display: flex;
+    gap: 20px;
+}
+
+.quantity-container{
+    width: 30%;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+}
+
+.minus-btn, 
+.plus-btn {
+    width: 10%;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.quantity-input{
+    width: 80%;
+    text-align: center;
+}
+
+.add-to-basket__button{
+    width: 40%;
+    border-radius: 22.493px;
+    background: #C10C99;
+    color: white;
+}
