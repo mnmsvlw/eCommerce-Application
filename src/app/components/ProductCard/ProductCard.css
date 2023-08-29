@@ -1,11 +1,13 @@
 .product-card__container{
     width: 100%;
+    background-color: #050214;
+    display: flex;
 }
 
 .product-card__slider-container{
-    width: 60wv;
+    width: 60vw;
 }
 
 .product-card__details-container{
-    width: 40wv;
+    width: 40vw;
 }

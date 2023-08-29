@@ -2,6 +2,7 @@ import { Route } from '../../types/routerTypes';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import LogoutPage from '../pages/LogoutPage/LogoutPage';
 import MainPage from '../pages/MainPage/MainPage';
+import ProductPage from '../pages/ProductPage/ProductPage';
 import RegisterPage from '../pages/RegisterPage/RegisterPage';
 
 const routes: Route[] = [
@@ -35,6 +36,13 @@ const routes: Route[] = [
   //   path: /^\/items\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\/$/,
   //   element: () => new CatalogPage(),
   // },
+  {
+    title: 'Product Card | E-Commerce Application',
+    path: /^\/product\/$/,
+    element: () => new ProductPage(),
+    accessRules: { isForUnauthorizedOnly: true },
+    redirect: '/',
+  },
 ];
 
 export default routes;

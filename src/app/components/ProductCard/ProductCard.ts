@@ -2,13 +2,14 @@ import { ProductResponse } from '../../../types/productTypes';
 import Container from '../../UI/Container';
 import Component from '../Component';
 import ProductDetails from './ProductDetails/ProductDetails';
+import './ProductCard.css';
 
 export default class ProductCard extends Component {
-  productData: ProductResponse;
+  productData: ProductResponse | null;
 
-  constructor(data: ProductResponse) {
+  constructor() {
     super();
-    this.productData = data;
+    this.productData = null;
   }
 
   render = () => {
@@ -16,7 +17,7 @@ export default class ProductCard extends Component {
     this.content = productCardContainer.render();
 
     const innerSliderContainer = new Container('product-card__slider-container').render();
-    const productDetailsContainer = new ProductDetails(this.productData).render();
+    const productDetailsContainer = new ProductDetails().render();
 
     this.content.append(innerSliderContainer, productDetailsContainer);
     return this.content;
