@@ -36,11 +36,28 @@ export default class ProductDetails extends Component {
 
     const btnContainer = new Container('product-card__btn-container').render();
     const quantatyBtn = new Container('quantity-container').render();
-    const minusBtn = new Button('-', 'button', 'minus-btn').render();
+    const minusBtn = new Button('-', 'button', 'minus-btn');
+    const minusBtnElement = minusBtn.render();
     const quantatyNum = new Container('quantity-input').render();
     quantatyNum.textContent = '1';
-    const plusBtn = new Button('+', 'button', 'plus-btn').render();
-    quantatyBtn.append(minusBtn, quantatyNum, plusBtn);
+    const plusBtn = new Button('+', 'button', 'plus-btn');
+    const plusBtnElement = plusBtn.render();
+    quantatyBtn.append(minusBtnElement, quantatyNum, plusBtnElement);
+
+    minusBtn.addListener('click', () => {
+      const currentValue = parseInt(quantatyNum.textContent || '1', 10);
+
+      if (currentValue > 1) {
+        quantatyNum.textContent = (currentValue - 1).toString();
+        console.log('minus button');
+      }
+    });
+
+    plusBtn.addListener('click', () => {
+      const currentValue = parseInt(quantatyNum.textContent || '1', 10);
+      quantatyNum.textContent = (currentValue + 1).toString();
+      console.log('plus button');
+    });
 
     const addToBasketBtn = new Button('Add To Cart', 'button', 'add-to-basket__button').render();
 
@@ -58,24 +75,5 @@ export default class ProductDetails extends Component {
 
     this.content.append(productName, productModel, productPrice, btnContainer, descriptionHeader, productDescription);
     return this.content;
-  };
-
-  private addListeners = () => {
-    const plusBtn = document.querySelector('.plus-btn') as HTMLButtonElement;
-    const minusBtn = document.querySelector('.minus-btn') as HTMLButtonElement;
-    const quantityInput = document.querySelector('.quantity-input') as HTMLInputElement;
-
-    plusBtn.addEventListener('click', () => {
-      const currentValue = parseInt(quantityInput.value, 10);
-      quantityInput.value = (currentValue + 1).toString();
-    });
-
-    minusBtn.addEventListener('click', () => {
-      const currentValue = parseInt(quantityInput.value, 10);
-
-      if (currentValue > 1) {
-        quantityInput.value = (currentValue - 1).toString();
-      }
-    });
   };
 }

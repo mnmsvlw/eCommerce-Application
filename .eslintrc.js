@@ -55,6 +55,14 @@ module.exports = {
         next: ['block', 'block-like'],
       },
     ],
+    "import/no-extraneous-dependencies": [
+      "error", {
+         "devDependencies": false, 
+         "optionalDependencies": false, 
+         "peerDependencies": false, 
+         "packageDir": "./"
+      }
+  ],
   },
   plugins: ['@typescript-eslint', 'prettier', 'import'],
   ignorePatterns: ['.eslintrc.js', 'jest.config.ts'],
