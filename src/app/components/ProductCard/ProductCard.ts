@@ -1,48 +1,26 @@
-import Splide from '@splidejs/splide';
-import { ProductResponse } from '../../../types/productTypes';
+import { ProductProjection, Image, ClientResponse } from '@commercetools/platform-sdk';
 import Container from '../../UI/Container';
 import Component from '../Component';
 import ProductDetails from './ProductDetails/ProductDetails';
-import './ProductCard.css';
 import InnerProductSlider from './InnerSlider/InnerSlider';
+import './ProductCard.css';
+import 'swiper/css/bundle';
 
 export default class ProductCard extends Component {
-  productData: ProductResponse | null;
+  productData: ProductProjection;
 
-  constructor() {
+  constructor(data: ClientResponse<ProductProjection>) {
     super();
-    this.productData = null;
+    this.productData = data.body;
   }
 
   render = () => {
-    const productCardContainer = new Container('product-card__container');
-    this.content = productCardContainer.render();
+    this.content = new Container('product-card__container').render();
 
-    const realImageUrls = [
-      '../testIMG/image1.jpg',
-      './src/app/components/ProductCard/testIMG/image2.jpg',
-      './src/app/components/ProductCard/testIMG/image3.jpg',
-    ];
+    const imageArr = this.productData.masterVariant.images as Image[];
+    const innerSliderContainer = new InnerProductSlider(imageArr).render();
 
-    const innerSliderContainer = new InnerProductSlider(realImageUrls).render();
-    document.addEventListener('DOMContentLoaded', () => {
-      new Splide('#thumbnail-carousel', {
-        fixedWidth: 100,
-        fixedHeight: 60,
-        gap: 10,
-        rewind: true,
-        pagination: false,
-        isNavigation: true,
-        breakpoints: {
-          600: {
-            fixedWidth: 60,
-            fixedHeight: 44,
-          },
-        },
-      }).mount();
-    });
-
-    const productDetailsContainer = new ProductDetails().render();
+    const productDetailsContainer = new ProductDetails(this.productData).render();
 
     this.content.append(innerSliderContainer, productDetailsContainer);
     return this.content;
