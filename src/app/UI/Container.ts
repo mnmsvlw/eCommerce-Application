@@ -13,6 +13,9 @@ export default class Container extends Component {
     this.content = new ElementCreator({
       tag: 'div',
       classNames: this.classNames,
+      attributes: {
+        id: this.id,
+      },
     }).getElement();
     return this.content;
   };
