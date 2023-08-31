@@ -53,20 +53,23 @@ export default class ProductDetails extends Component {
     const plusBtnElement = plusBtn.render();
     quantatyBtn.append(minusBtnElement, quantatyNum, plusBtnElement);
 
-    // minusBtn.addListener('click', () => {
+    // const minusHandler = () => {
     //   const currentValue = parseInt(quantatyNum.textContent || '1', 10);
 
     //   if (currentValue > 1) {
     //     quantatyNum.textContent = (currentValue - 1).toString();
     //     console.log('minus button');
     //   }
-    // });
+    // };
 
-    // plusBtn.addListener('click', () => {
+    // const plusHandler = () => {
     //   const currentValue = parseInt(quantatyNum.textContent || '1', 10);
     //   quantatyNum.textContent = (currentValue + 1).toString();
     //   console.log('plus button');
-    // });
+    // };
+
+    // minusBtn.addListener('click', minusHandler);
+    // plusBtn.addListener('click', plusHandler);
 
     const addToBasketBtn = new Button('Add To Cart', 'button', 'add-to-basket__button').render();
 
