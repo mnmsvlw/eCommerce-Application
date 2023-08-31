@@ -1,6 +1,7 @@
 import { Route } from '../../types/routerTypes';
 import sdkClient from '../api/SdkClient';
 import { listenersList, resetList } from '../data/listenersList';
+import { dispatchList, resetDispatchList } from '../data/mountList';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
 import redirect from '../utils/redirect';
 import routes from './routes';
@@ -62,6 +63,7 @@ export default class Router {
       root.innerHTML = '';
       root.append(route.element().render());
       this.addPageListeners();
+      this.dispatchEvents();
     } else {
       redirect(route.redirect as string);
     }
@@ -80,5 +82,14 @@ export default class Router {
       element.addEventListener(listener.eventType, listener.eventListener);
     });
     resetList();
+  }
+
+  dispatchEvents() {
+    dispatchList.forEach((event) => {
+      const element = document.getElementById(event.id) as HTMLElement;
+      const customEvent = new Event(event.eventType);
+      element.dispatchEvent(customEvent);
+    });
+    resetDispatchList();
   }
 }

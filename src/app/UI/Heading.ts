@@ -20,6 +20,9 @@ export default class Heading extends Component {
       tag: this.tag,
       classNames: this.classNames,
       text: this.text,
+      attributes: {
+        id: this.id,
+      },
     }).getElement();
     return this.content;
   };
