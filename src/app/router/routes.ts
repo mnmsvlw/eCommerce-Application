@@ -2,13 +2,18 @@ import { Route } from '../../types/routerTypes';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import LogoutPage from '../pages/LogoutPage/LogoutPage';
 import MainPage from '../pages/MainPage/MainPage';
+import ProfilePage from '../pages/ProfilePage/ProfilePage';
 import RegisterPage from '../pages/RegisterPage/RegisterPage';
 
 const routes: Route[] = [
   { title: 'Main | E-Commerce Application', path: /^\/$/, element: () => new MainPage() },
   // For Sprint#3
   // { path: /^\/items\/$/, element: () => new CatalogPage() },
-  // { path: /^\/profile\/$/, element: () => new ProfilePage() },
+  {
+    title: 'Profile | E-Commerce Application',
+    path: /^\/profile\/$/,
+    element: () => new ProfilePage(),
+  },
   {
     title: 'Register | E-Commerce Application',
     path: /^\/register\/$/,

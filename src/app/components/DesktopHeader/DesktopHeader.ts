@@ -28,7 +28,7 @@ export default class DesktopHeader extends Component {
       let linkElement: Link | Heading;
 
       if (item.title === 'Profile') {
-        linkElement = new Heading(6, '', `${sdkClient.userInfo.firstName} ${sdkClient.userInfo.lastName}`);
+        linkElement = new Link(item.href, 'nav-link', `${sdkClient.userInfo.firstName} ${sdkClient.userInfo.lastName}`);
       } else {
         linkElement = new Link(item.href, 'nav-link', item.title);
         linkElement.addListener('click', this.linkOnClick);

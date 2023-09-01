@@ -32,6 +32,8 @@ module.exports = {
     'no-debugger': 'off',
     'no-console': 0,
     'no-control-regex': 0,
+    'no-alert': 0,
+    '@typescript-eslint/no-unused-expressions': 'off',
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
     'import/extensions': [

@@ -1,3 +1,4 @@
+import { ClientResponse, Customer, MyCustomerUpdateAction } from '@commercetools/platform-sdk';
 import type { CreateCustomerData, LoginData } from '../../../types/registrationTypes';
 import sdkClient from '../SdkClient';
 
@@ -26,4 +27,19 @@ const loginCustomer = async (loginDataReceived: LoginData) => {
   return response;
 };
 
-export { createCustomer, loginCustomer };
+const changeDataCustomer = async (action: MyCustomerUpdateAction[]): Promise<ClientResponse<Customer>> => {
+  const response = await sdkClient.apiRoot
+    .me()
+    .post({
+      body: {
+        version: sdkClient.userInfo.version as number,
+        actions: action,
+      },
+    })
+    .execute();
+  alert('Your data has been successfully changed!');
+  window.location.reload();
+  return response;
+};
+
+export { createCustomer, loginCustomer, changeDataCustomer };
