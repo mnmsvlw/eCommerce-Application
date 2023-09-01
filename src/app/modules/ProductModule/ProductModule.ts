@@ -1,32 +1,36 @@
-import { ClientResponse, ProductProjection } from '@commercetools/platform-sdk';
 import getProduct from '../../api/product/Product';
 import Component from '../../components/Component';
 import ProductCard from '../../components/ProductCard/ProductCard';
+import Container from '../../UI/Container';
 
 export default class ProductModule extends Component {
-  productData: ClientResponse<ProductProjection> | null;
+  render = (key: string) => {
+    const productCardContainer = new Container('product-card__wrapper');
+    productCardContainer.bindAsync(this.renderAsync, key);
 
-  constructor() {
-    super();
-    this.productData = null;
-  }
-
-  async renderEl(key: string) {
-    await this.getProductData(key);
-
-    if (this.productData) {
-      const productCard = new ProductCard(this.productData as ClientResponse<ProductProjection>);
-      this.content = productCard.render();
-    }
-
+    this.content = productCardContainer.render();
     return this.content;
-  }
+  };
+
+  renderAsync = async (component: HTMLElement, key?: string) => {
+    if (key) {
+      const productData = await this.getProductData(key);
+
+      if (productData) {
+        const productCard = new ProductCard(productData);
+        const productCardContent = productCard.render();
+        component.appendChild(productCardContent);
+      }
+    }
+  };
 
   private getProductData = async (key: string) => {
     try {
-      this.productData = await getProduct(key);
+      const productData = await getProduct(key);
+      return productData;
     } catch (error) {
       console.log(error);
+      return null;
     }
   };
 }

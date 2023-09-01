@@ -16,16 +16,16 @@ export default class Component {
     return this.content;
   }
 
-  renderAsync = async (_component: HTMLElement) => {
+  renderAsync = async (_component: HTMLElement, _key?: string) => {
     return new Promise((resolve) => {
       resolve(null);
     });
   };
 
-  bindAsync = (renderAsync: (component: HTMLElement) => Promise<void>) => {
+  bindAsync = (renderAsync: (component: HTMLElement, key?: string) => Promise<void>, keyProduct?: string) => {
     this.addListener('mount', (e: Event) => {
       const target = e.target as HTMLElement;
-      renderAsync(target);
+      renderAsync(target, keyProduct);
     });
     this.addDispatchEvent('mount');
   };
