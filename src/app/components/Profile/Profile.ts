@@ -4,6 +4,7 @@ import ElementCreator from '../../utils/ElementCreator';
 import Component from '../Component';
 import ProfileEmailPass from './ProfileEmailPass';
 import ProfilePersonalInfo from './ProfilePersonalInfo';
+import ProfileAllAddresses from './PofileAllAddresses';
 import './Profile.css';
 
 export default class Profile extends Component {
@@ -21,7 +22,8 @@ export default class Profile extends Component {
     const formBox = new Container('wrapp-form').render();
     const personal = new ProfilePersonalInfo().render();
     const mailPass = new ProfileEmailPass().render();
-    formBox.append(personal, mailPass);
+    const address = new ProfileAllAddresses().render();
+    formBox.append(personal, mailPass, address);
     menu.append(foto, profile, list);
 
     this.content.append(menu, formBox);
