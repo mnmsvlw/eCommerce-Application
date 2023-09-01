@@ -2,6 +2,7 @@ import getProduct from '../../api/product/Product';
 import Component from '../../components/Component';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import Container from '../../UI/Container';
+import SwiperSlider from '../../utils/Swiper';
 
 export default class ProductModule extends Component {
   render = (key: string) => {
@@ -20,6 +21,7 @@ export default class ProductModule extends Component {
         const productCard = new ProductCard(productData);
         const productCardContent = productCard.render();
         component.appendChild(productCardContent);
+        new SwiperSlider().init();
       }
     }
   };
