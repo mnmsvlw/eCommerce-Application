@@ -40,7 +40,7 @@ export default class ProfilePersonalInfo extends Component {
     boxForDate.append(dateBox, svg3);
 
     const boxSave = new Container('save-i').render();
-    const btnSave = new Button('Save', 'submit', 'save').render();
+    const btnSave = new Button('Save', 'submit', 'save-info').render();
     boxSave.append(btnSave);
     boxSave.classList.add('hide');
 

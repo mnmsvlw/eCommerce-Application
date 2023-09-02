@@ -34,7 +34,7 @@ export default class ProfileEmailPass extends Component {
     boxForPass.append(passBox, svg2);
 
     const boxSave = new Container('save-e').render();
-    const btnSave = new Button('Save', 'submit', 'save').render();
+    const btnSave = new Button('Save', 'submit', 'save-email').render();
     boxSave.append(btnSave);
     boxSave.classList.add('hide');
     this.content.append(header, boxForEmail, boxForPass, boxSave);

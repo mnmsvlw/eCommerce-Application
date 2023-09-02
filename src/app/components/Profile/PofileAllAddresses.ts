@@ -17,11 +17,7 @@ export default class ProfileAllAddresses extends Component {
       const box = new ProfileAddress().render();
       conteiner.append(box);
     });
-    const boxSave = new Container('save-a').render();
-    const btnSave = new Button('Save', 'submit', 'save-address').render();
-    boxSave.append(btnSave);
-    boxSave.classList.add('hide');
-    this.content.append(header, btnAddNewAddress, conteiner, boxSave);
+    this.content.append(header, btnAddNewAddress, conteiner);
     return this.content;
   };
 }

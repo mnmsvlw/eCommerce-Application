@@ -6,6 +6,7 @@ import ElementCreator from '../../utils/ElementCreator';
 import Component from '../Component';
 import Select from '../../UI/Select';
 import Input from '../../UI/Input';
+import Button from '../../UI/Button';
 
 export default class ProfileAddress extends Component {
   render = () => {
@@ -18,6 +19,11 @@ export default class ProfileAddress extends Component {
     const shipping = new ElementCreator({ tag: 'p', classNames: 'shipping-item', text: 'Shipping' }).getElement();
     const billing = new ElementCreator({ tag: 'p', classNames: 'billing-item', text: 'Billing' }).getElement();
     conteinerType.append(type, shipping, billing);
+
+    const formErrorCode = new Container('errorCode').render();
+    const formErrorCity = new Container('errorCity').render();
+    const formErrorStreetName = new Container('errorStreetName').render();
+    const formErrorStreetNum = new Container('errorStreetNum').render();
 
     const countryPostalCode = new Container('countryPostalCode').render();
     const country = new Container('box-country').render();
@@ -37,16 +43,20 @@ export default class ProfileAddress extends Component {
     const postalCode = new Container('box-postalCode').render();
     const postalCodeLabel = new Label('postalcode', 'Postal code', 'label-postalcode').render();
     const postalCodeInput = new Input('postalcode', 50, 'input-postalcode', '').render();
-    postalCode.append(postalCodeLabel, postalCodeInput);
+    postalCode.append(postalCodeLabel, postalCodeInput, formErrorCode);
     countryPostalCode.append(country, postalCode);
 
     const cityLabel = new Label('city', 'City', 'label-city').render();
     const cityInput = new Input('city', 50, 'input-city').render();
-    const streetLabel = new Label('street', 'Street', 'label-street').render();
-    const streetInput = new Input('street', 50, 'input-street').render();
 
-    const shippingLabel = new Label('shippingLabel', 'Default Address', 'check-label').render();
-    const shippingInput = new Input('shippingLabel', 0, 'check-input', '', 'checkbox').render();
+    const streetNameLabel = new Label('streetName', 'Street name', 'label-street-name').render();
+    const streetNameInput = new Input('streetName', 50, 'input-street-name').render();
+
+    const streetNumberLabel = new Label('streetNumber', 'Street number', 'label-street-num').render();
+    const streetNumberInput = new Input('streetNumber', 50, 'input-street-num').render();
+
+    const shippingLabel = new Label('shippingLabel', 'Default Shipping Address', 'shipping-label').render();
+    const shippingInput = new Input('shippingLabel', 0, 'shipping-input', '', 'checkbox').render();
 
     const toggle1 = new Container('toggle1').render();
     const switch1 = new Container('switch1').render();
@@ -54,11 +64,26 @@ export default class ProfileAddress extends Component {
     const track1 = new Container('track1').render();
     track1.classList.add('s');
     toggle1.append(shippingInput, switch1, track1);
+    const billingLabel = new Label('billingLabel', 'Default Billing Address', 'billing-label').render();
+    const billingInput = new Input('billingLabel', 0, 'billing-input', '', 'checkbox').render();
+    const toggle2 = new Container('toggle2').render();
+    const switch2 = new Container('switch2').render();
+    switch2.classList.add('b');
+    const track2 = new Container('track2').render();
+    track2.classList.add('b');
+
+    toggle2.append(billingInput, switch2, track2);
     const boxSvg = new Container('box-svg').render();
     const svg = new Container('svg').render();
     boxSvg.append(svg);
     const boxForDefault1 = new Container('default').render();
+    const boxForDefault2 = new Container('default').render();
     boxForDefault1.append(shippingLabel, toggle1);
+    boxForDefault2.append(billingLabel, toggle2);
+    const boxSave = new Container('save-a').render();
+    const btnSave = new Button('Save', 'submit', 'save-address').render();
+    boxSave.append(btnSave);
+    boxSave.classList.add('hide');
 
     this.content.append(
       title,
@@ -67,10 +92,17 @@ export default class ProfileAddress extends Component {
       countryPostalCode,
       cityLabel,
       cityInput,
-      streetLabel,
-      streetInput,
+      formErrorCity,
+      streetNameLabel,
+      streetNameInput,
+      formErrorStreetName,
+      streetNumberLabel,
+      streetNumberInput,
+      formErrorStreetNum,
       boxForDefault1,
-      boxSvg
+      boxForDefault2,
+      boxSvg,
+      boxSave
     );
     return this.content;
   };

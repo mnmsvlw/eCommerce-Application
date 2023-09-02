@@ -7,13 +7,8 @@ import RegisterPage from '../pages/RegisterPage/RegisterPage';
 
 const routes: Route[] = [
   { title: 'Main | E-Commerce Application', path: /^\/$/, element: () => new MainPage() },
-  // For Sprint#3
-  // { path: /^\/items\/$/, element: () => new CatalogPage() },
-  {
-    title: 'Profile | E-Commerce Application',
-    path: /^\/profile\/$/,
-    element: () => new ProfilePage(),
-  },
+
+  { title: 'Profile | E-Commerce Application', path: /^\/profile\/$/, element: () => new ProfilePage() },
   {
     title: 'Register | E-Commerce Application',
     path: /^\/register\/$/,
