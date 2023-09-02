@@ -3,12 +3,9 @@ import Component from '../../Component';
 import ElementCreator from '../../../utils/ElementCreator';
 import Container from '../../../UI/Container';
 import 'swiper/css/bundle';
-import './InnerSlider.css';
-import ImageElement from '../../../UI/Img';
-import ModalConstructor from '../ModalView/ModalView';
-import SwiperSlider from '../../../utils/Swiper';
+import './ZoomSlider.css';
 
-export default class InnerProductSlider extends Component {
+export default class ZoomProductSlider extends Component {
   images: Image[];
 
   constructor(images: Image[]) {
@@ -30,7 +27,7 @@ export default class InnerProductSlider extends Component {
       return this.content;
     }
 
-    this.content = new Container('swiper').render();
+    this.content = new Container('zoom-swiper').render();
 
     const swiperWrapper = new ElementCreator({
       tag: 'div',
@@ -43,20 +40,16 @@ export default class InnerProductSlider extends Component {
         classNames: 'swiper-slide',
       }).getElement();
 
-      const imageElement = new ImageElement(image.url, 'slide-image');
-      const imageHTMLElement = imageElement.render();
-      swiperSlide.appendChild(imageHTMLElement);
-      swiperWrapper.appendChild(swiperSlide);
-      imageHTMLElement.addEventListener('click', () => {
-        const modal: HTMLElement | null = document.querySelector('.modal__cover');
+      const imageElement = new ElementCreator({
+        tag: 'img',
+        attributes: {
+          src: image.url,
+          alt: 'slide-image',
+        },
+      }).getElement();
 
-        if (modal != null) {
-          modal.remove();
-          this.showModal();
-        } else {
-          this.showModal();
-        }
-      });
+      swiperSlide.appendChild(imageElement);
+      swiperWrapper.appendChild(swiperSlide);
     });
 
     const swiperPagination = new Container('swiper-pagination').render();
@@ -65,11 +58,5 @@ export default class InnerProductSlider extends Component {
 
     this.content.append(swiperWrapper, swiperPagination, swiperButtonPrev, swiperButtonNext);
     return this.content;
-  };
-
-  showModal = () => {
-    const root = document.querySelector('#root') as HTMLBodyElement;
-    root.append(new ModalConstructor(this.images).render());
-    new SwiperSlider().init('.zoom-swiper');
   };
 }

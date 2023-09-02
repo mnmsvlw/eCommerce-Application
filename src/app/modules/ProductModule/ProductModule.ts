@@ -21,7 +21,7 @@ export default class ProductModule extends Component {
         const productCard = new ProductCard(productData);
         const productCardContent = productCard.render();
         component.appendChild(productCardContent);
-        new SwiperSlider().init();
+        new SwiperSlider().init('.swiper');
       }
     }
   };
