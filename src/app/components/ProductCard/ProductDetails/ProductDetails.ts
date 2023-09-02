@@ -5,6 +5,8 @@ import Heading from '../../../UI/Heading';
 import Component from '../../Component';
 import Button from '../../../UI/Button';
 import './ProductDetails.css';
+import Input from '../../../UI/Input';
+import Label from '../../../UI/Label';
 
 export default class ProductDetails extends Component {
   product: ProductProjection;
@@ -42,6 +44,23 @@ export default class ProductDetails extends Component {
       productPrice.append(productPriceValid);
     }
     // }
+
+    const sizes = this.product.masterVariant.attributes?.filter((attribute) => attribute.name === 'size');
+    const sizeContainer = new Container('product-card__size-container').render();
+
+    if (sizes) {
+      const sizeHeader = new Heading(3, 'product-card__size-heading', 'Choose a Size').render();
+      const sizeElementContainer = new Container('product-card__size-elements').render();
+      sizes?.forEach((size) => {
+        const elContainer = new Container('product-card__size-el-container').render();
+        const sizeElInput = new Input('size', 2, 'product-card__size-input', '', 'radio').render() as HTMLInputElement;
+        sizeElInput.value = size.value.label;
+        const sizeElText = new Label('size', `${sizeElInput.value}`, 'product-card__size-el-text').render();
+        elContainer.append(sizeElInput, sizeElText);
+        sizeElementContainer.append(elContainer);
+      });
+      sizeContainer.append(sizeHeader, sizeElementContainer);
+    }
 
     const btnContainer = new Container('product-card__btn-container').render();
     const quantatyBtn = new Container('quantity-container').render();
@@ -84,7 +103,7 @@ export default class ProductDetails extends Component {
       }`,
     }).getElement();
 
-    this.content.append(productName, productPrice, btnContainer, descriptionHeader, productDescription);
+    this.content.append(productName, productPrice, sizeContainer, btnContainer, descriptionHeader, productDescription);
 
     return this.content;
   };

@@ -6,7 +6,7 @@ import Page from '../Page';
 export default class RegisterPage extends Page {
   async create() {
     this.page.appendChild(new Header().render());
-    this.page.appendChild(new ProductModule().render('11'));
+    this.page.appendChild(new ProductModule().render('6'));
     listenBurger(this.page);
   }
 }
