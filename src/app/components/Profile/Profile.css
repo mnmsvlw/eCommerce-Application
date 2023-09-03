@@ -126,19 +126,15 @@
   padding-top: 5vh;
 }
 
-.label {
+.label, .label-pass {
   margin-bottom: 1vh;
 }
 
-.wrapper-personal, .wrapper-email, .wrapper-address {
-  display: none;
-}
-
-.wrapper-personal.show, .wrapper-email.show {
+.wrapper-personal, .wrapper-email {
   padding: 10vh 0 0 5vh;
 }
 
-.wrapper-personal.show, .wrapper-email.show, .wrapper-address.show {
+.wrapper-personal, .wrapper-email, .wrapper-address {
   height: 100%;
   display: block;
 }

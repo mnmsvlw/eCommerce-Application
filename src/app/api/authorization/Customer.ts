@@ -27,7 +27,10 @@ const loginCustomer = async (loginDataReceived: LoginData) => {
   return response;
 };
 
-const changeDataCustomer = async (action: MyCustomerUpdateAction[]): Promise<ClientResponse<Customer>> => {
+const changeDataCustomer = async (
+  action: MyCustomerUpdateAction[],
+  text: string
+): Promise<ClientResponse<Customer>> => {
   const response = await sdkClient.apiRoot
     .me()
     .post({
@@ -37,7 +40,7 @@ const changeDataCustomer = async (action: MyCustomerUpdateAction[]): Promise<Cli
       },
     })
     .execute();
-  alert('Your data has been successfully changed!');
+  alert(`Your ${text} has been successfully changed!`);
   window.location.reload();
   return response;
 };

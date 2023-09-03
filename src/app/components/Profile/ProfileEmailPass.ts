@@ -19,20 +19,16 @@ export default class ProfileEmailPass extends Component {
     const boxForEmail = new Container('form-email').render();
     boxForEmail.append(emailBox, svg1);
     const passBox = new Container('pass').render();
-    const passLabel = new Label('pass', 'Password', 'label').render();
+    const passLabel = new Label('pass', 'Password', 'label-pass').render();
     const passInput = new Input('pass', 50, 'input-pass', '', 'text').render();
-    const currentPassLabel = new Label('current', 'Enter your password', 'label-cur').render();
-    const currentPassInput = new Input('current', 50, 'input-curr', '', 'password').render();
     const newPassLabel = new Label('new', 'Enter new password', 'label-new').render();
-    const newPassInput = new Input('new', 50, 'input-new', '', 'password').render();
+    const newPassInput = new Input('new', 50, 'input-new', '', 'text').render();
     const changePass = new Container('changeNewPass').render();
-    changePass.append(currentPassLabel, currentPassInput, newPassLabel, newPassInput, formErrorPass);
+    changePass.append(newPassLabel, newPassInput, formErrorPass);
     passBox.append(passLabel, passInput, changePass);
     const svg2 = new Container('change-pass').render();
     const boxForPass = new Container('form-email').render();
-
     boxForPass.append(passBox, svg2);
-
     const boxSave = new Container('save-e').render();
     const btnSave = new Button('Save', 'submit', 'save-email').render();
     boxSave.append(btnSave);
