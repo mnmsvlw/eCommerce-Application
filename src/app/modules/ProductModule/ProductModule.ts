@@ -29,8 +29,8 @@ export default class ProductModule extends Component {
 
       if (productData?.body === undefined) {
         const rootElement = document.querySelector('#root') as HTMLElement;
-        const notFoundComponent = new NotFoundModule().render();
-        rootElement.appendChild(notFoundComponent);
+        const notFoundModule = new NotFoundModule().render();
+        rootElement.appendChild(notFoundModule);
       }
     } catch (e) {
       console.log(e);

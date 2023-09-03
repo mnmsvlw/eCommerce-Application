@@ -1,35 +1,26 @@
+import './CatalogModule.css';
 import Container from '../../UI/Container';
-import sdkClient from '../../api/SdkClient';
 import Component from '../../components/Component';
-import ItemCard from '../../components/ItemCard/ItemCard';
-import redirect from '../../utils/redirect';
+import CatalogSidebar from './components/CatalogSidebar/CatalogSidebar';
+import ItemsList from './components/ItemsList/ItemsList';
 
 export default class CatalogModule extends Component {
+  addUpdateQueryStringListener = () => {
+    window.addEventListener('queryUpdated', () => {
+      const itemsListContainer = document.querySelector('.items-list-container') as HTMLElement;
+      itemsListContainer.innerHTML = '';
+      const newContainer = new ItemsList();
+      newContainer.renderAsync(itemsListContainer);
+    });
+  };
+
   render = () => {
-    const catalogContainer = new Container('catalog-container');
-    catalogContainer.bindAsync(this.renderAsync);
+    this.content = new Container('catalog-container').render();
+    const sidebar = new CatalogSidebar().render();
+    const itemsList = new ItemsList().render();
 
-    this.content = catalogContainer.render();
+    this.addUpdateQueryStringListener();
+    this.content.append(sidebar, itemsList);
     return this.content;
-  };
-
-  setCatalogContainerListener = (container: HTMLElement) => {
-    container.addEventListener('click', (e: Event) => {
-      const target = e.target as HTMLElement;
-      const closestCard = target.closest('.item-card') as HTMLElement;
-
-      if (closestCard) {
-        const { itemId } = closestCard.dataset;
-        redirect(`/items/${itemId}`);
-      }
-    });
-  };
-
-  renderAsync = async (component: HTMLElement) => {
-    const itemsList = (await sdkClient.apiRoot.productProjections().get().execute()).body.results;
-    itemsList.forEach((item) => {
-      component.appendChild(new ItemCard().render(item));
-    });
-    this.setCatalogContainerListener(component);
   };
 }
