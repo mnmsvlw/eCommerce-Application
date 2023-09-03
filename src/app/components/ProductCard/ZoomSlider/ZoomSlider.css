@@ -1,0 +1,12 @@
+.zoom-swiper  {
+    visibility: visible;
+    width: 75vw;
+    height: 70vh;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.zoom-swiper .swiper-wrapper{
+    width: 80%;
+}
+
