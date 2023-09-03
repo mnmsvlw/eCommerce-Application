@@ -1,0 +1,505 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap%27');
+
+.wrapper-profile {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  font-family: 'Poppins', sans-serif;
+  color: #FFFFFF;
+  background-color: #050214;
+}
+
+.menu {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  border-right: 1px solid #C10C99;
+  padding: 10vh 10vh 0 10vh;
+  padding-bottom: 36.5vh;
+}
+
+.foto {
+  width: 115px;
+  height: 115px;
+  background:
+  url('../Profile/asset/ava.png') 100% 100% no-repeat;
+  background-size: 115px 115px, auto, 100px;
+}
+
+.profile {
+  margin-bottom: 5vh;
+}
+
+.info-item, .email-item, .address-item {
+  list-style-type: none;
+  margin-bottom: 3vh;
+  cursor: pointer;
+}
+
+.info-item.red, .email-item.red, .address-item.red{
+  color: #C10C99;
+  font-weight: 700;
+}
+
+.info-item.red:hover, .email-item.red:hover, .address-item.red:hover{
+  color: #C10C99;
+  font-weight: 700;
+}
+
+.info-item:hover, .email-item:hover, .address-item:hover {
+  color: #f74ed2;
+}
+
+.wrapp-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-left: 3vw;
+  width: 75%;
+
+}
+.first, .last, .date, .email, .pass {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: 2vh;
+}
+.changeNewPass.show {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.changeNewPass {
+  display: none;
+}
+
+.change-first, .change-last, .change-date, .change-email, .change-pass {
+  width: 20px;
+  height: 20px;
+  background:
+  url('../Profile/asset/pen1.png') 100% 100% no-repeat;
+  background-size: 20px 20px, auto, 30px;
+  cursor: pointer;
+  margin-top: 40px;
+}
+
+.change-first:hover,
+.change-last:hover,
+.change-date:hover,
+.change-email:hover,
+.change-pass:hover {
+  border: 1px solid #C10C99;
+  background-size: 19px 19px, auto, 10px;
+  border-radius: 2px;
+  box-shadow: 0px 0px 0px 1px #C10C99, 
+            0px 1px 2px #C10C99,
+            0px 2px 4px #C10C99,
+            0px 2px 8px #C10C99;
+}
+
+.change-first.change,
+.change-last.change,
+.change-date.change,
+.change-email.change,
+.change-pass.change {
+  border: 1px solid #C10C99;
+  background-size: 19px 19px, auto, 10px;
+  border-radius: 2px;
+  box-shadow: 0px 0px 0px 1px white, 
+            0px 1px 2px white,
+            0px 2px 4px white,
+            0px 2px 8px white;
+}
+
+.form-personal, .form-email {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 5vh;
+  width: 100%;
+}
+
+.headerPage {
+  margin-bottom: 4vh;
+  padding-top: 5vh;
+}
+
+.label, .label-pass {
+  margin-bottom: 1vh;
+}
+
+.wrapper-personal, .wrapper-email {
+  padding: 10vh 0 0 5vh;
+}
+
+.wrapper-personal, .wrapper-email, .wrapper-address {
+  height: 100%;
+  display: block;
+}
+.save-i.hide, .save-e.hide, .save-a.hide, .save-an.hide {
+  display: none;
+}
+.save-i, .save-e, .save-a {
+  display: flex;
+  justify-content: center;
+}
+
+.save-email, .save-info, .save-address, .btnAddNewAddress, .save-new {
+  display: block;
+  width: 100px;
+  height: 30px;
+  background-color: #C10C99;
+  border-radius: 32px;
+  color: #FFFFFF;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0px 4px 26px 0px #00000040;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.btnAddNewAddress {
+  width: 200px;
+  margin-bottom: 30px;
+}
+.save-new:hover,
+.save-info:hover,
+.save-email:hover,
+.save-address:hover,
+.btnAddNewAddress:hover {
+  background-color: #ff00c8;
+}
+
+.save-new:active,
+.save-info:active,
+.save-email:active,
+.save-address:active,
+.btnAddNewAddress:active {
+  background-color: #FFFFFF;
+  color: #C10C99;
+}
+.input-date, .input-last, .input-first, .input-email, .input-pass, .input-curr, .input-new {
+  position: relative;
+  background-color: #050214;
+  color: #FFF;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  margin-bottom: 1vh;
+  border: none;
+  border: 1px solid #FFF;
+  border-radius: 10px;
+  padding-left: 10px;
+  outline: none;
+}
+.date {
+  width: 94%;
+}
+.input-date {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.wrapper-address.show {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.conteiner {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.box-address {
+  position: relative;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  border: 2px solid #C10C99;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 20px;
+}
+
+.box-address.width {
+  width: auto;
+}
+
+.box-address.hidden {
+  display: none;
+}
+
+.close {
+  width: 30px;
+  height: 30px;
+  background:
+  url('../Profile/asset/close.png') 100% 100% no-repeat;
+  background-size: 30px 30px, auto, 30px;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+
+}
+
+.close:hover {
+  width: 32px;
+  height: 32px;
+  background-size: 32px 32px, auto, 30px;
+}
+
+.conteinerType {
+  width: 100%;
+  padding-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 10px;
+  padding-right: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.type-item {
+  list-style-type: none;
+  width: 40%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.countryPostalCode {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.box-postalCode, .box-country {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+}
+.box-country {
+  width: 50%;
+}
+.input-city, .input-street-name, .input-street-num {
+  position: relative;
+  background-color: #050214;
+  color: #FFF;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-bottom: 1vh;
+  border: none;
+  border: 1px solid #FFF;
+  border-radius: 10px;
+  padding-left: 10px;
+  outline: none;
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.select-country {
+  margin-bottom: 10px;
+  position: relative;
+  background-color: #050214;
+  color: #FFF;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-bottom: 1vh;
+  border: none;
+  border: 1px solid #FFF;
+  border-radius: 10px;
+  padding-left: 10px;
+  outline: none;
+}
+.input-postalcode {
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 5px;
+  position: relative;
+  background-color: #050214;
+  color: #FFF;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-bottom: 1vh;
+  border: none;
+  border: 1px solid #FFF;
+  border-radius: 10px;
+  padding-left: 10px;
+  outline: none;
+}
+
+.label-country {
+  margin-bottom: 10px;
+}
+.default {
+  display: none;
+}
+.default.add {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #C10C99;
+}
+.default.add.width {
+  display: inline;
+  width: 50%;
+}
+
+
+
+.b, .s {
+  display: block;
+}
+
+.toggle1, .toggle2 {
+  position: absolute;
+  top: 100%;
+  right: 20%;
+  width: 40px;
+  height: 20px;
+  border-radius: 100px;
+  background-color: rgb(183, 179, 179);
+  margin: -20px -40px;
+  overflow: hidden;
+  box-shadow: inset 0 0 2px 1px rgba(0,0,0,.05);
+}
+
+.shipping-input, .billing-input {
+  position: absolute;
+  display: block;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 6;
+}
+
+  .shipping-input:checked ~ .track1,
+  .billing-input:checked ~ .track2 {
+    box-shadow: inset 0 0 0 20px #C10C99;;
+  }
+
+  .shipping-input:checked ~ .switch1,
+  .billing-input:checked ~ .switch2 {
+    right: 2px;
+    left: 22px;
+    transition: .35s cubic-bezier(0.785, 0.135, 0.150, 0.860);
+    transition-property: left, right;
+    transition-delay: .05s, 0s;
+  }
+
+.switch1, .switch2 {
+  position: absolute;
+  left: 2px;
+  top: 1px;
+  bottom: 1px;
+  right: 22px;
+  background-color: #fff;
+  border-radius: 36px;
+  z-index: 1;
+  transition: .35s cubic-bezier(0.785, 0.135, 0.150, 0.860);
+  transition-property: left, right;
+  transition-delay: 0s, .05s;
+  box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+
+.track1, .track2 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  transition: .35s cubic-bezier(0.785, 0.135, 0.150, 0.860);
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,.05);
+  border-radius: 40px;
+}
+.box-svg {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-top: 10px;
+}
+.svg {
+  width: 20px;
+  height: 20px;
+  background:
+  url('../Profile/asset/pen2.png') 100% 100% no-repeat;
+  background-size: 20px 20px, auto, 20px;
+  cursor: pointer;
+}
+.svg.hidden {
+display: none;
+}
+.box-svg.show {
+  display: none;
+}
+
+.svg:hover {
+  border: 1px solid white;
+  background-size: 19px 19px, auto, 10px;
+  border-radius: 2px;
+  box-shadow: 0px 0px 0px 1px #C10C99, 
+            0px 1px 2px #C10C99,
+            0px 2px 4px #C10C99,
+            0px 2px 8px #C10C99;
+}
+
+.svg.change {
+  border: 1px solid #C10C99;
+  background-size: 19px 19px, auto, 10px;
+  border-radius: 2px;
+  box-shadow: 0px 0px 0px 1px white, 
+            0px 1px 2px white,
+            0px 2px 4px white,
+            0px 2px 8px white;
+}
+
+.errorMailNew,
+.errorPassNew,
+.errorFirstNew,
+.errorLastNew,
+.errorDateNew,
+.errorCode,
+.errorCity,
+.errorStreetName,
+.errorStreetNum {
+  white-space: pre;
+  font-size: 12px;
+  color: #C10C99;
+  display: none;
+  width: 100%;
+}
