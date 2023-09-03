@@ -33,6 +33,7 @@ const routes: Route[] = [
     accessRules: { isForAuthorizedOnly: true },
     redirect: '/',
   },
+
   // For Sprint#3
   // {
   //   path: /^\/items\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\/$/,
