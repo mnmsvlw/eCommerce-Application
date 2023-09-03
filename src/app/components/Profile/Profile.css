@@ -138,7 +138,7 @@
   height: 100%;
   display: block;
 }
-.save-i.hide, .save-e.hide, .save-a.hide {
+.save-i.hide, .save-e.hide, .save-a.hide, .save-an.hide {
   display: none;
 }
 .save-i, .save-e, .save-a {
@@ -146,7 +146,7 @@
   justify-content: center;
 }
 
-.save-email, .save-info, .save-address, .btnAddNewAddress {
+.save-email, .save-info, .save-address, .btnAddNewAddress, .save-new {
   display: block;
   width: 100px;
   height: 30px;
@@ -165,7 +165,7 @@
   width: 200px;
   margin-bottom: 30px;
 }
-
+.save-new:hover,
 .save-info:hover,
 .save-email:hover,
 .save-address:hover,
@@ -173,6 +173,7 @@
   background-color: #ff00c8;
 }
 
+.save-new:active,
 .save-info:active,
 .save-email:active,
 .save-address:active,
@@ -225,7 +226,7 @@
 
 .box-address {
   position: relative;
-  width: 35%;
+  width: 400px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -233,10 +234,12 @@
   border: 2px solid #C10C99;
   border-radius: 5px;
   padding: 20px;
-
   margin: 20px;
 }
 
+.box-address.width {
+  width: auto;
+}
 
 .box-address.hidden {
   display: none;
@@ -368,7 +371,10 @@
   font-size: 14px;
   color: #C10C99;
 }
-
+.default.add.width {
+  display: inline;
+  width: 50%;
+}
 
 
 
@@ -455,7 +461,12 @@
   background-size: 20px 20px, auto, 20px;
   cursor: pointer;
 }
-
+.svg.hidden {
+display: none;
+}
+.box-svg.show {
+  display: none;
+}
 
 .svg:hover {
   border: 1px solid white;

@@ -3,7 +3,10 @@ import { changeDataCustomer } from '../../api/authorization/Customer';
 import sdkClient from '../../api/SdkClient';
 import Component from '../../components/Component';
 import ProfileAllAddresses from '../../components/Profile/PofileAllAddresses';
+import Container from '../../UI/Container';
+import Heading from '../../UI/Heading';
 import ValidationRules from '../RegistrationModule/validation/ValidationRules/ValidationRules';
+import NewAddressModule from './NewAddress';
 
 export default class AddressesModule extends Component {
   render = () => {
@@ -30,6 +33,12 @@ export default class AddressesModule extends Component {
       const el = e.target as HTMLElement;
       el.classList.contains('btnAddNewAddress') && this.addNewAddress();
     });
+
+    console.log('addresses', addresses);
+    console.log('bill', sdkClient.userInfo.billingAddressIds);
+    console.log('defbill', sdkClient.userInfo.defaultBillingAddressId);
+    console.log('shill', sdkClient.userInfo.shippingAddressIds);
+    console.log('defshill', sdkClient.userInfo.defaultShippingAddressId);
   }
 
   fillAddress(doc: Element, address: Address): void {
@@ -60,11 +69,11 @@ export default class AddressesModule extends Component {
       key === 'KeyShipping' && this.highlightAddressType(doc, '.shipping-item');
       key === 'KeyBilling' && this.highlightAddressType(doc, '.billing-item');
 
-      this.listenAddressInput(cityInput, city, saveBtn);
-      this.listenAddressInput(countrySelect, country, saveBtn);
-      this.listenAddressInput(postalCodeInput, postalCode, saveBtn);
-      this.listenAddressInput(streetNameInput, streetName, saveBtn);
-      this.listenAddressInput(streetNumInput, streetNumber, saveBtn);
+      this.showSaveBtn(cityInput, city, saveBtn);
+      this.showSaveBtn(countrySelect, country, saveBtn);
+      this.showSaveBtn(postalCodeInput, postalCode, saveBtn);
+      this.showSaveBtn(streetNameInput, streetName, saveBtn);
+      this.showSaveBtn(streetNumInput, streetNumber, saveBtn);
 
       this.listenInputs(doc, cityInput, city, '.errorCity');
       this.listenInputs(doc, postalCodeInput, postalCode, '.errorCode');
@@ -121,19 +130,7 @@ export default class AddressesModule extends Component {
           }
         }
 
-        if (el.classList.contains('close')) {
-          doc.classList.add('hidden');
-          const addressId = doc.id;
-          changeDataCustomer(
-            [
-              {
-                action: 'removeAddress',
-                addressId: `${addressId}`,
-              },
-            ],
-            'address'
-          );
-        }
+        el.classList.contains('close') && this.removeAddress(doc);
       });
     }
   }
@@ -173,7 +170,7 @@ export default class AddressesModule extends Component {
     error.style.display = 'none';
   }
 
-  listenAddressInput(input: HTMLInputElement | HTMLSelectElement, data: string, save: HTMLElement) {
+  showSaveBtn(input: HTMLInputElement | HTMLSelectElement, data: string, save: HTMLElement) {
     input.addEventListener('input', () => {
       input.value !== data ? save.classList.remove('hide') : save.classList.add('hide');
     });
@@ -186,6 +183,25 @@ export default class AddressesModule extends Component {
   }
 
   addNewAddress(): void {
-    console.log('new addreSS');
+    this.content.textContent = '';
+    const header = new Heading(3, 'headerPage', 'Enter Addresses').render();
+    const conteiner = new Container('conteiner').render();
+    const box = new NewAddressModule().render();
+    conteiner.append(box);
+    this.content.append(header, conteiner);
+  }
+
+  removeAddress(doc: Element) {
+    doc.classList.add('hidden');
+    const addressId = doc.id;
+    changeDataCustomer(
+      [
+        {
+          action: 'removeAddress',
+          addressId: `${addressId}`,
+        },
+      ],
+      'address'
+    );
   }
 }

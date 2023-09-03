@@ -44,4 +44,12 @@ export default class ValidationRules {
   country(value: string): boolean {
     return value !== '';
   }
+
+  house(value: string): boolean {
+    return /^[1-9][0-9]*([a-z]|[а-я]|(\/[1-9][0-9]*))?$/i.test(value);
+  }
+
+  streetName(value: string): boolean {
+    return /^[A-Za-z]{1}[a-z]{0,30}$/i.test(value);
+  }
 }
