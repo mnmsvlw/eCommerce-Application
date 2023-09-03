@@ -131,6 +131,7 @@ export default class AddressesModule extends Component {
         }
 
         el.classList.contains('close') && this.removeAddress(doc);
+        el.classList.contains('save-address') && this.changeAddress(doc);
       });
     }
   }
@@ -203,5 +204,25 @@ export default class AddressesModule extends Component {
       ],
       'address'
     );
+  }
+
+  changeAddress(doc: Element) {
+    const countrySelect = doc.querySelector('.select-country') as HTMLSelectElement;
+    const postalCodeInput = doc.querySelector('.input-postalcode') as HTMLInputElement;
+    const cityInput = doc.querySelector('.input-city') as HTMLInputElement;
+    const streetNameInput = doc.querySelector('.input-street-name') as HTMLInputElement;
+    const streetNumInput = doc.querySelector('.input-street-num') as HTMLInputElement;
+    // const def = doc.querySelectorAll<HTMLInputElement>('input[type=checkbox]');
+    // const defShipp = def[0].checked;
+    // const defBill = def[1].checked;
+    const addressChange: Address = {
+      streetName: `${streetNameInput.value}`,
+      streetNumber: `${streetNumInput.value}`,
+      postalCode: `${postalCodeInput.value}`,
+      city: `${cityInput.value}`,
+      country: `${countrySelect.value}`,
+    };
+
+    changeDataCustomer([{ action: 'changeAddress', addressId: `${doc.id}`, address: addressChange }], 'addres');
   }
 }
