@@ -33,7 +33,19 @@ export default class MainPage extends Page {
       redirect(logoutLink.href);
     });
 
-    this.page.append(mainLink.render(), loginLink.render(), registerLink.render(), logoutLink.render());
+    const productLink = new Link('/product/', '', 'Product page');
+    productLink.addListener('click', (e: Event) => {
+      e.preventDefault();
+      redirect(productLink.href);
+    });
+
+    this.page.append(
+      mainLink.render(),
+      loginLink.render(),
+      registerLink.render(),
+      logoutLink.render(),
+      productLink.render()
+    );
     listenBurger(this.page);
   }
 }
