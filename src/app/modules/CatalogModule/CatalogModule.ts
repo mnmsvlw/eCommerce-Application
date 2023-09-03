@@ -1,8 +1,7 @@
-// import { ClientResponse, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 import sdkClient from '../../api/SdkClient';
 import Container from '../../UI/Container';
 import Component from '../../components/Component';
-import Heading from '../../UI/Heading';
+import ItemCard from '../../components/ItemCard/ItemCard';
 
 export default class CatalogModule extends Component {
   render = () => {
@@ -15,8 +14,11 @@ export default class CatalogModule extends Component {
 
   renderAsync = async (component: HTMLElement) => {
     // Async logic example
-    const itemsList = await sdkClient.apiRoot.productProjections().get().execute();
-    console.log(itemsList);
-    component.appendChild(new Heading(1, 'heading', JSON.stringify(itemsList)).render());
+    const itemsList = (await sdkClient.apiRoot.productProjections().get().execute()).body.results;
+    itemsList.forEach((item) => {
+      component.appendChild(new ItemCard().render(item));
+    });
+    // console.log(itemsList);
+    // component.appendChild(new Heading(1, 'heading', JSON.stringify(itemsList)).render());
   };
 }
