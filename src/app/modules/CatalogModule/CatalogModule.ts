@@ -1,8 +1,8 @@
-// import { ClientResponse, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
-import sdkClient from '../../api/SdkClient';
 import Container from '../../UI/Container';
+import sdkClient from '../../api/SdkClient';
 import Component from '../../components/Component';
-import Heading from '../../UI/Heading';
+import ItemCard from '../../components/ItemCard/ItemCard';
+import redirect from '../../utils/redirect';
 
 export default class CatalogModule extends Component {
   render = () => {
@@ -13,10 +13,23 @@ export default class CatalogModule extends Component {
     return this.content;
   };
 
+  setCatalogContainerListener = (container: HTMLElement) => {
+    container.addEventListener('click', (e: Event) => {
+      const target = e.target as HTMLElement;
+      const closestCard = target.closest('.item-card') as HTMLElement;
+
+      if (closestCard) {
+        const { itemId } = closestCard.dataset;
+        redirect(`/items/${itemId}`);
+      }
+    });
+  };
+
   renderAsync = async (component: HTMLElement) => {
-    // Async logic example
-    const itemsList = await sdkClient.apiRoot.productProjections().get().execute();
-    console.log(itemsList);
-    component.appendChild(new Heading(1, 'heading', JSON.stringify(itemsList)).render());
+    const itemsList = (await sdkClient.apiRoot.productProjections().get().execute()).body.results;
+    itemsList.forEach((item) => {
+      component.appendChild(new ItemCard().render(item));
+    });
+    this.setCatalogContainerListener(component);
   };
 }
