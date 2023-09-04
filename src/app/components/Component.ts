@@ -17,13 +17,11 @@ export default class Component {
     return this.content;
   }
 
-
   renderAsync = async (_component: HTMLElement) => {
     return new Promise((resolve) => {
       resolve(null);
     });
   };
-
 
   bindAsync = (renderAsync: (component: HTMLElement) => Promise<void>) => {
     this.addListener('mount', (e: Event) => {
