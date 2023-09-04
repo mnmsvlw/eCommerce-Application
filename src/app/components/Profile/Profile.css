@@ -137,6 +137,7 @@
 .wrapper-personal, .wrapper-email, .wrapper-address {
   height: 100%;
   display: block;
+  position: relative;
 }
 .save-i.hide, .save-e.hide, .save-a.hide, .save-an.hide {
   display: none;
@@ -502,4 +503,25 @@ display: none;
   color: #C10C99;
   display: none;
   width: 100%;
+}
+
+.info-i, .info-e {
+  color: white;
+  position: absolute;
+  top: 5%;
+  border: 2px solid #C10C99;
+  border-radius: 10px;
+  background-color: #050214;
+  padding: 10px;
+}
+
+.info-a, .info-n {
+  color: white;
+  position: absolute;
+  top: 3%;
+  left: 5%;
+  border: 2px solid #C10C99;
+  border-radius: 10px;
+  background-color: #050214;
+  padding: 5px;
 }

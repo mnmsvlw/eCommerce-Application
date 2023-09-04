@@ -2,11 +2,13 @@ import { changeDataCustomer } from '../../api/authorization/Customer';
 import sdkClient from '../../api/SdkClient';
 import Component from '../../components/Component';
 import ProfilePersonalInfo from '../../components/Profile/ProfilePersonalInfo';
+import Heading from '../../UI/Heading';
 import ValidationRules from '../RegistrationModule/validation/ValidationRules/ValidationRules';
 
 export default class PersonalInfoModule extends Component {
   render = () => {
     this.content = new ProfilePersonalInfo().render();
+    sessionStorage.setItem('page', 'info');
     this.fillData(this.content);
     return this.content;
   };
@@ -60,6 +62,12 @@ export default class PersonalInfoModule extends Component {
     const errorBox = this.content.querySelector(err) as HTMLElement;
 
     if (el.classList.contains('change')) {
+      const arrChange = this.content.querySelectorAll('.change');
+
+      if (arrChange.length === 1) {
+        this.saveBtn.classList.add('hide');
+      }
+
       el.classList.remove('change');
       elem.readOnly = true;
       elem.value = data;
@@ -101,17 +109,29 @@ export default class PersonalInfoModule extends Component {
     }
   }
 
-  saveData(): void {
-    this.VRules.name(this.first.value) === true &&
-      this.VRules.name(this.last.value) === true &&
-      this.VRules.dateOfBirth(this.date.value) === true &&
-      changeDataCustomer(
-        [
+  async saveData(): Promise<void> {
+    try {
+      this.VRules.name(this.first.value) === true &&
+        this.VRules.name(this.last.value) === true &&
+        this.VRules.dateOfBirth(this.date.value) === true &&
+        (await changeDataCustomer([
           { action: 'setFirstName', firstName: `${this.first.value}` },
           { action: 'setLastName', lastName: `${this.last.value}` },
           { action: 'setDateOfBirth', dateOfBirth: `${this.date.value}` },
-        ],
-        'data'
-      );
+        ]));
+      this.showInfo('data');
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  showInfo(text: string) {
+    const info = new Heading(4, 'info-i', `Your ${text} has been successfully changed!`).render();
+    this.content.append(info);
+    const TIME = 3000;
+    setTimeout(() => {
+      window.location.reload();
+      info.remove();
+    }, TIME);
   }
 }

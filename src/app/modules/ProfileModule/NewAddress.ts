@@ -4,6 +4,7 @@ import Component from '../../components/Component';
 import ProfileAddress from '../../components/Profile/ProfileAddress';
 import Button from '../../UI/Button';
 import Container from '../../UI/Container';
+import Heading from '../../UI/Heading';
 import ValidationRules from '../RegistrationModule/validation/ValidationRules/ValidationRules';
 
 export default class NewAddressModule extends Component {
@@ -118,27 +119,31 @@ export default class NewAddressModule extends Component {
   }
 
   async saveAddress() {
-    const addressNew = this.fillAddressReg();
-    const addedAddress = await changeDataCustomer([{ action: 'addAddress', address: addressNew }], 'address');
-    console.log('addedAddress', addedAddress.body.addresses);
-    const arrAddresses = addedAddress.body.addresses;
-    const lastAddress = arrAddresses[arrAddresses.length - 1];
-    console.log('lastAddess', lastAddress);
+    try {
+      const addressNew = this.fillAddressReg();
+      const addedAddress = await changeDataCustomer([{ action: 'addAddress', address: addressNew }]); // 'address'
+      console.log('addedAddress', addedAddress.body.addresses);
+      const arrAddresses = addedAddress.body.addresses;
+      const lastAddress = arrAddresses[arrAddresses.length - 1];
+      console.log('lastAddess', lastAddress);
 
-    if ((this.arrChecked[0] as HTMLInputElement).checked === true) {
-      changeDataCustomer(
-        [{ action: 'setDefaultShippingAddress', addressId: `${lastAddress?.id}` }],
-        '',
-        addedAddress.body.version
-      );
-    }
+      this.showInfo();
 
-    if ((this.arrChecked[1] as HTMLInputElement).checked === true) {
-      changeDataCustomer(
-        [{ action: 'setDefaultBillingAddress', addressId: `${lastAddress?.id}` }],
-        '',
-        addedAddress.body.version
-      );
+      if ((this.arrChecked[0] as HTMLInputElement).checked === true) {
+        changeDataCustomer(
+          [{ action: 'setDefaultShippingAddress', addressId: `${lastAddress?.id}` }],
+          addedAddress.body.version
+        );
+      }
+
+      if ((this.arrChecked[1] as HTMLInputElement).checked === true) {
+        changeDataCustomer(
+          [{ action: 'setDefaultBillingAddress', addressId: `${lastAddress?.id}` }],
+          addedAddress.body.version
+        );
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -155,5 +160,15 @@ export default class NewAddressModule extends Component {
       country: `${this.countrySelect.value}`,
     };
     return address;
+  }
+
+  showInfo() {
+    const info = new Heading(5, 'info-n', `Your new address has been successfully added!`).render();
+    this.content.append(info);
+    const TIME = 3000;
+    setTimeout(() => {
+      window.location.reload();
+      info.remove();
+    }, TIME);
   }
 }

@@ -29,7 +29,6 @@ const loginCustomer = async (loginDataReceived: LoginData) => {
 
 const changeDataCustomer = async (
   action: MyCustomerUpdateAction[],
-  text?: string,
   version: number = sdkClient.userInfo.version as number
 ): Promise<ClientResponse<Customer>> => {
   const response = await sdkClient.apiRoot
@@ -41,8 +40,7 @@ const changeDataCustomer = async (
       },
     })
     .execute();
-  if (text) alert(`Your ${text} has been successfully changed!`);
-  window.location.reload();
+
   return response;
 };
 

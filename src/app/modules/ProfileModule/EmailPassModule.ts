@@ -2,6 +2,7 @@ import { changeDataCustomer } from '../../api/authorization/Customer';
 import sdkClient from '../../api/SdkClient';
 import Component from '../../components/Component';
 import ProfileEmailPass from '../../components/Profile/ProfileEmailPass';
+import Heading from '../../UI/Heading';
 import validateEmail from '../LoginModule/helpers/validateEmail';
 import isValidInput from '../LoginModule/helpers/validateInput';
 import validatePassword from '../LoginModule/helpers/validatePassword';
@@ -10,6 +11,7 @@ export default class EmailPassModule extends Component {
   render = () => {
     this.content = new ProfileEmailPass().render();
     this.fillData(this.content);
+    sessionStorage.setItem('page', 'email');
     return this.content;
   };
 
@@ -56,6 +58,12 @@ export default class EmailPassModule extends Component {
     const errorBox = this.content.querySelector(err) as HTMLElement;
 
     if (el.classList.contains('change')) {
+      const arrChange = this.content.querySelectorAll('.change');
+
+      if (arrChange.length === 1) {
+        this.saveBtn.classList.add('hide');
+      }
+
       el.classList.remove('change');
       elem.readOnly = true;
       elem.value = data;
@@ -111,10 +119,26 @@ export default class EmailPassModule extends Component {
     }
   }
 
-  saveData(): void {
-    validateEmail(this.mail.value) === '' &&
-      this.mail.value !== this.email &&
-      changeDataCustomer([{ action: 'changeEmail', email: `${this.mail.value}` }], 'mail');
+  async saveData(): Promise<void> {
+    if (validateEmail(this.mail.value) === '' && this.mail.value !== this.email) {
+      try {
+        await changeDataCustomer([{ action: 'changeEmail', email: `${this.mail.value}` }]);
+        this.showInfo('mail');
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     validatePassword(this.newPass.value) === '' && console.log('изменить пароль!');
+  }
+
+  showInfo(text: string) {
+    const info = new Heading(4, 'info-e', `Your ${text} has been successfully changed!`).render();
+    this.content.append(info);
+    const TIME = 3000;
+    setTimeout(() => {
+      window.location.reload();
+      info.remove();
+    }, TIME);
   }
 }

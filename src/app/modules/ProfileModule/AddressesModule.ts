@@ -11,6 +11,7 @@ import NewAddressModule from './NewAddress';
 export default class AddressesModule extends Component {
   render = () => {
     this.content = new ProfileAllAddresses().render();
+    sessionStorage.setItem('page', 'address');
     this.fillData(this.content);
     this.content.querySelectorAll('select').forEach((elem) => {
       const el = elem;
@@ -57,6 +58,8 @@ export default class AddressesModule extends Component {
 
     const { city, country, id, key, postalCode, streetName, streetNumber } = address;
 
+    const data = { city, country, id, key, postalCode, streetName, streetNumber };
+
     if (city && country && id && postalCode && streetName && streetNumber) {
       countrySelect.value = country;
       postalCodeInput.value = postalCode;
@@ -65,6 +68,11 @@ export default class AddressesModule extends Component {
       streetNumInput.value = streetNumber;
       const boxAddress = doc;
       boxAddress.id = id;
+
+      allInput.forEach((x) => {
+        const input = x;
+        input.readOnly = true;
+      });
 
       key === 'KeyShipping' && this.highlightAddressType(doc, '.shipping-item');
       key === 'KeyBilling' && this.highlightAddressType(doc, '.billing-item');
@@ -75,10 +83,10 @@ export default class AddressesModule extends Component {
       this.showSaveBtn(streetNameInput, streetName, saveBtn);
       this.showSaveBtn(streetNumInput, streetNumber, saveBtn);
 
-      this.listenInputs(doc, cityInput, city, '.errorCity');
-      this.listenInputs(doc, postalCodeInput, postalCode, '.errorCode');
-      this.listenInputs(doc, streetNameInput, streetName, '.errorStreetName');
-      this.listenInputs(doc, streetNumInput, streetNumber, '.errorStreetNum');
+      this.listenInputs(data, doc, cityInput, '.errorCity');
+      this.listenInputs(data, doc, postalCodeInput, '.errorCode');
+      this.listenInputs(data, doc, streetNameInput, '.errorStreetName');
+      this.listenInputs(data, doc, streetNumInput, '.errorStreetNum');
 
       doc.addEventListener('click', (e) => {
         const el = e.target as HTMLElement;
@@ -136,10 +144,26 @@ export default class AddressesModule extends Component {
     }
   }
 
-  listenInputs(doc: Element, input: HTMLInputElement, data: string, err: string) {
+  listenInputs(data: Address, doc: Element, input: HTMLInputElement, err: string) {
+    const countrySelect = doc.querySelector('.select-country') as HTMLSelectElement;
+    const postalCodeInput = doc.querySelector('.input-postalcode') as HTMLInputElement;
+    const cityInput = doc.querySelector('.input-city') as HTMLInputElement;
+    const streetNameInput = doc.querySelector('.input-street-name') as HTMLInputElement;
+    const streetNumInput = doc.querySelector('.input-street-num') as HTMLInputElement;
     const saveBtn = doc.querySelector('.save-a') as HTMLElement;
     input.addEventListener('input', () => {
-      input.value !== data ? saveBtn.classList.remove('hide') : saveBtn.classList.add('hide');
+      if (
+        countrySelect.value !== data.country ||
+        postalCodeInput.value !== data.postalCode ||
+        cityInput.value !== data.city ||
+        streetNameInput.value !== data.streetName ||
+        streetNumInput.value !== data.streetNumber
+      ) {
+        saveBtn.classList.remove('hide');
+      } else {
+        saveBtn.classList.add('hide');
+      }
+
       const click = (className: string) => input.classList.contains(className);
       click('input-postalcode') && this.isValid(doc, input, this.VRules.postalCode, 'postal code', err);
       click('input-city') && this.isValid(doc, input, this.VRules.city, 'city name', err);
@@ -192,37 +216,57 @@ export default class AddressesModule extends Component {
     this.content.append(header, conteiner);
   }
 
-  removeAddress(doc: Element) {
-    doc.classList.add('hidden');
-    const addressId = doc.id;
-    changeDataCustomer(
-      [
-        {
-          action: 'removeAddress',
-          addressId: `${addressId}`,
-        },
-      ],
-      'address'
-    );
+  async removeAddress(doc: Element) {
+    try {
+      doc.classList.add('hidden');
+      const addressId = doc.id;
+      await changeDataCustomer([{ action: 'removeAddress', addressId: `${addressId}` }]);
+      this.showInfo(doc, 'Your address has been successfully deleted!');
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  changeAddress(doc: Element) {
-    const countrySelect = doc.querySelector('.select-country') as HTMLSelectElement;
-    const postalCodeInput = doc.querySelector('.input-postalcode') as HTMLInputElement;
-    const cityInput = doc.querySelector('.input-city') as HTMLInputElement;
-    const streetNameInput = doc.querySelector('.input-street-name') as HTMLInputElement;
-    const streetNumInput = doc.querySelector('.input-street-num') as HTMLInputElement;
-    // const def = doc.querySelectorAll<HTMLInputElement>('input[type=checkbox]');
-    // const defShipp = def[0].checked;
-    // const defBill = def[1].checked;
-    const addressChange: Address = {
-      streetName: `${streetNameInput.value}`,
-      streetNumber: `${streetNumInput.value}`,
-      postalCode: `${postalCodeInput.value}`,
-      city: `${cityInput.value}`,
-      country: `${countrySelect.value}`,
-    };
+  async changeAddress(doc: Element) {
+    try {
+      const countrySelect = doc.querySelector('.select-country') as HTMLSelectElement;
+      const postalCodeInput = doc.querySelector('.input-postalcode') as HTMLInputElement;
+      const cityInput = doc.querySelector('.input-city') as HTMLInputElement;
+      const streetNameInput = doc.querySelector('.input-street-name') as HTMLInputElement;
+      const streetNumInput = doc.querySelector('.input-street-num') as HTMLInputElement;
 
-    changeDataCustomer([{ action: 'changeAddress', addressId: `${doc.id}`, address: addressChange }], 'addres');
+      if (
+        this.VRules.postalCode(postalCodeInput.value) === true &&
+        this.VRules.name(streetNameInput.value) === true &&
+        this.VRules.house(streetNumInput.value) === true &&
+        this.VRules.city(cityInput.value) === true
+      ) {
+        // const def = doc.querySelectorAll<HTMLInputElement>('input[type=checkbox]');
+        // const defShipp = def[0].checked;
+        // const defBill = def[1].checked;
+        const addressChange: Address = {
+          streetName: `${streetNameInput.value}`,
+          streetNumber: `${streetNumInput.value}`,
+          postalCode: `${postalCodeInput.value}`,
+          city: `${cityInput.value}`,
+          country: `${countrySelect.value}`,
+        };
+
+        await changeDataCustomer([{ action: 'changeAddress', addressId: `${doc.id}`, address: addressChange }]);
+        this.showInfo(doc, 'Your address has been successfully changed!');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  showInfo(doc: Element, text: string) {
+    const info = new Heading(6, 'info-a', `${text}`).render();
+    doc.append(info);
+    const TIME = 3000;
+    setTimeout(() => {
+      window.location.reload();
+      info.remove();
+    }, TIME);
   }
 }

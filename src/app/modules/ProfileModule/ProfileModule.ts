@@ -8,9 +8,26 @@ export default class ProfileModule extends Component {
   render = () => {
     this.content = new Profile().render();
     const box = this.content.querySelector('.wrapp-form') as HTMLElement;
-    box.append(new PersonalInfoModule().render());
     const menu = this.content.querySelector('.menu') as HTMLElement;
-    (menu.querySelector('.info-item') as HTMLElement).classList.add('red');
+    this.content.querySelectorAll('.red').forEach((elem) => elem.classList.remove('red'));
+
+    const page = sessionStorage.getItem('page');
+
+    if (page === null || page === 'info') {
+      box.append(new PersonalInfoModule().render());
+      (menu.querySelector('.info-item') as HTMLElement).classList.add('red');
+    }
+
+    if (page === 'email') {
+      box.append(new EmailPassModule().render());
+      (menu.querySelector('.email-item') as HTMLElement).classList.add('red');
+    }
+
+    if (page === 'address') {
+      box.append(new AddressesModule().render());
+      (menu.querySelector('.address-item') as HTMLElement).classList.add('red');
+    }
+
     this.changeBlock(menu, box);
     return this.content;
   };
