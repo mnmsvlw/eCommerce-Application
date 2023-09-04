@@ -5,3 +5,8 @@ export interface ImageData {
   };
   url: string;
 }
+
+export interface SizeValue {
+  key: string;
+  label: string;
+}

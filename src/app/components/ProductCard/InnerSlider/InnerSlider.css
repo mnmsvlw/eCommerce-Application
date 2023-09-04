@@ -49,3 +49,22 @@
   padding: 10px;
   text-align: center;
 }
+
+@media (max-width: 550px) {
+  .swiper  {
+    width: 90vw;
+    height: 50vh;
+    margin-top: 5vh;
+  }
+  
+  .swiper-slide{
+    background-size: cover;
+    background-position: 50%;
+    min-height: 20vh;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
