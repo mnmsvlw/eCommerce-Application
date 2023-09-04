@@ -26,9 +26,8 @@ export default class ItemsList extends Component {
   };
 
   renderAsync = async (component: HTMLElement) => {
-    // const itemsList = (await sdkClient.apiRoot.productProjections().get().execute()).body.results;
     const queryParams = new URLSearchParams(window.location.search);
-    let filterParams = '';
+    const filterParams: string[] = [];
     let sortParams = '';
     let textParams = '';
     let itemsList;
@@ -39,15 +38,17 @@ export default class ItemsList extends Component {
           sortParams += value;
         } else if (key === 'text') {
           textParams = value;
+        } else if (key === 'price') {
+          filterParams.push(value);
         } else {
-          filterParams += `${key}:"${value}"`;
+          filterParams.push(`${key}:"${value}"`);
         }
       });
     }
 
-    const queryArgs: { filter?: string; sort?: string; 'text.en-US'?: string } = {};
+    const queryArgs: { filter?: string[]; sort?: string; 'text.en-US'?: string } = {};
 
-    if (filterParams) {
+    if (filterParams.length > 0) {
       queryArgs.filter = filterParams;
     }
 
@@ -73,6 +74,8 @@ export default class ItemsList extends Component {
       itemsList = (await sdkClient.apiRoot.productProjections().search().get().execute()).body.results;
     }
 
+    const element = component;
+    element.innerHTML = '';
     itemsList.forEach((item) => {
       component.appendChild(new ItemCard().render(item));
     });
