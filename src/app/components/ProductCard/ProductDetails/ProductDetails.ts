@@ -7,6 +7,7 @@ import Button from '../../../UI/Button';
 import './ProductDetails.css';
 import Input from '../../../UI/Input';
 import Label from '../../../UI/Label';
+import { SizeValue } from '../../../../types/productTypes';
 
 export default class ProductDetails extends Component {
   product: ProductProjection;
@@ -45,16 +46,24 @@ export default class ProductDetails extends Component {
     }
     // }
 
-    const sizes = this.product.masterVariant.attributes?.filter((attribute) => attribute.name === 'size');
+    const { variants } = this.product;
+    const sizeVariants: SizeValue[] = [];
+    variants.forEach((variant) => {
+      variant.attributes?.forEach((attribute) => {
+        if (attribute.name === 'size' || attribute.name === 'size-w') {
+          sizeVariants.push(attribute.value);
+        }
+      });
+    });
     const sizeContainer = new Container('product-card__size-container').render();
 
-    if (sizes) {
+    if (sizeVariants) {
       const sizeHeader = new Heading(3, 'product-card__size-heading', 'Choose a Size').render();
       const sizeElementContainer = new Container('product-card__size-elements').render();
-      sizes?.forEach((size) => {
+      sizeVariants?.forEach((size) => {
         const elContainer = new Container('product-card__size-el-container').render();
         const sizeElInput = new Input('size', 2, 'product-card__size-input', '', 'radio').render() as HTMLInputElement;
-        sizeElInput.value = size.value.label;
+        sizeElInput.value = size.label;
         const sizeElText = new Label('size', `${sizeElInput.value}`, 'product-card__size-el-text').render();
         elContainer.append(sizeElInput, sizeElText);
         sizeElementContainer.append(elContainer);
@@ -64,12 +73,10 @@ export default class ProductDetails extends Component {
 
     const btnContainer = new Container('product-card__btn-container').render();
     const quantatyBtn = new Container('quantity-container').render();
-    const minusBtn = new Button('-', 'button', 'minus-btn');
-    const minusBtnElement = minusBtn.render();
+    const minusBtnElement = new Button('-', 'button', 'minus-btn').render();
     const quantatyNum = new Container('quantity-num').render();
     quantatyNum.textContent = '1';
-    const plusBtn = new Button('+', 'button', 'plus-btn');
-    const plusBtnElement = plusBtn.render();
+    const plusBtnElement = new Button('+', 'button', 'plus-btn').render();
     quantatyBtn.append(minusBtnElement, quantatyNum, plusBtnElement);
 
     const minusHandler = () => {

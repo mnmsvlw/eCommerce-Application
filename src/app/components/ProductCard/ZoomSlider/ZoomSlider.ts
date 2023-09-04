@@ -1,7 +1,7 @@
 import { Image } from '@commercetools/platform-sdk';
 import Component from '../../Component';
-import ElementCreator from '../../../utils/ElementCreator';
 import Container from '../../../UI/Container';
+import ImageElement from '../../../UI/Img';
 import 'swiper/css/bundle';
 import './ZoomSlider.css';
 
@@ -16,38 +16,18 @@ export default class ZoomProductSlider extends Component {
   public render = () => {
     if (this.images.length === 1) {
       this.content = new Container('image-container').render();
-      const img = new ElementCreator({
-        tag: 'img',
-        attributes: {
-          src: this.images[0].url,
-          alt: 'slide-image',
-        },
-      }).getElement();
+      const img = new ImageElement(this.images[0].url, 'slide-image').render();
       this.content.append(img);
       return this.content;
     }
 
     this.content = new Container('zoom-swiper').render();
 
-    const swiperWrapper = new ElementCreator({
-      tag: 'div',
-      classNames: 'swiper-wrapper',
-    }).getElement();
+    const swiperWrapper = new Container('swiper-wrapper').render();
 
     this.images.forEach((image) => {
-      const swiperSlide = new ElementCreator({
-        tag: 'div',
-        classNames: 'swiper-slide',
-      }).getElement();
-
-      const imageElement = new ElementCreator({
-        tag: 'img',
-        attributes: {
-          src: image.url,
-          alt: 'slide-image',
-        },
-      }).getElement();
-
+      const swiperSlide = new Container('swiper-slide').render();
+      const imageElement = new ImageElement(image.url, 'slide-image').render();
       swiperSlide.appendChild(imageElement);
       swiperWrapper.appendChild(swiperSlide);
     });
