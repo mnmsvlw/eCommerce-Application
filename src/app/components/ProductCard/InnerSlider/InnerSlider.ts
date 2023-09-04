@@ -1,11 +1,10 @@
 import { Image } from '@commercetools/platform-sdk';
 import Component from '../../Component';
 import Container from '../../../UI/Container';
-import 'swiper/css/bundle';
-import './InnerSlider.css';
 import ImageElement from '../../../UI/Img';
 import ModalConstructor from '../ModalView/ModalView';
 import SwiperSlider from '../../../utils/Swiper';
+import './InnerSlider.css';
 
 export default class InnerProductSlider extends Component {
   images: Image[];

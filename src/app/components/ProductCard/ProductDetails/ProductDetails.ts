@@ -90,14 +90,12 @@ export default class ProductDetails extends Component {
 
       if (currentValue > 1) {
         quantatyNum.textContent = (currentValue - 1).toString();
-        console.log('minus button');
       }
     };
 
     const plusHandler = () => {
       const currentValue = parseInt(quantatyNum.textContent || '1', 10);
       quantatyNum.textContent = (currentValue + 1).toString();
-      console.log('plus button');
     };
 
     minusBtnElement.addEventListener('click', minusHandler);

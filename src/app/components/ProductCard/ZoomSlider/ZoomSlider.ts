@@ -2,7 +2,6 @@ import { Image } from '@commercetools/platform-sdk';
 import Component from '../../Component';
 import Container from '../../../UI/Container';
 import ImageElement from '../../../UI/Img';
-import 'swiper/css/bundle';
 import './ZoomSlider.css';
 
 export default class ZoomProductSlider extends Component {
