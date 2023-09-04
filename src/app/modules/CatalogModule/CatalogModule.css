@@ -1,0 +1,12 @@
+.catalog-container {
+  background-color: #050214;
+  color: #FFFFFF;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5vw;
+  position: relative;
+}
+
+

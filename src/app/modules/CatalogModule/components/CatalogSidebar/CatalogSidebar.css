@@ -1,0 +1,17 @@
+.sidebar-container {
+  position: sticky;
+  top: 12vh;
+  height: 400px;
+  width: 400px;
+}
+
+.sidebar__category {
+  list-style: none;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+.sidebar__subcategory {
+  margin-left: 1rem;
+  cursor: pointer;
+}
