@@ -4,6 +4,7 @@ import Container from '../../../UI/Container';
 import ImageElement from '../../../UI/Img';
 import ModalConstructor from '../ModalView/ModalView';
 import SwiperSlider from '../../../utils/Swiper';
+import 'swiper/css/bundle';
 import './InnerSlider.css';
 
 export default class InnerProductSlider extends Component {
@@ -19,6 +20,16 @@ export default class InnerProductSlider extends Component {
       this.content = new Container('image-container').render();
       const img = new ImageElement(this.images[0].url, 'slide-image').render();
       this.content.append(img);
+      img.addEventListener('click', () => {
+        const modal: HTMLElement | null = document.querySelector('.modal__cover');
+
+        if (modal != null) {
+          modal.remove();
+          this.showModal();
+        } else {
+          this.showModal();
+        }
+      });
       return this.content;
     }
 
