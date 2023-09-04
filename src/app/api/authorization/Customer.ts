@@ -1,4 +1,9 @@
-import { ClientResponse, Customer, MyCustomerUpdateAction } from '@commercetools/platform-sdk';
+import {
+  ClientResponse,
+  Customer,
+  MyCustomerChangePassword,
+  MyCustomerUpdateAction,
+} from '@commercetools/platform-sdk';
 import type { CreateCustomerData, LoginData } from '../../../types/registrationTypes';
 import sdkClient from '../SdkClient';
 
@@ -44,4 +49,16 @@ const changeDataCustomer = async (
   return response;
 };
 
-export { createCustomer, loginCustomer, changeDataCustomer };
+const changePasswordCustomer = async (password: MyCustomerChangePassword): Promise<ClientResponse<Customer>> => {
+  const response = await sdkClient.apiRoot
+    .me()
+    .password()
+    .post({
+      body: password,
+    })
+    .execute();
+
+  return response;
+};
+
+export { createCustomer, loginCustomer, changeDataCustomer, changePasswordCustomer };
