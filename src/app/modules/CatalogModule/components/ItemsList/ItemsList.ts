@@ -29,21 +29,43 @@ export default class ItemsList extends Component {
     // const itemsList = (await sdkClient.apiRoot.productProjections().get().execute()).body.results;
     const queryParams = new URLSearchParams(window.location.search);
     let filterParams = '';
+    let sortParams = '';
+    let textParams = '';
     let itemsList;
-    console.log(queryParams);
 
     if (queryParams.size > 0) {
       [...queryParams.entries()].forEach(([key, value]) => {
-        filterParams += `${key}:"${value}"`;
+        if (key === 'sort') {
+          sortParams += value;
+        } else if (key === 'text') {
+          textParams = value;
+        } else {
+          filterParams += `${key}:"${value}"`;
+        }
       });
+    }
+
+    const queryArgs: { filter?: string; sort?: string; 'text.en-US'?: string } = {};
+
+    if (filterParams) {
+      queryArgs.filter = filterParams;
+    }
+
+    if (sortParams) {
+      queryArgs.sort = sortParams;
+    }
+
+    if (textParams) {
+      queryArgs['text.en-US'] = textParams;
+    }
+
+    if (queryArgs) {
       itemsList = (
         await sdkClient.apiRoot
           .productProjections()
           .search()
           .get({
-            queryArgs: {
-              filter: filterParams,
-            },
+            queryArgs,
           })
           .execute()
       ).body.results;

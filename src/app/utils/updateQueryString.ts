@@ -11,8 +11,9 @@ const updateQueryString = (params: { [index: string]: string }) => {
 
   window.history.pushState(null, '', currentUrl);
 
+  const catalogContainer = document.querySelector('.catalog-container') as HTMLElement;
   const event = new Event('queryUpdated');
-  window.dispatchEvent(event);
+  catalogContainer.dispatchEvent(event);
 };
 
 export default updateQueryString;
