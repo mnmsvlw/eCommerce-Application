@@ -1,7 +1,7 @@
 import Component from '../components/Component';
 import ElementCreator from '../utils/ElementCreator';
 
-export default class Container extends Component {
+export default class LiElement extends Component {
   classNames?: string;
 
   text?: string;
@@ -14,7 +14,7 @@ export default class Container extends Component {
 
   public render = () => {
     this.content = new ElementCreator({
-      tag: 'div',
+      tag: 'li',
       classNames: this.classNames,
       attributes: {
         id: this.id,
