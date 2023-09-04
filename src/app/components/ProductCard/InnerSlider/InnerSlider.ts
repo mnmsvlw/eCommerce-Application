@@ -4,6 +4,7 @@ import Container from '../../../UI/Container';
 import ImageElement from '../../../UI/Img';
 import ModalConstructor from '../ModalView/ModalView';
 import SwiperSlider from '../../../utils/Swiper';
+import 'swiper/css/bundle';
 import './InnerSlider.css';
 
 export default class InnerProductSlider extends Component {
