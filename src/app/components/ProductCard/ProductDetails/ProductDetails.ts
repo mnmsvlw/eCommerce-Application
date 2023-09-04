@@ -103,7 +103,7 @@ export default class ProductDetails extends Component {
     minusBtnElement.addEventListener('click', minusHandler);
     plusBtnElement.addEventListener('click', plusHandler);
 
-    const addToBasketBtn = new Button('Add To Cart', 'button', 'add-to-basket__button').render();
+    const addToBasketBtn = new Button('Add to Cart', 'button', 'add-to-basket__button').render();
 
     btnContainer.append(quantatyBtn, addToBasketBtn);
 

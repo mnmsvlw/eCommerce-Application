@@ -164,6 +164,7 @@
     background: #C10C99;
     color: white;
     cursor: pointer;
+    font-weight: 800;
 }
 
 .product-card__description-header{
@@ -173,7 +174,7 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .product-card__description{
@@ -280,7 +281,7 @@
     }
 
     .product-card__price{
-        width: 40vw;
+        width: 90vw;
         justify-content: center;
         align-items: center;
         margin: 0px;
