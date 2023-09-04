@@ -23,11 +23,15 @@
 
 .product-card__price {
     display: grid;
-    width: 20vw;
+    width: 25vw;
     grid-template-rows: auto auto;
     grid-template-columns: repeat(2, auto);
     gap: 0px 10px;    
     margin-bottom: 30px;
+}
+
+.product-card__price > :nth-child(odd) {
+    text-align: left;
 }
 
 .product-card__price-valid{
@@ -37,6 +41,7 @@
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    text-align: center;
 }
 
 .product-card__price-unvalid{
@@ -182,6 +187,14 @@
     margin-bottom: 20px;
 }
 
+
+@media (max-width: 1040px) {
+    
+    .product-card__price {
+        width: 37vw;
+    }
+}
+
 @media (max-width: 1000px) {
     .quantity-container{
         width: 30%;
@@ -191,7 +204,10 @@
         width: 35vw;
     }
     
-
+    .product-card__price {
+        display: grid;
+        width: 37vw;
+    }
 }
 
 @media (max-width: 767px) {
@@ -209,11 +225,11 @@
     }
 
     .product-card__price-valid{
-        font-size: 20px;
+        font-size: 16px;
     }
     
     .product-card__price-unvalid{
-        font-size: 20px;
+        font-size: 16px;
     }
     
     .product-card__price-discount{
@@ -264,8 +280,9 @@
     }
 
     .product-card__price{
-        width: 90vw;
-        justify-self: end;
+        width: 40vw;
+        justify-content: center;
+        align-items: center;
         margin: 0px;
         margin-bottom: 10px;
     }
@@ -283,6 +300,10 @@
     .product-card__price-discount{
         font-size: 15px;
         text-align: right;
+    }
+
+    .product-card__size-container{
+        width: 90vw;
     }
 
     .product-card__size-heading{

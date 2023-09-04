@@ -24,27 +24,33 @@ export default class ProductDetails extends Component {
 
     const productPrice = new Container('product-card__price').render();
     const productPriceValid = new Container('product-card__price-valid').render();
+    const masterVariantPrice = this.product.masterVariant.prices;
 
-    // if (this.product.masterVariant.price?.discounted?.discount) {
-    //   productPriceValid.textContent = `$${this.product.masterVariant.price.discounted.value}`;
-    //   const productPriceUnvalid = new Container('product-card__price-unvalid').render();
-    //   productPriceUnvalid.textContent = `$${this.product.masterVariant.price.value}`;
-    //   const discountPersantage = new Container('product-card__price-discount').render();
-    //   discountPersantage.textContent = `- ${this.product.masterVariant.price.discounted.value}% Off`;
-    //   productPrice.append(productPriceValid, productPriceUnvalid, discountPersantage);
-    // } else {
-    const masterVariantPrice = this.product.masterVariant?.prices;
+    if (masterVariantPrice && masterVariantPrice.length > 0) {
+      const price = masterVariantPrice[0]?.value.centAmount.toString().slice(0, -2);
+      const discountedPrice = masterVariantPrice[0]?.discounted?.value.centAmount.toString().slice(0, -2);
 
-    if (masterVariantPrice && masterVariantPrice[0]?.value) {
-      const amount = masterVariantPrice[0].value.centAmount.toString().slice(0, -2);
-      const cents = masterVariantPrice[0].value.centAmount.toString().slice(-2);
-      productPriceValid.textContent = `$${amount}.${cents}`;
-      productPrice.append(productPriceValid);
+      if (discountedPrice) {
+        const discount = (((+price - +discountedPrice) / +price) * 100).toFixed(0);
+        productPriceValid.textContent = `$${discountedPrice} USD`;
+        const productPriceUnvalid = new Container('product-card__price-unvalid').render();
+        productPriceUnvalid.textContent = `$${price} USD`;
+        const discountPersantage = new Container('product-card__price-discount').render();
+        discountPersantage.textContent = `- ${discount}% Off`;
+        productPrice.append(productPriceValid, productPriceUnvalid, discountPersantage);
+      } else if (price) {
+        const amount = masterVariantPrice[0]?.value.centAmount.toString().slice(0, -2);
+        const cents = masterVariantPrice[0]?.value.centAmount.toString().slice(-2);
+        productPriceValid.textContent = `$${amount}.${cents} USD`;
+        productPrice.append(productPriceValid);
+      } else {
+        productPriceValid.textContent = `$${100}.00`;
+        productPrice.append(productPriceValid);
+      }
     } else {
       productPriceValid.textContent = `$${100}.00`;
       productPrice.append(productPriceValid);
     }
-    // }
 
     const { variants } = this.product;
     const sizeVariants: SizeValue[] = [];
