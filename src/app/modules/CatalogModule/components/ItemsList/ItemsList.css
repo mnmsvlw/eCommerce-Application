@@ -5,3 +5,11 @@
   gap: 25px;
   max-width: 860px;
 }
+
+.no-items {
+  padding: 20px;
+  font-family: 'Inter', sans-serif;
+  color: #FFFFFF70;
+  font-weight: 600;
+  font-size: 20px;
+}

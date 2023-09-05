@@ -1,7 +1,6 @@
 import './ItemCard.css';
-import { Price, ProductProjection } from '@commercetools/platform-sdk';
+import { LocalizedString, Price, ProductProjection } from '@commercetools/platform-sdk';
 import Container from '../../UI/Container';
-import Heading from '../../UI/Heading';
 import Component from '../Component';
 import ImageElement from '../../UI/Img';
 
@@ -21,17 +20,30 @@ export default class ItemCard extends Component {
     const itemImage = new ImageElement(String(imgSrc), String(itemInfo.name['en-US']), 'item-card__image').render();
 
     const textContainer = new Container('item-card__text-container').render();
-    const nameHeading = new Heading(3, 'item-card__name', String(itemInfo.name['en-US'])).render();
+    const metaTitle = itemInfo.metaTitle as LocalizedString;
+    const metaDescription = itemInfo.metaDescription as LocalizedString;
+    const nameHeading = new Container('item-card__name', String(metaTitle['en-US'])).render();
+    const description = new Container('item-card__description', String(metaDescription['en-US'])).render();
     const prices = itemInfo.masterVariant.prices as Price[];
-    const priceHeading = new Heading(3, 'item-card__price', `${prices[0].value.centAmount / 100} USD`).render();
+    const priceContainer = new Container('item-card__price').render();
+    const priceHeading = new Container('item-card__price-current', `${prices[0].value.centAmount / 100} USD`).render();
 
-    // cardContainer.addListener('click', () => {
-    //   redirect(`/items/${itemInfo.id}`);
-    // });
+    if (prices[0].discounted) {
+      const discountedHeading = new Container(
+        'item-card__price-discount',
+        `${prices[0].discounted.value.centAmount / 100} USD`
+      ).render();
+      const discountAmount = new Container(
+        'item-card__price-discount-amount',
+        `-${Math.ceil((1 - prices[0].discounted.value.centAmount / prices[0].value.centAmount) * 100)}% off`
+      ).render();
+      discountedHeading.appendChild(discountAmount);
+      priceContainer.appendChild(discountedHeading);
+    }
 
-    // this.content = cardContainer.render();
+    priceContainer.appendChild(priceHeading);
     imgContainer.appendChild(itemImage);
-    textContainer.append(nameHeading, priceHeading);
+    textContainer.append(nameHeading, description, priceContainer);
     this.content.append(imgContainer, textContainer);
 
     return this.content;

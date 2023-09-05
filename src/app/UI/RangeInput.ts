@@ -1,7 +1,7 @@
 import Component from '../components/Component';
 import ElementCreator from '../utils/ElementCreator';
 
-export default class Range extends Component {
+export default class RangeInput extends Component {
   classNames?: string;
 
   min: number;
