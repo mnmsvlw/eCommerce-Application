@@ -111,15 +111,37 @@ export default class PersonalInfoModule extends Component {
 
   async saveData(): Promise<void> {
     try {
-      this.VRules.name(this.first.value) === true &&
+      if (
+        this.VRules.name(this.first.value) === true &&
         this.VRules.name(this.last.value) === true &&
-        this.VRules.dateOfBirth(this.date.value) === true &&
-        (await changeDataCustomer([
+        this.VRules.dateOfBirth(this.date.value) === true
+      ) {
+        await changeDataCustomer([
           { action: 'setFirstName', firstName: `${this.first.value}` },
           { action: 'setLastName', lastName: `${this.last.value}` },
           { action: 'setDateOfBirth', dateOfBirth: `${this.date.value}` },
-        ]));
-      this.showInfo('data');
+        ]);
+        this.showInfo('data');
+
+        const userRequest = await sdkClient.apiRoot.me().get().execute();
+        sdkClient.userInfo = userRequest.body;
+        this.firstName = sdkClient.userInfo.firstName as string;
+        this.lastName = sdkClient.userInfo.lastName as string;
+        this.dateOfBirth = sdkClient.userInfo.dateOfBirth as string;
+        this.first.value = this.firstName;
+        this.first.readOnly = true;
+        this.last.value = this.lastName;
+        this.last.readOnly = true;
+        this.date.value = this.dateOfBirth;
+        this.date.readOnly = true;
+        const arrChange = this.content.querySelectorAll('.change');
+        arrChange.forEach((elem) => elem.classList.remove('change'));
+        this.saveBtn.classList.add('hide');
+        this.showInfo('data');
+        const title = document.querySelector("[href='/profile/']") as HTMLElement;
+        console.log(title);
+        title.textContent = `${this.firstName} ${this.lastName}`;
+      }
     } catch (error) {
       console.log(error);
     }
@@ -130,7 +152,6 @@ export default class PersonalInfoModule extends Component {
     this.content.append(info);
     const TIME = 3000;
     setTimeout(() => {
-      window.location.reload();
       info.remove();
     }, TIME);
   }
