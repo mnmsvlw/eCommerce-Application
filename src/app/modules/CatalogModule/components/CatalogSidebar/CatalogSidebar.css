@@ -145,6 +145,7 @@
     box-shadow: 0 1px 2px 0px #C10C99 inset;
     border-right: 1px solid #C10C99;
     z-index: 1000;
+    overflow: scroll;
   }
 
   .right-container {
@@ -168,9 +169,18 @@
 
   .size__content {
     gap: 10px;
+    height: 280px;
   }
 
-  .size__content {
-    height: 300px;
+  .size__label {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .sidebar-container {
+    height: 100vh;
+    overflow: scroll;
+    width: 80%;
   }
 }
