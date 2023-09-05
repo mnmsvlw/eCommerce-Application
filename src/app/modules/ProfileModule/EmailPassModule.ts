@@ -1,11 +1,9 @@
-import Path from '../../../types/enum';
 import { ApiError } from '../../../types/sdkTypes';
 import { changeDataCustomer, changePasswordCustomer, loginCustomer } from '../../api/authorization/Customer';
 import sdkClient from '../../api/SdkClient';
 import Component from '../../components/Component';
 import ProfileEmailPass from '../../components/Profile/ProfileEmailPass';
 import Heading from '../../UI/Heading';
-import redirect from '../../utils/redirect';
 import validateEmail from '../LoginModule/helpers/validateEmail';
 import isValidInput from '../LoginModule/helpers/validateInput';
 import validatePassword from '../LoginModule/helpers/validatePassword';
@@ -123,9 +121,19 @@ export default class EmailPassModule extends Component {
   }
 
   async saveData(): Promise<void> {
+    const arrChange = this.content.querySelectorAll('.change');
+
     if (validateEmail(this.mail.value) === '' && this.mail.value !== this.email) {
       try {
         await changeDataCustomer([{ action: 'changeEmail', email: `${this.mail.value}` }]);
+        const userRequest = await sdkClient.apiRoot.me().get().execute();
+        sdkClient.userInfo = userRequest.body;
+        this.email = sdkClient.userInfo.email as string;
+        this.mail.readOnly = true;
+        this.mail.value = this.email;
+        this.mail.style.borderBottom = '1px solid white';
+        arrChange.forEach((elem) => elem.classList.remove('change'));
+        this.saveBtn.classList.add('hide');
         this.showInfo('Your mail has been successfully changed!');
       } catch (error) {
         const apiError = error as ApiError;
@@ -148,6 +156,12 @@ export default class EmailPassModule extends Component {
           await loginCustomer({ email, password: this.newPass.value });
           const userRequest = await sdkClient.apiRoot.me().get().execute();
           sdkClient.userInfo = userRequest.body;
+          arrChange.forEach((elem) => elem.classList.remove('change'));
+          this.saveBtn.classList.add('hide');
+          this.passInput.readOnly = true;
+          this.passLabel.textContent = 'Password';
+          this.passInput.value = '********';
+          this.changeNewPassBox.classList.remove('show');
           this.showInfo('Your password has been successfully changed!');
         }, 1000);
       } catch (error) {
@@ -161,9 +175,6 @@ export default class EmailPassModule extends Component {
     const info = new Heading(4, 'info-e', `${text}`).render();
     this.content.append(info);
     const TIME = 3000;
-    setTimeout(() => {
-      redirect(Path.PROFILE);
-      info.remove();
-    }, TIME);
+    setTimeout(() => info.remove(), TIME);
   }
 }

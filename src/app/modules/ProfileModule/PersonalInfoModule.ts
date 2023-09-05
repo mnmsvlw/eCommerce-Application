@@ -121,8 +121,6 @@ export default class PersonalInfoModule extends Component {
           { action: 'setLastName', lastName: `${this.last.value}` },
           { action: 'setDateOfBirth', dateOfBirth: `${this.date.value}` },
         ]);
-        this.showInfo('data');
-
         const userRequest = await sdkClient.apiRoot.me().get().execute();
         sdkClient.userInfo = userRequest.body;
         this.firstName = sdkClient.userInfo.firstName as string;
