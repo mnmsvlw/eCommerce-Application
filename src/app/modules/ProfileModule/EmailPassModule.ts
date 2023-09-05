@@ -148,7 +148,6 @@ export default class EmailPassModule extends Component {
           await loginCustomer({ email, password: this.newPass.value });
           const userRequest = await sdkClient.apiRoot.me().get().execute();
           sdkClient.userInfo = userRequest.body;
-          // redirect(Path.MAIN_PAGE);
           this.showInfo('Your password has been successfully changed!');
         }, 1000);
       } catch (error) {
