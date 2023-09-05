@@ -7,6 +7,7 @@
   font-family: 'Poppins', sans-serif;
   color: #ffffff;
   background-color: #050214;
+  min-height: 90vh;
 }
 
 .menu {
@@ -18,16 +19,15 @@
   border-right: 1px solid #c10c99;
   padding: 10vh 10vh 0 10vh;
   padding-bottom: 36.5vh;
+  min-height: 90vh;
 }
 
 .foto {
-  width: 115px;
-  height: 115px;
+  width: 15vw;
+  height: 15vh;
   background: url('../Profile/asset/ava.png') 100% 100% no-repeat;
-  background-size:
-    115px 115px,
-    auto,
-    100px;
+  background-size: contain;
+  background-position: center;
 }
 
 .profile {
@@ -103,12 +103,10 @@
   width: 20px;
   height: 20px;
   background: url('../Profile/asset/pen1.png') 100% 100% no-repeat;
-  background-size:
-    20px 20px,
-    auto,
-    20px;
+  background-size: contain;
   cursor: pointer;
   margin-top: 40px;
+  margin-left: 2px;
 }
 
 .change-first:hover,
@@ -336,12 +334,12 @@
 .shipping-item-def,
 .billing-item-def {
   font-size: 12px;
-  color:#c10c99;
+  color: #c10c99;
 }
 
 .shipping-item-def.hide,
 .billing-item-def.hide {
-    display: none;
+  display: none;
 }
 
 /*.type-item {
@@ -620,13 +618,14 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
+  gap: 5vw;
 }
 
 .billing-label {
-  padding-left: 60px;
+  padding-left: 50px;
 }
 .shipping-label {
-  padding-left: 40px;
+  padding-left: 30px;
 }
 
 @media (max-width: 1300px) {
