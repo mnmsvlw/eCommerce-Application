@@ -68,11 +68,11 @@ header {
 .burger-btn {
 	width: 30px;
 	height: 30px;
-	position: relative;
+	position: fixed;
+  top: 2vh;
+  right: 15px;
 	z-index:2;
 	overflow: hidden;
-  display: block;
-  margin-right: 30px;
   display: none;
 }
 
@@ -142,6 +142,7 @@ header {
 
   .nav-desktop.show {
     transform: translateX(0);
+    z-index: 1000;
   }
 
   .nav-list {
@@ -154,10 +155,11 @@ header {
   
   .burger-btn {
     display: block;
+    z-index: 1001;
   }
 
   .nav-desktop {
-    width: 70%;
+    width: 35%;
   }
 
   .nav-item {

@@ -1,7 +1,11 @@
-import { changeDataCustomer } from '../../api/authorization/Customer';
+import Path from '../../../types/enum';
+import { ApiError } from '../../../types/sdkTypes';
+import { changeDataCustomer, changePasswordCustomer, loginCustomer } from '../../api/authorization/Customer';
 import sdkClient from '../../api/SdkClient';
 import Component from '../../components/Component';
 import ProfileEmailPass from '../../components/Profile/ProfileEmailPass';
+import Heading from '../../UI/Heading';
+import redirect from '../../utils/redirect';
 import validateEmail from '../LoginModule/helpers/validateEmail';
 import isValidInput from '../LoginModule/helpers/validateInput';
 import validatePassword from '../LoginModule/helpers/validatePassword';
@@ -10,6 +14,7 @@ export default class EmailPassModule extends Component {
   render = () => {
     this.content = new ProfileEmailPass().render();
     this.fillData(this.content);
+    sessionStorage.setItem('page', 'email');
     return this.content;
   };
 
@@ -56,6 +61,12 @@ export default class EmailPassModule extends Component {
     const errorBox = this.content.querySelector(err) as HTMLElement;
 
     if (el.classList.contains('change')) {
+      const arrChange = this.content.querySelectorAll('.change');
+
+      if (arrChange.length === 1) {
+        this.saveBtn.classList.add('hide');
+      }
+
       el.classList.remove('change');
       elem.readOnly = true;
       elem.value = data;
@@ -111,10 +122,49 @@ export default class EmailPassModule extends Component {
     }
   }
 
-  saveData(): void {
-    validateEmail(this.mail.value) === '' &&
-      this.mail.value !== this.email &&
-      changeDataCustomer([{ action: 'changeEmail', email: `${this.mail.value}` }], 'mail');
-    validatePassword(this.newPass.value) === '' && console.log('изменить пароль!');
+  async saveData(): Promise<void> {
+    if (validateEmail(this.mail.value) === '' && this.mail.value !== this.email) {
+      try {
+        await changeDataCustomer([{ action: 'changeEmail', email: `${this.mail.value}` }]);
+        this.showInfo('Your mail has been successfully changed!');
+      } catch (error) {
+        const apiError = error as ApiError;
+        this.showInfo(apiError.message);
+      }
+    }
+
+    if (validatePassword(this.newPass.value) === '') {
+      try {
+        const version = sdkClient.userInfo.version as number;
+        const email = sdkClient.userInfo.email as string;
+        await changePasswordCustomer({
+          version,
+          currentPassword: `${this.passInput.value}`,
+          newPassword: `${this.newPass.value}`,
+        });
+        sdkClient.reset();
+        setTimeout(async () => {
+          sdkClient.setPasswordFlow(email, this.newPass.value);
+          await loginCustomer({ email, password: this.newPass.value });
+          const userRequest = await sdkClient.apiRoot.me().get().execute();
+          sdkClient.userInfo = userRequest.body;
+          // redirect(Path.MAIN_PAGE);
+          this.showInfo('Your password has been successfully changed!');
+        }, 1000);
+      } catch (error) {
+        const apiError = error as ApiError;
+        this.showInfo(apiError.message);
+      }
+    }
+  }
+
+  showInfo(text: string) {
+    const info = new Heading(4, 'info-e', `${text}`).render();
+    this.content.append(info);
+    const TIME = 3000;
+    setTimeout(() => {
+      redirect(Path.PROFILE);
+      info.remove();
+    }, TIME);
   }
 }

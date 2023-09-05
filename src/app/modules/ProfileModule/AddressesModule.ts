@@ -1,4 +1,5 @@
 import { Address } from '@commercetools/platform-sdk';
+import { ApiError } from '../../../types/sdkTypes';
 import { changeDataCustomer } from '../../api/authorization/Customer';
 import sdkClient from '../../api/SdkClient';
 import Component from '../../components/Component';
@@ -11,6 +12,7 @@ import NewAddressModule from './NewAddress';
 export default class AddressesModule extends Component {
   render = () => {
     this.content = new ProfileAllAddresses().render();
+    sessionStorage.setItem('page', 'address');
     this.fillData(this.content);
     this.content.querySelectorAll('select').forEach((elem) => {
       const el = elem;
@@ -20,6 +22,10 @@ export default class AddressesModule extends Component {
   };
 
   VRules: ValidationRules = new ValidationRules();
+
+  arrBilling!: string[];
+
+  arrShipping!: string[];
 
   fillData(content: HTMLElement): void {
     const addresses = sdkClient.userInfo.addresses as Address[];
@@ -57,6 +63,8 @@ export default class AddressesModule extends Component {
 
     const { city, country, id, key, postalCode, streetName, streetNumber } = address;
 
+    const data = { city, country, id, key, postalCode, streetName, streetNumber };
+
     if (city && country && id && postalCode && streetName && streetNumber) {
       countrySelect.value = country;
       postalCodeInput.value = postalCode;
@@ -66,8 +74,21 @@ export default class AddressesModule extends Component {
       const boxAddress = doc;
       boxAddress.id = id;
 
-      key === 'KeyShipping' && this.highlightAddressType(doc, '.shipping-item');
-      key === 'KeyBilling' && this.highlightAddressType(doc, '.billing-item');
+      allInput.forEach((x) => {
+        const input = x;
+        input.readOnly = true;
+      });
+
+      this.arrBilling = sdkClient.userInfo.billingAddressIds as string[];
+      this.arrShipping = sdkClient.userInfo.shippingAddressIds as string[];
+      const bill = this.arrBilling?.filter((i) => i === id);
+      const ship = this.arrShipping?.filter((i) => i === id);
+      bill.length === 1 && this.highlightAddressType(doc, '.billing-item');
+      ship.length === 1 && this.highlightAddressType(doc, '.shipping-item');
+
+      const arrS = sdkClient.userInfo.defaultShippingAddressId;
+      const arrB = sdkClient.userInfo.defaultBillingAddressId;
+      console.log(`bill ${arrB}, ship ${arrS}`);
 
       this.showSaveBtn(cityInput, city, saveBtn);
       this.showSaveBtn(countrySelect, country, saveBtn);
@@ -75,10 +96,10 @@ export default class AddressesModule extends Component {
       this.showSaveBtn(streetNameInput, streetName, saveBtn);
       this.showSaveBtn(streetNumInput, streetNumber, saveBtn);
 
-      this.listenInputs(doc, cityInput, city, '.errorCity');
-      this.listenInputs(doc, postalCodeInput, postalCode, '.errorCode');
-      this.listenInputs(doc, streetNameInput, streetName, '.errorStreetName');
-      this.listenInputs(doc, streetNumInput, streetNumber, '.errorStreetNum');
+      this.listenInputs(data, doc, cityInput, '.errorCity');
+      this.listenInputs(data, doc, postalCodeInput, '.errorCode');
+      this.listenInputs(data, doc, streetNameInput, '.errorStreetName');
+      this.listenInputs(data, doc, streetNumInput, '.errorStreetNum');
 
       doc.addEventListener('click', (e) => {
         const el = e.target as HTMLElement;
@@ -118,7 +139,7 @@ export default class AddressesModule extends Component {
             doc.querySelectorAll<HTMLInputElement>('input[type=checkbox]').forEach((checkbox) => {
               const check = checkbox;
               check.addEventListener('change', () => {
-                check.checked === true ? saveBtn.classList.remove('hide') : saveBtn.classList.add('hide');
+                check.checked ? saveBtn.classList.remove('hide') : saveBtn.classList.add('hide');
               });
             });
             allInput.forEach((x) => {
@@ -130,15 +151,32 @@ export default class AddressesModule extends Component {
           }
         }
 
-        el.classList.contains('close') && this.removeAddress(doc);
+        el.classList.contains('close') && this.removeAddress(doc, id);
+        el.classList.contains('save-address') && this.changeAddress(doc, id);
       });
     }
   }
 
-  listenInputs(doc: Element, input: HTMLInputElement, data: string, err: string) {
+  listenInputs(data: Address, doc: Element, input: HTMLInputElement, err: string) {
+    const countrySelect = doc.querySelector('.select-country') as HTMLSelectElement;
+    const postalCodeInput = doc.querySelector('.input-postalcode') as HTMLInputElement;
+    const cityInput = doc.querySelector('.input-city') as HTMLInputElement;
+    const streetNameInput = doc.querySelector('.input-street-name') as HTMLInputElement;
+    const streetNumInput = doc.querySelector('.input-street-num') as HTMLInputElement;
     const saveBtn = doc.querySelector('.save-a') as HTMLElement;
     input.addEventListener('input', () => {
-      input.value !== data ? saveBtn.classList.remove('hide') : saveBtn.classList.add('hide');
+      if (
+        countrySelect.value !== data.country ||
+        postalCodeInput.value !== data.postalCode ||
+        cityInput.value !== data.city ||
+        streetNameInput.value !== data.streetName ||
+        streetNumInput.value !== data.streetNumber
+      ) {
+        saveBtn.classList.remove('hide');
+      } else {
+        saveBtn.classList.add('hide');
+      }
+
       const click = (className: string) => input.classList.contains(className);
       click('input-postalcode') && this.isValid(doc, input, this.VRules.postalCode, 'postal code', err);
       click('input-city') && this.isValid(doc, input, this.VRules.city, 'city name', err);
@@ -191,17 +229,70 @@ export default class AddressesModule extends Component {
     this.content.append(header, conteiner);
   }
 
-  removeAddress(doc: Element) {
-    doc.classList.add('hidden');
-    const addressId = doc.id;
-    changeDataCustomer(
-      [
-        {
-          action: 'removeAddress',
-          addressId: `${addressId}`,
-        },
-      ],
-      'address'
-    );
+  async removeAddress(doc: Element, id: string) {
+    try {
+      doc.classList.add('hidden');
+      await changeDataCustomer([{ action: 'removeAddress', addressId: `${id}` }]);
+      const userRequest = await sdkClient.apiRoot.me().get().execute();
+      sdkClient.userInfo = userRequest.body;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async changeAddress(doc: Element, id: string) {
+    try {
+      const countrySelect = doc.querySelector('.select-country') as HTMLSelectElement;
+      const postalCodeInput = doc.querySelector('.input-postalcode') as HTMLInputElement;
+      const cityInput = doc.querySelector('.input-city') as HTMLInputElement;
+      const streetNameInput = doc.querySelector('.input-street-name') as HTMLInputElement;
+      const streetNumInput = doc.querySelector('.input-street-num') as HTMLInputElement;
+
+      if (
+        this.VRules.postalCode(postalCodeInput.value) === true &&
+        this.VRules.name(streetNameInput.value) === true &&
+        this.VRules.house(streetNumInput.value) === true &&
+        this.VRules.city(cityInput.value) === true
+      ) {
+        const addressChange: Address = {
+          streetName: `${streetNameInput.value}`,
+          streetNumber: `${streetNumInput.value}`,
+          postalCode: `${postalCodeInput.value}`,
+          city: `${cityInput.value}`,
+          country: `${countrySelect.value}`,
+        };
+
+        await changeDataCustomer([{ action: 'changeAddress', addressId: `${id}`, address: addressChange }]);
+        const userRequest = await sdkClient.apiRoot.me().get().execute();
+        sdkClient.userInfo = userRequest.body;
+        const def = doc.querySelectorAll<HTMLInputElement>('input[type=checkbox]');
+        const defShipp = def[0].checked;
+        const defBill = def[1].checked;
+        defShipp &&
+          (await changeDataCustomer(
+            [{ action: 'setDefaultShippingAddress', addressId: `${id}` }],
+            sdkClient.userInfo.version as number
+          ));
+        defBill &&
+          (await changeDataCustomer(
+            [{ action: 'setDefaultBillingAddress', addressId: `${id}` }],
+            sdkClient.userInfo.version as number
+          ));
+        this.showInfo(doc, 'Your address has been successfully changed!');
+      }
+    } catch (error) {
+      const apiError = error as ApiError;
+      this.showInfo(doc, apiError.message);
+    }
+  }
+
+  showInfo(doc: Element, text: string) {
+    const info = new Heading(6, 'info-a', `${text}`).render();
+    doc.append(info);
+    const TIME = 3000;
+    setTimeout(() => {
+      window.location.reload();
+      info.remove();
+    }, TIME);
   }
 }
