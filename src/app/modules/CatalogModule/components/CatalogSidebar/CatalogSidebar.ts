@@ -1,6 +1,7 @@
 import './CatalogSidebar.css';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { DualHRangeBar } from 'dual-range-bar';
+import { Config } from 'dual-range-bar/types/DualRangeBar';
 import Container from '../../../../UI/Container';
 import sdkClient from '../../../../api/SdkClient';
 import Component from '../../../../components/Component';
@@ -13,11 +14,18 @@ import Button from '../../../../UI/Button';
 
 export default class CatalogSidebar extends Component {
   render = () => {
+    const queryParams = new URLSearchParams(window.location.search);
+
     const sidebarContainer = new Container('sidebar-container');
     sidebarContainer.bindAsync(this.renderAsync);
     const categoriesContainer = new Container('sidebar__categories').render();
     const categoriesTitle = new Container('categories__title', 'Categories').render();
     const resetCategory = new Button('reset', '', 'categories__reset');
+
+    if (queryParams.get('categories.id')) {
+      resetCategory.classNames += ' categories__reset_active';
+    }
+
     resetCategory.addListener('click', (e: Event) => {
       const button = e.target as HTMLElement;
       button.classList.remove('categories__reset_active');
@@ -30,6 +38,11 @@ export default class CatalogSidebar extends Component {
     const priceContainer = new Container('sidebar__price').render();
     const priceTitle = new Container('price__title', 'Price').render();
     const resetPrice = new Button('reset', '', 'price__reset');
+
+    if (queryParams.get('price')) {
+      resetPrice.classNames += ' price__reset_active';
+    }
+
     resetPrice.addListener('click', (e: Event) => {
       const dualRange = document.querySelector('.price__range ') as HTMLElement;
       dualRange.setAttribute('data-lower', '0');
@@ -63,6 +76,11 @@ export default class CatalogSidebar extends Component {
     const colorContainer = new Container('sidebar__color').render();
     const colorTitle = new Container('color__title', 'Color').render();
     const colorReset = new Button('reset', '', 'color__reset');
+
+    if (queryParams.get('color')) {
+      colorReset.classNames += ' color__reset_active';
+    }
+
     colorReset.addListener('click', (e: Event) => {
       const button = e.target as HTMLElement;
       button.classList.remove('color__reset_active');
@@ -100,16 +118,31 @@ export default class CatalogSidebar extends Component {
         }
       });
 
+      const currentColors = queryParams.get('color');
       const renderedContainer = checkboxContainer.render();
-      const checkbox = new Input(color, 1, 'color__checkbox', color, 'checkbox');
+      const checkbox = new Input(color, 1, 'color__checkbox', color, 'checkbox').render();
       const label = new Label(color, color, 'color__label').render();
-      renderedContainer.append(checkbox.render(), label);
+
+      if (currentColors) {
+        const colors = currentColors.split(',');
+
+        if (colors.includes(color)) {
+          checkbox.setAttribute('checked', 'true');
+        }
+      }
+
+      renderedContainer.append(checkbox, label);
       colorContainer.append(renderedContainer);
     });
 
     const sizeContainer = new Container('sidebar__size').render();
     const sizeTitle = new Container('size__title', 'Size').render();
     const sizeReset = new Button('reset', '', 'size__reset');
+
+    if (queryParams.get('size')) {
+      sizeReset.classNames += ' size__reset_active';
+    }
+
     sizeReset.addListener('click', (e: Event) => {
       const button = e.target as HTMLElement;
       button.classList.remove('size__reset_active');
@@ -148,10 +181,20 @@ export default class CatalogSidebar extends Component {
         }
       });
 
+      const currentSizes = queryParams.get('size');
       const renderedContainer = checkboxContainer.render();
-      const checkbox = new Input(String(index + 1), 1, 'size__checkbox', size, 'checkbox');
+      const checkbox = new Input(String(index + 1), 1, 'size__checkbox', size, 'checkbox').render();
       const label = new Label(String(index + 1), size, 'size__label').render();
-      renderedContainer.append(checkbox.render(), label);
+
+      if (currentSizes) {
+        const sizes = currentSizes.split(',');
+
+        if (sizes.includes(String(index + 1))) {
+          checkbox.setAttribute('checked', 'true');
+        }
+      }
+
+      renderedContainer.append(checkbox, label);
       sizeContent.append(renderedContainer);
     });
 
@@ -161,7 +204,27 @@ export default class CatalogSidebar extends Component {
   };
 
   renderDualRange(container: HTMLElement) {
-    const rangeText = new Container('price__range-text', 'From 180 USD to 1990 USD').render();
+    const queryParams = new URLSearchParams(window.location.search);
+    const currentPrice = queryParams.get('price');
+    const range: string[] = [];
+
+    if (currentPrice) {
+      const query = currentPrice.split(' ');
+      const min = query[2].slice(1);
+      const max = query[4].slice(0, -1);
+      range.push(min);
+      range.push(max);
+    }
+
+    let prerenderedText = '';
+
+    if (range.length > 0) {
+      prerenderedText = `From ${Math.floor(Number(range[0]) / 100)} USD to  ${Math.ceil(Number(range[1]) / 100)} USD`;
+    } else {
+      prerenderedText = 'From 180 USD to 1990 USD';
+    }
+
+    const rangeText = new Container('price__range-text', prerenderedText).render();
     const rangeInput = new Container('price__range');
     rangeInput.addListener('update', (e: RangeEvent) => {
       const rangeTextElement = document.querySelector('.price__range-text') as HTMLElement;
@@ -185,10 +248,24 @@ export default class CatalogSidebar extends Component {
       }
     });
     const rangeEl = rangeInput.render() as HTMLDivElement;
-    const drbar = new DualHRangeBar(rangeEl, {
-      minimizes: true,
-      size: 'small',
-    });
+    // dualRange.setAttribute('data-lower', String(Number(range[0]) / 199900));
+    let config: Partial<Config> = {};
+
+    if (range.length > 0) {
+      config = {
+        minimizes: true,
+        size: 'small',
+        lower: Number(range[0]) / 199900,
+        upper: Number(range[1]) / 199900,
+      };
+    } else {
+      config = {
+        minimizes: true,
+        size: 'small',
+      };
+    }
+
+    const drbar = new DualHRangeBar(rangeEl, config);
     console.log(drbar);
 
     container.append(rangeEl, rangeText);
@@ -245,12 +322,20 @@ export default class CatalogSidebar extends Component {
 
   renderAsync = async (component: HTMLElement) => {
     try {
+      const queryParams = new URLSearchParams(window.location.search);
+      const currentCategory = queryParams.get('categories.id');
+
       const categoriesData = await sdkClient.apiRoot.categories().get().execute();
       const mainCategories = categoriesData.body.results.filter((cat) => cat.ancestors.length === 0);
 
       mainCategories.forEach((cat) => {
         const categoryHeading = new Container('cat__container').render();
         const mainCat = new Container('sidebar__category', cat.name['en-US']).render();
+
+        if (currentCategory === cat.id) {
+          mainCat.classList.add('category__active');
+        }
+
         mainCat.setAttribute('data-category-id', cat.id);
         categoryHeading.appendChild(mainCat);
         const childCategories = categoriesData.body.results.filter((child) => child.parent?.id === cat.id);
@@ -258,6 +343,11 @@ export default class CatalogSidebar extends Component {
           const childHeading = new Container('sidebar__subcategory', child.name['en-US']).render();
           childHeading.setAttribute('data-category-id', child.id);
           categoryHeading.append(childHeading);
+
+          if (currentCategory === child.id) {
+            mainCat.classList.add('category__active');
+            childHeading.classList.add('category__active');
+          }
         });
         component.firstChild?.appendChild(categoryHeading);
       });
