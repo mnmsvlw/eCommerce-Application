@@ -373,7 +373,6 @@
   color: #C10C99;
 }
 .default.add.width {
-  display: inline;
   width: 50%;
 }
 
@@ -524,4 +523,22 @@ display: none;
   border-radius: 10px;
   background-color: #050214;
   padding: 5px;
+}
+
+.info-n {
+  top: -12%;
+}
+
+.defs {
+  width: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.billing-label {
+  padding-left: 60px;
+}
+.shipping-label {
+  padding-left: 40px;
 }

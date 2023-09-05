@@ -1,11 +1,11 @@
-// import Path from '../../../types/enum';
+import Path from '../../../types/enum';
 import { ApiError } from '../../../types/sdkTypes';
 import { changeDataCustomer, changePasswordCustomer, loginCustomer } from '../../api/authorization/Customer';
 import sdkClient from '../../api/SdkClient';
 import Component from '../../components/Component';
 import ProfileEmailPass from '../../components/Profile/ProfileEmailPass';
 import Heading from '../../UI/Heading';
-// import redirect from '../../utils/redirect';
+import redirect from '../../utils/redirect';
 import validateEmail from '../LoginModule/helpers/validateEmail';
 import isValidInput from '../LoginModule/helpers/validateInput';
 import validatePassword from '../LoginModule/helpers/validatePassword';
@@ -144,8 +144,8 @@ export default class EmailPassModule extends Component {
         });
         sdkClient.reset();
         setTimeout(async () => {
-          await loginCustomer({ email, password: this.newPass.value });
           sdkClient.setPasswordFlow(email, this.newPass.value);
+          await loginCustomer({ email, password: this.newPass.value });
           const userRequest = await sdkClient.apiRoot.me().get().execute();
           sdkClient.userInfo = userRequest.body;
           // redirect(Path.MAIN_PAGE);
@@ -163,7 +163,7 @@ export default class EmailPassModule extends Component {
     this.content.append(info);
     const TIME = 3000;
     setTimeout(() => {
-      // window.location.reload();
+      redirect(Path.PROFILE);
       info.remove();
     }, TIME);
   }

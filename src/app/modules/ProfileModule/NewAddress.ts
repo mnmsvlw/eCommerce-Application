@@ -1,15 +1,16 @@
+import { Address } from '@commercetools/platform-sdk';
 import { AddressReg } from '../../../types/registrationTypes';
+import { ApiError } from '../../../types/sdkTypes';
 import { changeDataCustomer } from '../../api/authorization/Customer';
+import sdkClient from '../../api/SdkClient';
 import Component from '../../components/Component';
-import ProfileAddress from '../../components/Profile/ProfileAddress';
-import Button from '../../UI/Button';
-import Container from '../../UI/Container';
+import ProfileNewAddress from '../../components/Profile/ProfileNewAddress';
 import Heading from '../../UI/Heading';
 import ValidationRules from '../RegistrationModule/validation/ValidationRules/ValidationRules';
 
 export default class NewAddressModule extends Component {
   render = () => {
-    this.content = new ProfileAddress().render();
+    this.content = new ProfileNewAddress().render();
     this.fillData(this.content);
     return this.content;
   };
@@ -28,36 +29,20 @@ export default class NewAddressModule extends Component {
 
   streetNumInput!: HTMLInputElement;
 
-  arrChecked: HTMLInputElement[] = [];
+  billing!: HTMLInputElement;
+
+  shipping!: HTMLInputElement;
 
   fillData(content: HTMLElement): void {
-    content.classList.add('width');
-    this.svgBox = content.querySelector('.box-svg') as HTMLElement;
-    const svg = content.querySelector('.svg') as HTMLElement;
-    svg.classList.add('hidden');
-    this.svgBox.classList.add('show');
-    const boxSave = new Container('save-an').render();
-    const btnSave = new Button('Save', 'submit', 'save-new').render();
-    this.svgBox.append(boxSave);
-    boxSave.append(btnSave);
-    const title = content.querySelector('.title') as HTMLElement;
-    title.textContent = '';
-    const type = content.querySelector('.conteinerType') as HTMLElement;
-    type.textContent = '';
-    const defs = content.querySelectorAll('.default');
-    defs.forEach((def) => {
-      def.classList.add('add');
-      def.classList.add('width');
-      const check = def.querySelector('input[type=checkbox]') as HTMLInputElement;
-      this.arrChecked.push(check);
-    });
-    const select = content.querySelector('.select-country') as HTMLSelectElement;
-    select.value = 'GE';
+    this.billing = content.querySelector('.shipping-input') as HTMLInputElement;
+    this.shipping = content.querySelector('.billing-input') as HTMLInputElement;
     this.countrySelect = content.querySelector('.select-country') as HTMLSelectElement;
+    this.countrySelect.value = 'GE';
     this.postalCodeInput = content.querySelector('.input-postalcode') as HTMLInputElement;
     this.cityInput = content.querySelector('.input-city') as HTMLInputElement;
     this.streetNameInput = content.querySelector('.input-street-name') as HTMLInputElement;
     this.streetNumInput = content.querySelector('.input-street-num') as HTMLInputElement;
+    this.svgBox = content.querySelector('.box-svg') as HTMLElement;
     this.listenField(content);
   }
 
@@ -120,30 +105,29 @@ export default class NewAddressModule extends Component {
 
   async saveAddress() {
     try {
-      const addressNew = this.fillAddressReg();
-      const addedAddress = await changeDataCustomer([{ action: 'addAddress', address: addressNew }]); // 'address'
-      console.log('addedAddress', addedAddress.body.addresses);
-      const arrAddresses = addedAddress.body.addresses;
-      const lastAddress = arrAddresses[arrAddresses.length - 1];
-      console.log('lastAddess', lastAddress);
+      const addedAddress = await changeDataCustomer([{ action: 'addAddress', address: this.fillAddressReg() }]);
+      setTimeout(async () => {
+        const userRequest = await sdkClient.apiRoot.me().get().execute();
+        sdkClient.userInfo = userRequest.body;
+        const { addresses } = addedAddress.body;
+        const address = addresses[addresses.length - 1] as Address;
+        const { id } = address;
+        this.billing.checked &&
+          (await changeDataCustomer(
+            [{ action: 'addBillingAddressId', addressId: `${id}` }],
+            sdkClient.userInfo.version as number
+          ));
+        this.shipping.checked &&
+          (await changeDataCustomer(
+            [{ action: 'addShippingAddressId', addressId: `${id}` }],
+            sdkClient.userInfo.version as number
+          ));
 
-      this.showInfo();
-
-      if ((this.arrChecked[0] as HTMLInputElement).checked === true) {
-        changeDataCustomer(
-          [{ action: 'setDefaultShippingAddress', addressId: `${lastAddress?.id}` }],
-          addedAddress.body.version
-        );
-      }
-
-      if ((this.arrChecked[1] as HTMLInputElement).checked === true) {
-        changeDataCustomer(
-          [{ action: 'setDefaultBillingAddress', addressId: `${lastAddress?.id}` }],
-          addedAddress.body.version
-        );
-      }
+        this.showInfo('Your new address has been successfully added!');
+      }, 1000);
     } catch (error) {
-      console.log(error);
+      const apiError = error as ApiError;
+      this.showInfo(apiError.message);
     }
   }
 
@@ -162,8 +146,8 @@ export default class NewAddressModule extends Component {
     return address;
   }
 
-  showInfo() {
-    const info = new Heading(5, 'info-n', `Your new address has been successfully added!`).render();
+  showInfo(text: string) {
+    const info = new Heading(5, 'info-n', `${text}`).render();
     this.content.append(info);
     const TIME = 3000;
     setTimeout(() => {

@@ -1,4 +1,5 @@
 import { Address } from '@commercetools/platform-sdk';
+import { ApiError } from '../../../types/sdkTypes';
 import { changeDataCustomer } from '../../api/authorization/Customer';
 import sdkClient from '../../api/SdkClient';
 import Component from '../../components/Component';
@@ -21,6 +22,10 @@ export default class AddressesModule extends Component {
   };
 
   VRules: ValidationRules = new ValidationRules();
+
+  arrBilling!: string[];
+
+  arrShipping!: string[];
 
   fillData(content: HTMLElement): void {
     const addresses = sdkClient.userInfo.addresses as Address[];
@@ -74,8 +79,16 @@ export default class AddressesModule extends Component {
         input.readOnly = true;
       });
 
-      key === 'KeyShipping' && this.highlightAddressType(doc, '.shipping-item');
-      key === 'KeyBilling' && this.highlightAddressType(doc, '.billing-item');
+      this.arrBilling = sdkClient.userInfo.billingAddressIds as string[];
+      this.arrShipping = sdkClient.userInfo.shippingAddressIds as string[];
+      const bill = this.arrBilling?.filter((i) => i === id);
+      const ship = this.arrShipping?.filter((i) => i === id);
+      bill.length === 1 && this.highlightAddressType(doc, '.billing-item');
+      ship.length === 1 && this.highlightAddressType(doc, '.shipping-item');
+
+      const arrS = sdkClient.userInfo.defaultShippingAddressId;
+      const arrB = sdkClient.userInfo.defaultBillingAddressId;
+      console.log(`bill ${arrB}, ship ${arrS}`);
 
       this.showSaveBtn(cityInput, city, saveBtn);
       this.showSaveBtn(countrySelect, country, saveBtn);
@@ -126,7 +139,7 @@ export default class AddressesModule extends Component {
             doc.querySelectorAll<HTMLInputElement>('input[type=checkbox]').forEach((checkbox) => {
               const check = checkbox;
               check.addEventListener('change', () => {
-                check.checked === true ? saveBtn.classList.remove('hide') : saveBtn.classList.add('hide');
+                check.checked ? saveBtn.classList.remove('hide') : saveBtn.classList.add('hide');
               });
             });
             allInput.forEach((x) => {
@@ -138,8 +151,8 @@ export default class AddressesModule extends Component {
           }
         }
 
-        el.classList.contains('close') && this.removeAddress(doc);
-        el.classList.contains('save-address') && this.changeAddress(doc);
+        el.classList.contains('close') && this.removeAddress(doc, id);
+        el.classList.contains('save-address') && this.changeAddress(doc, id);
       });
     }
   }
@@ -216,18 +229,18 @@ export default class AddressesModule extends Component {
     this.content.append(header, conteiner);
   }
 
-  async removeAddress(doc: Element) {
+  async removeAddress(doc: Element, id: string) {
     try {
       doc.classList.add('hidden');
-      const addressId = doc.id;
-      await changeDataCustomer([{ action: 'removeAddress', addressId: `${addressId}` }]);
-      this.showInfo(doc, 'Your address has been successfully deleted!');
+      await changeDataCustomer([{ action: 'removeAddress', addressId: `${id}` }]);
+      const userRequest = await sdkClient.apiRoot.me().get().execute();
+      sdkClient.userInfo = userRequest.body;
     } catch (error) {
       console.log(error);
     }
   }
 
-  async changeAddress(doc: Element) {
+  async changeAddress(doc: Element, id: string) {
     try {
       const countrySelect = doc.querySelector('.select-country') as HTMLSelectElement;
       const postalCodeInput = doc.querySelector('.input-postalcode') as HTMLInputElement;
@@ -241,9 +254,6 @@ export default class AddressesModule extends Component {
         this.VRules.house(streetNumInput.value) === true &&
         this.VRules.city(cityInput.value) === true
       ) {
-        // const def = doc.querySelectorAll<HTMLInputElement>('input[type=checkbox]');
-        // const defShipp = def[0].checked;
-        // const defBill = def[1].checked;
         const addressChange: Address = {
           streetName: `${streetNameInput.value}`,
           streetNumber: `${streetNumInput.value}`,
@@ -252,11 +262,19 @@ export default class AddressesModule extends Component {
           country: `${countrySelect.value}`,
         };
 
-        await changeDataCustomer([{ action: 'changeAddress', addressId: `${doc.id}`, address: addressChange }]);
+        await changeDataCustomer([{ action: 'changeAddress', addressId: `${id}`, address: addressChange }]);
+        const userRequest = await sdkClient.apiRoot.me().get().execute();
+        sdkClient.userInfo = userRequest.body;
+        const def = doc.querySelectorAll<HTMLInputElement>('input[type=checkbox]');
+        const defShipp = def[0].checked;
+        const defBill = def[1].checked;
+        defShipp && (await changeDataCustomer([{ action: 'setDefaultShippingAddress', addressId: `${id}` }], sdkClient.userInfo.version as number));
+        defBill && (await changeDataCustomer([{ action: 'setDefaultBillingAddress', addressId: `${id}` }], sdkClient.userInfo.version as number));
         this.showInfo(doc, 'Your address has been successfully changed!');
       }
     } catch (error) {
-      console.log(error);
+      const apiError = error as ApiError;
+      this.showInfo(doc, apiError.message);
     }
   }
 
