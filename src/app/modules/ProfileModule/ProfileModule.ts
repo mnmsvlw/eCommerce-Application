@@ -24,6 +24,7 @@ export default class ProfileModule extends Component {
     }
 
     if (page === 'address') {
+      box.classList.add('address');
       box.append(new AddressesModule().render());
       (menu.querySelector('.address-item') as HTMLElement).classList.add('red');
     }
@@ -37,6 +38,7 @@ export default class ProfileModule extends Component {
       const box = elem2;
       const el = e.target as HTMLElement;
       this.content.querySelectorAll('.red').forEach((elem) => elem.classList.remove('red'));
+      this.content.querySelectorAll('.wrapp-form').forEach((elem) => elem.classList.remove('address'));
 
       if (el.classList.contains('info-item')) {
         el.classList.add('red');
@@ -53,6 +55,7 @@ export default class ProfileModule extends Component {
       if (el.classList.contains('address-item')) {
         el.classList.add('red');
         box.textContent = '';
+        box.classList.add('address');
         box.append(new AddressesModule().render());
       }
     });

@@ -66,6 +66,7 @@ export default class ProfileNewAddress extends Component {
 
     toggle2.append(billingInput, switch2, track2);
     const boxSvg = new Container('box-svg').render();
+    boxSvg.classList.add('a');
 
     const boxForDefault1 = new Container('default').render();
     const boxForDefault2 = new Container('default').render();

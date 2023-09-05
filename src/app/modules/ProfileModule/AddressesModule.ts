@@ -268,8 +268,16 @@ export default class AddressesModule extends Component {
         const def = doc.querySelectorAll<HTMLInputElement>('input[type=checkbox]');
         const defShipp = def[0].checked;
         const defBill = def[1].checked;
-        defShipp && (await changeDataCustomer([{ action: 'setDefaultShippingAddress', addressId: `${id}` }], sdkClient.userInfo.version as number));
-        defBill && (await changeDataCustomer([{ action: 'setDefaultBillingAddress', addressId: `${id}` }], sdkClient.userInfo.version as number));
+        defShipp &&
+          (await changeDataCustomer(
+            [{ action: 'setDefaultShippingAddress', addressId: `${id}` }],
+            sdkClient.userInfo.version as number
+          ));
+        defBill &&
+          (await changeDataCustomer(
+            [{ action: 'setDefaultBillingAddress', addressId: `${id}` }],
+            sdkClient.userInfo.version as number
+          ));
         this.showInfo(doc, 'Your address has been successfully changed!');
       }
     } catch (error) {
