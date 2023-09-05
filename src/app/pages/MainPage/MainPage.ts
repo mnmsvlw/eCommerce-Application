@@ -33,10 +33,22 @@ export default class MainPage extends Page {
       redirect(logoutLink.href);
     });
 
-    const productLink = new Link('/product/', '', 'Product page');
+    const catalogLink = new Link('/items/', '', 'Catalog page');
+    catalogLink.addListener('click', (e: Event) => {
+      e.preventDefault();
+      redirect(catalogLink.href);
+    });
+
+    const productLink = new Link('/items/e77c72b5-258d-4e16-970a-324ed0f2ae16/', '', 'Product page');
     productLink.addListener('click', (e: Event) => {
       e.preventDefault();
       redirect(productLink.href);
+    });
+
+    const profileLink = new Link('/profile/', '', 'Profile page');
+    profileLink.addListener('click', (e: Event) => {
+      e.preventDefault();
+      redirect(profileLink.href);
     });
 
     this.page.append(
@@ -44,7 +56,9 @@ export default class MainPage extends Page {
       loginLink.render(),
       registerLink.render(),
       logoutLink.render(),
-      productLink.render()
+      catalogLink.render(),
+      productLink.render(),
+      profileLink.render()
     );
     listenBurger(this.page);
   }

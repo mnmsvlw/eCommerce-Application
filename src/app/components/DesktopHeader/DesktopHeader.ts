@@ -31,8 +31,9 @@ export default class DesktopHeader extends Component {
         linkElement = new Link(item.href, 'nav-link', `${sdkClient.userInfo.firstName} ${sdkClient.userInfo.lastName}`);
       } else {
         linkElement = new Link(item.href, 'nav-link', item.title);
-        linkElement.addListener('click', this.linkOnClick);
       }
+
+      linkElement.addListener('click', this.linkOnClick);
 
       li.appendChild(linkElement.render());
       ul.appendChild(li);
