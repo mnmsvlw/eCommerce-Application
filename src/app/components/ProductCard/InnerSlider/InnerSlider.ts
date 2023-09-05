@@ -1,12 +1,11 @@
 import { Image } from '@commercetools/platform-sdk';
 import Component from '../../Component';
-import ElementCreator from '../../../utils/ElementCreator';
 import Container from '../../../UI/Container';
-import 'swiper/css/bundle';
-import './InnerSlider.css';
 import ImageElement from '../../../UI/Img';
 import ModalConstructor from '../ModalView/ModalView';
 import SwiperSlider from '../../../utils/Swiper';
+import 'swiper/css/bundle';
+import './InnerSlider.css';
 
 export default class InnerProductSlider extends Component {
   images: Image[];
@@ -19,32 +18,28 @@ export default class InnerProductSlider extends Component {
   public render = () => {
     if (this.images.length === 1) {
       this.content = new Container('image-container').render();
-      const img = new ElementCreator({
-        tag: 'img',
-        attributes: {
-          src: this.images[0].url,
-          alt: 'slide-image',
-        },
-      }).getElement();
+      const img = new ImageElement(this.images[0].url, 'slide-image').render();
       this.content.append(img);
+      img.addEventListener('click', () => {
+        const modal: HTMLElement | null = document.querySelector('.modal__cover');
+
+        if (modal != null) {
+          modal.remove();
+          this.showModal();
+        } else {
+          this.showModal();
+        }
+      });
       return this.content;
     }
 
     this.content = new Container('swiper').render();
-
-    const swiperWrapper = new ElementCreator({
-      tag: 'div',
-      classNames: 'swiper-wrapper',
-    }).getElement();
+    const swiperWrapper = new Container('swiper-wrapper').render();
 
     this.images.forEach((image) => {
-      const swiperSlide = new ElementCreator({
-        tag: 'div',
-        classNames: 'swiper-slide',
-      }).getElement();
+      const swiperSlide = new Container('swiper-slide').render();
 
-      const imageElement = new ImageElement(image.url, 'slide-image');
-      const imageHTMLElement = imageElement.render();
+      const imageHTMLElement = new ImageElement(image.url, 'slide-image').render();
       swiperSlide.appendChild(imageHTMLElement);
       swiperWrapper.appendChild(swiperSlide);
       imageHTMLElement.addEventListener('click', () => {

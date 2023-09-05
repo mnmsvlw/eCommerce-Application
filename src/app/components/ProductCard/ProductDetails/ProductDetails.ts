@@ -7,6 +7,7 @@ import Button from '../../../UI/Button';
 import './ProductDetails.css';
 import Input from '../../../UI/Input';
 import Label from '../../../UI/Label';
+import { SizeValue } from '../../../../types/productTypes';
 
 export default class ProductDetails extends Component {
   product: ProductProjection;
@@ -23,38 +24,52 @@ export default class ProductDetails extends Component {
 
     const productPrice = new Container('product-card__price').render();
     const productPriceValid = new Container('product-card__price-valid').render();
+    const masterVariantPrice = this.product.masterVariant.prices;
 
-    // if (this.product.masterVariant.price?.discounted?.discount) {
-    //   productPriceValid.textContent = `$${this.product.masterVariant.price.discounted.value}`;
-    //   const productPriceUnvalid = new Container('product-card__price-unvalid').render();
-    //   productPriceUnvalid.textContent = `$${this.product.masterVariant.price.value}`;
-    //   const discountPersantage = new Container('product-card__price-discount').render();
-    //   discountPersantage.textContent = `- ${this.product.masterVariant.price.discounted.value}% Off`;
-    //   productPrice.append(productPriceValid, productPriceUnvalid, discountPersantage);
-    // } else {
-    const masterVariantPrice = this.product.masterVariant?.prices;
+    if (masterVariantPrice && masterVariantPrice.length > 0) {
+      const price = masterVariantPrice[0]?.value.centAmount.toString().slice(0, -2);
+      const discountedPrice = masterVariantPrice[0]?.discounted?.value.centAmount.toString().slice(0, -2);
 
-    if (masterVariantPrice && masterVariantPrice[0]?.value) {
-      const amount = masterVariantPrice[0].value.centAmount.toString().slice(0, -2);
-      const cents = masterVariantPrice[0].value.centAmount.toString().slice(-2);
-      productPriceValid.textContent = `$${amount}.${cents}`;
-      productPrice.append(productPriceValid);
+      if (discountedPrice) {
+        const discount = (((+price - +discountedPrice) / +price) * 100).toFixed(0);
+        productPriceValid.textContent = `$${discountedPrice} USD`;
+        const productPriceUnvalid = new Container('product-card__price-unvalid').render();
+        productPriceUnvalid.textContent = `$${price} USD`;
+        const discountPersantage = new Container('product-card__price-discount').render();
+        discountPersantage.textContent = `- ${discount}% Off`;
+        productPrice.append(productPriceValid, productPriceUnvalid, discountPersantage);
+      } else if (price) {
+        const amount = masterVariantPrice[0]?.value.centAmount.toString().slice(0, -2);
+        const cents = masterVariantPrice[0]?.value.centAmount.toString().slice(-2);
+        productPriceValid.textContent = `$${amount}.${cents} USD`;
+        productPrice.append(productPriceValid);
+      } else {
+        productPriceValid.textContent = `$${100}.00`;
+        productPrice.append(productPriceValid);
+      }
     } else {
       productPriceValid.textContent = `$${100}.00`;
       productPrice.append(productPriceValid);
     }
-    // }
 
-    const sizes = this.product.masterVariant.attributes?.filter((attribute) => attribute.name === 'size');
+    const { variants } = this.product;
+    const sizeVariants: SizeValue[] = [];
+    variants.forEach((variant) => {
+      variant.attributes?.forEach((attribute) => {
+        if (attribute.name === 'size' || attribute.name === 'size-w') {
+          sizeVariants.push(attribute.value);
+        }
+      });
+    });
     const sizeContainer = new Container('product-card__size-container').render();
 
-    if (sizes) {
+    if (sizeVariants) {
       const sizeHeader = new Heading(3, 'product-card__size-heading', 'Choose a Size').render();
       const sizeElementContainer = new Container('product-card__size-elements').render();
-      sizes?.forEach((size) => {
+      sizeVariants?.forEach((size) => {
         const elContainer = new Container('product-card__size-el-container').render();
         const sizeElInput = new Input('size', 2, 'product-card__size-input', '', 'radio').render() as HTMLInputElement;
-        sizeElInput.value = size.value.label;
+        sizeElInput.value = size.label;
         const sizeElText = new Label('size', `${sizeElInput.value}`, 'product-card__size-el-text').render();
         elContainer.append(sizeElInput, sizeElText);
         sizeElementContainer.append(elContainer);
@@ -64,12 +79,10 @@ export default class ProductDetails extends Component {
 
     const btnContainer = new Container('product-card__btn-container').render();
     const quantatyBtn = new Container('quantity-container').render();
-    const minusBtn = new Button('-', 'button', 'minus-btn');
-    const minusBtnElement = minusBtn.render();
+    const minusBtnElement = new Button('-', 'button', 'minus-btn').render();
     const quantatyNum = new Container('quantity-num').render();
     quantatyNum.textContent = '1';
-    const plusBtn = new Button('+', 'button', 'plus-btn');
-    const plusBtnElement = plusBtn.render();
+    const plusBtnElement = new Button('+', 'button', 'plus-btn').render();
     quantatyBtn.append(minusBtnElement, quantatyNum, plusBtnElement);
 
     const minusHandler = () => {
@@ -77,20 +90,18 @@ export default class ProductDetails extends Component {
 
       if (currentValue > 1) {
         quantatyNum.textContent = (currentValue - 1).toString();
-        console.log('minus button');
       }
     };
 
     const plusHandler = () => {
       const currentValue = parseInt(quantatyNum.textContent || '1', 10);
       quantatyNum.textContent = (currentValue + 1).toString();
-      console.log('plus button');
     };
 
     minusBtnElement.addEventListener('click', minusHandler);
     plusBtnElement.addEventListener('click', plusHandler);
 
-    const addToBasketBtn = new Button('Add To Cart', 'button', 'add-to-basket__button').render();
+    const addToBasketBtn = new Button('Add to Cart', 'button', 'add-to-basket__button').render();
 
     btnContainer.append(quantatyBtn, addToBasketBtn);
 

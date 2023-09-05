@@ -24,7 +24,7 @@ export default class ElementCreator {
   private setAttributes(
     element: HTMLElement,
     attr?: {
-      [index: string]: string | boolean;
+      [index: string]: string | boolean | number;
     }
   ) {
     if (attr) {

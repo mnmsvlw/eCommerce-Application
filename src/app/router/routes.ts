@@ -1,6 +1,6 @@
 import { Route } from '../../types/routerTypes';
 import CatalogPage from '../pages/CatalogPage/CatalogPage';
-import ItemPage from '../pages/ItemPage/ItemPage';
+// import ItemPage from '../pages/ItemPage/ItemPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import LogoutPage from '../pages/LogoutPage/LogoutPage';
 import MainPage from '../pages/MainPage/MainPage';
@@ -47,9 +47,9 @@ const routes: Route[] = [
     redirect: '/',
   },
   {
-    title: 'Catalog | E-Commerce Application',
+    title: 'Product Card | E-Commerce Application',
     path: /^\/items\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\/$/,
-    element: () => new ItemPage(),
+    element: () => new ProductPage(),
   },
 ];
 

@@ -1,3 +1,4 @@
+import { ProductProjection } from '@commercetools/platform-sdk';
 import { addToEventList } from '../data/listenersList';
 import { addToDispatchList } from '../data/mountList';
 import ElementCreator from '../utils/ElementCreator';
@@ -12,20 +13,20 @@ export default class Component {
     this.id = crypto.randomUUID();
   }
 
-  render(..._options: string[]) {
+  render(..._options: string[] | ProductProjection[]) {
     return this.content;
   }
 
-  renderAsync = async (_component: HTMLElement, _key?: string) => {
+  renderAsync = async (_component: HTMLElement) => {
     return new Promise((resolve) => {
       resolve(null);
     });
   };
 
-  bindAsync = (renderAsync: (component: HTMLElement, key?: string) => Promise<void>, keyProduct?: string) => {
+  bindAsync = (renderAsync: (component: HTMLElement) => Promise<void>) => {
     this.addListener('mount', (e: Event) => {
       const target = e.target as HTMLElement;
-      renderAsync(target, keyProduct);
+      renderAsync(target);
     });
     this.addDispatchEvent('mount');
   };
