@@ -69,9 +69,42 @@ export default class ProfileNewAddress extends Component {
     boxSvg.classList.add('a');
 
     const boxForDefault1 = new Container('default').render();
+    boxForDefault1.classList.add('checkbox-container-profile');
     const boxForDefault2 = new Container('default').render();
+    boxForDefault2.classList.add('checkbox-container-profile');
+
+    const checkboxContainerBilling = new Container('checkbox-container-profile').render();
+    const defaultBillingAddressLabel = new Label(
+      'bill-checkbox-profile',
+      'Set as default billing address?',
+      'profile-label-checkbox'
+    ).render();
+    const defaultBillingAddress = new Input(
+      'bill-checkbox-profile',
+      5,
+      'profile-input-checkbox',
+      '',
+      'checkbox'
+    ).render();
+    checkboxContainerBilling.append(defaultBillingAddressLabel, defaultBillingAddress);
+
+    const checkboxContainerShipping = new Container('checkbox-container-profile').render();
+    const defaultShippingAddressLabel = new Label(
+      'ship-checkbox-profile',
+      'Set as default shipping address?',
+      'profile-label-checkbox'
+    ).render();
+    const defaultShippingAddress = new Input(
+      'ship-checkbox-profile',
+      5,
+      'profile-input-checkbox',
+      '',
+      'checkbox'
+    ).render();
+    checkboxContainerShipping.append(defaultShippingAddressLabel, defaultShippingAddress);
+
     const boxDefs = new Container('defs').render();
-    boxDefs.append(boxForDefault1, boxForDefault2);
+    boxDefs.append(boxForDefault1, boxForDefault2, checkboxContainerBilling, checkboxContainerShipping);
     boxForDefault1.classList.add('add');
     boxForDefault2.classList.add('add');
     boxForDefault1.classList.add('width');

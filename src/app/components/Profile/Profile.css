@@ -601,14 +601,22 @@
   width: 70%;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 5vw;
+}
+
+.checkbox-container-profile{
+  width: 35%;
+  font-size: 12px;
+  display: flex;
+  gap: 7px;
 }
 
 .billing-label {
-  padding-left: 60px;
+  padding-left: 50px;
 }
 .shipping-label {
-  padding-left: 40px;
+  padding-left: 30px;
 }
 
 @media (max-width: 1300px) {
