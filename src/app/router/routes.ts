@@ -11,7 +11,13 @@ import RegisterPage from '../pages/RegisterPage/RegisterPage';
 const routes: Route[] = [
   { title: 'Main | E-Commerce Application', path: /^\/$/, element: () => new MainPage() },
   { title: 'Catalog | E-Commerce Application', path: /^\/items\/$/, element: () => new CatalogPage() },
-  { title: 'Profile | E-Commerce Application', path: /^\/profile\/$/, element: () => new ProfilePage() },
+  {
+    title: 'Profile | E-Commerce Application',
+    path: /^\/profile\/$/,
+    element: () => new ProfilePage(),
+    accessRules: { isForAuthorizedOnly: true },
+    redirect: '/login/',
+  },
   {
     title: 'Register | E-Commerce Application',
     path: /^\/register\/$/,
@@ -31,19 +37,6 @@ const routes: Route[] = [
     path: /^\/logout\/$/,
     element: () => new LogoutPage(),
     accessRules: { isForAuthorizedOnly: true },
-    redirect: '/',
-  },
-
-  // For Sprint#3
-  // {
-  //   path: /^\/items\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\/$/,
-  //   element: () => new CatalogPage(),
-  // },
-  {
-    title: 'Product Card | E-Commerce Application',
-    path: /^\/product\/$/,
-    element: () => new ProductPage(),
-    accessRules: { isForUnauthorizedOnly: true },
     redirect: '/',
   },
   {

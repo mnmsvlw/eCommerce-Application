@@ -86,7 +86,6 @@ export default class CatalogSidebar extends Component {
             selectedColors.push(checkbox.name);
           }
         });
-        updateQueryString({ color: selectedColors.join() });
 
         const checkedCounter = [...colorCheckboxes].filter((checkbox) => checkbox.checked);
 
@@ -96,6 +95,8 @@ export default class CatalogSidebar extends Component {
         if (checkedCounter.length === 0) {
           button.classList.remove('color__reset_active');
           this.clearQueryString('color');
+        } else {
+          updateQueryString({ color: selectedColors.join() });
         }
       });
 
@@ -134,7 +135,6 @@ export default class CatalogSidebar extends Component {
           }
         });
 
-        updateQueryString({ size: selectedSizes.join() });
         const checkedCounter = [...sizeCheckboxes].filter((checkbox) => checkbox.checked);
 
         const button = document.querySelector('.size__reset') as HTMLElement;
@@ -143,6 +143,8 @@ export default class CatalogSidebar extends Component {
         if (checkedCounter.length === 0) {
           button.classList.remove('size__reset_active');
           this.clearQueryString('size');
+        } else {
+          updateQueryString({ size: selectedSizes.join() });
         }
       });
 

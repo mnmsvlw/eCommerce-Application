@@ -143,6 +143,7 @@
     flex-direction: column;
     align-items: flex-start;
     box-shadow: 0 1px 2px 0px #C10C99 inset;
+    border-right: 1px solid #C10C99;
     z-index: 1000;
   }
 
@@ -167,5 +168,9 @@
 
   .size__content {
     gap: 10px;
+  }
+
+  .size__content {
+    height: 300px;
   }
 }
