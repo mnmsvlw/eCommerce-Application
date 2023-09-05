@@ -40,6 +40,10 @@ export default class ItemsList extends Component {
           textParams = value;
         } else if (key === 'price') {
           filterParams.push(value);
+        } else if (key === 'color') {
+          filterParams.push(`variants.attributes.color:"${value.split(',').join('", "')}"`);
+        } else if (key === 'size') {
+          filterParams.push(`variants.attributes.size.key:"${value.split(',').join('", "')}"`);
         } else {
           filterParams.push(`${key}:"${value}"`);
         }
@@ -76,9 +80,15 @@ export default class ItemsList extends Component {
 
     const element = component;
     element.innerHTML = '';
-    itemsList.forEach((item) => {
-      component.appendChild(new ItemCard().render(item));
-    });
+
+    if (itemsList.length > 0) {
+      itemsList.forEach((item) => {
+        component.appendChild(new ItemCard().render(item));
+      });
+    } else {
+      element.appendChild(new Container('no-items', 'No items found').render());
+    }
+
     this.setCatalogContainerListener(component);
   };
 }

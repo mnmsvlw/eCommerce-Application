@@ -3,9 +3,11 @@ export type NavItem = {
   href: string;
 };
 
+export interface RangeEventParams {
+  lower: number;
+  upper: number;
+}
+
 export interface RangeEvent extends Event {
-  detail?: {
-    lower: number;
-    upper: number;
-  };
+  detail?: RangeEventParams;
 }

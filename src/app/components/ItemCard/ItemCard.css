@@ -5,6 +5,11 @@
   border: 2px solid #400834;
   font: 15px 'Inter', sans-serif;
   cursor: pointer;
+  transition: transform .3s;
+}
+
+.item-card:hover {
+  transform: scale(103%);
 }
 
 .item-card:hover .item-card__text-container{
@@ -32,8 +37,42 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 10px 5px;
+  padding: 14px 20px 5px;
   background-color: #FFFFFF05;
   transition: background-color .3s;
 }
 
+.item-card__price-discount + .item-card__price-current {
+  text-decoration: line-through;
+  color: #FFFFFF65;
+} 
+
+.item-card__price {
+  display: flex;
+  gap: 10px;
+}
+
+.item-card__price-discount-amount {
+  color: #C10C99;
+  font-weight: 800;
+  font-size: 10px;
+  letter-spacing: 0.06rem;
+}
+
+.item-card__price-current {
+  margin-bottom: 14px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.item-card__price-discount,
+.item-card__name  {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.item-card__description {
+  font-weight: 600;
+  font-size: 10px;
+  color: #FFFFFF65;
+}

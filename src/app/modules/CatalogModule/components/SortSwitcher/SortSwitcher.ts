@@ -1,3 +1,4 @@
+import './SortSwitcher.css';
 import Select from '../../../../UI/Select';
 import Component from '../../../../components/Component';
 import updateQueryString from '../../../../utils/updateQueryString';
