@@ -34,8 +34,8 @@ export default class NewAddressModule extends Component {
   shipping!: HTMLInputElement;
 
   fillData(content: HTMLElement): void {
-    this.billing = content.querySelector('.shipping-input') as HTMLInputElement;
-    this.shipping = content.querySelector('.billing-input') as HTMLInputElement;
+    this.shipping = content.querySelector('.shipping-input') as HTMLInputElement;
+    this.billing = content.querySelector('.billing-input') as HTMLInputElement;
     this.countrySelect = content.querySelector('.select-country') as HTMLSelectElement;
     this.countrySelect.value = 'GE';
     this.postalCodeInput = content.querySelector('.input-postalcode') as HTMLInputElement;
