@@ -16,7 +16,8 @@
 
 .main-image{
     width: 100%;
-    height: 85%;
+    min-height: 65vh;
+    height: 100%;
     background-image: url(./main-image.png);
     background-size: cover;
     background-repeat: no-repeat;
@@ -134,4 +135,61 @@
 .main-link-cat:hover,
 .main-link-cat:hover{
     background-color: rgb(182, 181, 181);
+}
+
+@media (max-width: 1000px) {
+    .main-header{
+        font-size: 3.5em;
+    }
+
+    .main-banner{
+        font-size: 0.7em;
+    }
+
+    .category-header{
+        font-size: 1em;
+    }
+
+    .main-link-cat,
+    .main-link-cat{
+    font-size: 1em;
+    height: 5vh;
+    }
+}
+
+@media (max-width: 767px) {
+    .main-header{
+        font-size: 2.5em;
+    }
+
+    .main-image{
+        height: 50vh;
+    }
+
+    .image-details{
+        width: 60vw;
+    }
+
+    .main-link{
+        width: 40vw;
+    }
+
+    .main-banner{
+        font-size: 0.6em;
+    }
+
+    .category-header{
+        font-size: 1em;
+        text-align: center;
+    }
+
+    .main-btn-container{
+        flex-direction: column;
+    }
+
+    .main-link-cat,
+    .main-link-cat{
+        font-size: 0.8em;
+        height: 5vh;
+    }
 }
