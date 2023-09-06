@@ -6,6 +6,7 @@ import PersonalInfoModule from './PersonalInfoModule';
 
 export default class ProfileModule extends Component {
   render = () => {
+    document.addEventListener('click', (e) => console.log(e.target));
     this.content = new Profile().render();
     const box = this.content.querySelector('.wrapp-form') as HTMLElement;
     const menu = this.content.querySelector('.menu') as HTMLElement;
@@ -37,22 +38,25 @@ export default class ProfileModule extends Component {
     elem1.addEventListener('click', (e) => {
       const box = elem2;
       const el = e.target as HTMLElement;
-      this.content.querySelectorAll('.red').forEach((elem) => elem.classList.remove('red'));
-      this.content.querySelectorAll('.wrapp-form').forEach((elem) => elem.classList.remove('address'));
 
       if (el.classList.contains('info-item')) {
+        this.content.querySelectorAll('.red').forEach((elem) => elem.classList.remove('red'));
         el.classList.add('red');
         box.textContent = '';
         box.append(new PersonalInfoModule().render());
+        this.content.querySelectorAll('.wrapp-form').forEach((elem) => elem.classList.remove('address'));
       }
 
       if (el.classList.contains('email-item')) {
+        this.content.querySelectorAll('.red').forEach((elem) => elem.classList.remove('red'));
         el.classList.add('red');
         box.textContent = '';
         box.append(new EmailPassModule().render());
+        this.content.querySelectorAll('.wrapp-form').forEach((elem) => elem.classList.remove('address'));
       }
 
       if (el.classList.contains('address-item')) {
+        this.content.querySelectorAll('.red').forEach((elem) => elem.classList.remove('red'));
         el.classList.add('red');
         box.textContent = '';
         box.classList.add('address');

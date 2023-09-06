@@ -73,7 +73,7 @@
 }
 
 .wrapp-form.address {
-  width: 100%;
+  width: 75%;
 }
 .first,
 .last,
@@ -314,25 +314,41 @@
     auto,
     30px;
 }
-
+.conteinerTypeAll {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
 .conteinerType {
   width: 100%;
   padding-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   margin-left: 10px;
   padding-right: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+.shipping-item-def,
+.billing-item-def {
+  font-size: 12px;
+  color: #c10c99;
+}
 
-.type-item {
+.shipping-item-def.hide,
+.billing-item-def.hide {
+  display: none;
+}
+
+/*.type-item {
   list-style-type: none;
   width: 40%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-}
+} */
 
 .countryPostalCode {
   width: 100%;
@@ -423,7 +439,7 @@
   justify-content: space-between;
   margin-top: 10px;
   font-size: 14px;
-  color: #c10c99;
+  color: rgb(193, 12, 153);
 }
 .default.add.width {
   width: 100%;
@@ -613,6 +629,7 @@
   width: 100%;
   display: flex;
   align-items: center;
+
   justify-content: space-between;
 }
 
@@ -933,7 +950,7 @@
     margin-right: 0;
     padding-right: 0;
   }
-  .type-item {
+  /*.type-item {
     font-size: 10px;
-  }
+  }*/
 }

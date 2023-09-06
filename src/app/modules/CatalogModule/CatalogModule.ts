@@ -42,6 +42,10 @@ export default class CatalogModule extends Component {
     sidebar.appendChild(renderedIcon);
   };
 
+  // restoreState = () => {
+
+  // }
+
   render = () => {
     const catalogContainer = new Container('catalog-container');
     const sidebar = new CatalogSidebar().render();
@@ -56,7 +60,7 @@ export default class CatalogModule extends Component {
 
     this.hideFilter(sidebar);
     this.addUpdateQueryStringListener(catalogContainer);
-    this.resetQuery();
+    // this.resetQuery();
 
     mainContainer.append(searchBar, sortFilterContainer, itemsList);
     this.content = catalogContainer.render();

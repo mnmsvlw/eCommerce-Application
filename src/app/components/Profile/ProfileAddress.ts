@@ -13,12 +13,34 @@ export default class ProfileAddress extends Component {
     this.content = new Container('box-address').render();
     const title = new Heading(4, 'title', 'Address').render();
     const close = new Container('close').render();
-
-    const conteinerType = new Container('conteinerType').render();
+    const conteinerType = new Container('conteinerTypeAll').render();
+    const shippBill = new Container('conteinerType').render();
     const type = new ElementCreator({ tag: 'p', classNames: 'type-item', text: 'Type :' }).getElement();
-    const shipping = new ElementCreator({ tag: 'p', classNames: 'shipping-item', text: 'Shipping' }).getElement();
-    const billing = new ElementCreator({ tag: 'p', classNames: 'billing-item', text: 'Billing' }).getElement();
-    conteinerType.append(type, shipping, billing);
+    const shipping = new ElementCreator({
+      tag: 'p',
+      classNames: 'shipping-item',
+      text: 'Shipping',
+    }).getElement();
+    const billing = new ElementCreator({
+      tag: 'p',
+      classNames: 'billing-item',
+      text: 'Billing',
+    }).getElement();
+
+    const shippingDef = new ElementCreator({
+      tag: 'p',
+      classNames: 'shipping-item-def',
+      text: 'Default Shipping Address',
+    }).getElement();
+    shippingDef.classList.add('hide');
+    const billingDef = new ElementCreator({
+      tag: 'p',
+      classNames: 'billing-item-def',
+      text: 'Default Billing Address',
+    }).getElement();
+    billingDef.classList.add('hide');
+    shippBill.append(type, shipping, billing);
+    conteinerType.append(shippBill, shippingDef, billingDef);
 
     const formErrorCode = new Container('errorCode').render();
     const formErrorCity = new Container('errorCity').render();
