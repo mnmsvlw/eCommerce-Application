@@ -33,6 +33,10 @@ export default class NewAddressModule extends Component {
 
   shipping!: HTMLInputElement;
 
+  shippingDefault!: HTMLInputElement;
+
+  billingDefault!: HTMLInputElement;
+
   fillData(content: HTMLElement): void {
     this.shipping = content.querySelector('.shipping-input') as HTMLInputElement;
     this.billing = content.querySelector('.billing-input') as HTMLInputElement;
@@ -43,6 +47,8 @@ export default class NewAddressModule extends Component {
     this.streetNameInput = content.querySelector('.input-street-name') as HTMLInputElement;
     this.streetNumInput = content.querySelector('.input-street-num') as HTMLInputElement;
     this.svgBox = content.querySelector('.box-svg') as HTMLElement;
+    this.shippingDefault = content.querySelector('.shippingDef-input') as HTMLInputElement;
+    this.billingDefault = content.querySelector('.billingDef-input') as HTMLInputElement;
     this.listenField(content);
   }
 
@@ -116,12 +122,32 @@ export default class NewAddressModule extends Component {
           (await changeDataCustomer(
             [{ action: 'addBillingAddressId', addressId: `${id}` }],
             sdkClient.userInfo.version as number
-          ));
+          ).catch((error) => console.log(error)));
         this.shipping.checked &&
           (await changeDataCustomer(
             [{ action: 'addShippingAddressId', addressId: `${id}` }],
             sdkClient.userInfo.version as number
-          ));
+          ).catch((error) => console.log(error)));
+        this.shippingDefault.checked &&
+          (await changeDataCustomer(
+            [
+              {
+                action: 'setDefaultShippingAddress',
+                addressId: `${id}`,
+              },
+            ],
+            sdkClient.userInfo.version as number
+          ).catch((error) => console.log(error)));
+        this.billingDefault.checked &&
+          (await changeDataCustomer(
+            [
+              {
+                action: 'setDefaultBillingAddress',
+                addressId: `${id}`,
+              },
+            ],
+            sdkClient.userInfo.version as number
+          ).catch((error) => console.log(error)));
 
         this.showInfo('Your new address has been successfully added!');
       }, 1000);

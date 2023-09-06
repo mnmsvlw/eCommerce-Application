@@ -442,16 +442,20 @@
   color: rgb(193, 12, 153);
 }
 .default.add.width {
-  width: 50%;
+  width: 100%;
 }
 
 .b,
-.s {
+.s,
+.bd,
+.sd {
   display: block;
 }
 
 .toggle1,
-.toggle2 {
+.toggle2,
+.toggle3,
+.toggle4 {
   position: absolute;
   top: 100%;
   right: 20%;
@@ -478,12 +482,16 @@
 }
 
 .shipping-input:checked ~ .track1,
-.billing-input:checked ~ .track2 {
+.billing-input:checked ~ .track2,
+.shipping-input:checked ~ .track3,
+.billing-input:checked ~ .track4 {
   box-shadow: inset 0 0 0 20px #c10c99;
 }
 
 .shipping-input:checked ~ .switch1,
-.billing-input:checked ~ .switch2 {
+.billing-input:checked ~ .switch2,
+.shipping-input:checked ~ .switch3,
+.billing-input:checked ~ .switch4 {
   right: 2px;
   left: 22px;
   transition: 0.35s cubic-bezier(0.785, 0.135, 0.15, 0.86);
@@ -492,7 +500,9 @@
 }
 
 .switch1,
-.switch2 {
+.switch2,
+.switch3,
+.switch4 {
   position: absolute;
   left: 2px;
   top: 1px;
@@ -508,7 +518,9 @@
 }
 
 .track1,
-.track2 {
+.track2,
+.track3,
+.track4 {
   position: absolute;
   left: 0;
   top: 0;
@@ -614,11 +626,25 @@
 }
 
 .defs {
-  width: 70%;
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  gap: 5vw;
+
+  justify-content: space-between;
+}
+
+.billship {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.billshipDef {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .billing-label {
@@ -638,6 +664,10 @@
 @media (max-width: 1200px) {
   .wrapp-form {
     width: 50%;
+  }
+
+  .defs.address {
+    width: 100%;
   }
 
   .box-address {
@@ -668,10 +698,41 @@
   .defs {
     width: 85%;
   }
+  .defs.address {
+    width: 100%;
+    justify-content: flex-start;
+  }
 
   .box-svg.a {
     justify-content: center;
     align-items: center;
+  }
+}
+
+@media (max-width: 980px) {
+
+  .defs.address {
+    width: 100%;
+    flex-direction: column-reverse;
+  }
+
+  .billship {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .billshipDef {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .shipping-label,
+  .billing-label {
+    padding-left: 0;
   }
 }
 
@@ -792,8 +853,9 @@
     flex-direction: column;
   }
   .default.add.width {
-    width: 75%;
+    width: 100%;
   }
+
 }
 
 @media (max-width: 615px) {
@@ -808,13 +870,10 @@
     padding-left: 0;
   }
 
-  .b,
-  .s {
-    display: block;
-  }
-
   .toggle1,
-  .toggle2 {
+  .toggle2,
+  .toggle3,
+  .toggle4 {
     position: absolute;
     top: 100%;
     right: 20%;
@@ -834,14 +893,18 @@
   }
 
   .shipping-input:checked ~ .switch1,
-  .billing-input:checked ~ .switch2 {
+  .billing-input:checked ~ .switch2,
+  .shipping-input:checked ~ .switch3,
+  .billing-input:checked ~ .switch4 {
     right: 2px;
     left: 16px;
     transition: 0.35s cubic-bezier(0.785, 0.135, 0.15, 0.86);
   }
 
   .switch1,
-  .switch2 {
+  .switch2,
+  .switch3,
+  .switch4 {
     position: absolute;
     left: 2px;
     top: 1px;
@@ -852,7 +915,9 @@
   }
 
   .track1,
-  .track2 {
+  .track2,
+  .track3,
+  .track4{
     border-radius: 40px;
   }
 
