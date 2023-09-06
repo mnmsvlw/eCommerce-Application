@@ -47,8 +47,8 @@ export default class NewAddressModule extends Component {
     this.streetNameInput = content.querySelector('.input-street-name') as HTMLInputElement;
     this.streetNumInput = content.querySelector('.input-street-num') as HTMLInputElement;
     this.svgBox = content.querySelector('.box-svg') as HTMLElement;
-    this.shippingDefault = content.querySelector('input[name="bill-checkbox-profile"]') as HTMLInputElement;
-    this.billingDefault = content.querySelector('input[name="ship-checkbox-profile"]') as HTMLInputElement;
+    this.shippingDefault = content.querySelector('.shippingDef-input') as HTMLInputElement;
+    this.billingDefault = content.querySelector('.billingDef-input') as HTMLInputElement;
     this.listenField(content);
   }
 

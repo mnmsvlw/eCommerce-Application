@@ -49,13 +49,17 @@ export default class ProfileNewAddress extends Component {
 
     const shippingLabel = new Label('shippingLabel', 'Shipping Address', 'shipping-label').render();
     const shippingInput = new Input('shippingLabel', 0, 'shipping-input', '', 'checkbox').render();
-
     const toggle1 = new Container('toggle1').render();
     const switch1 = new Container('switch1').render();
     switch1.classList.add('s');
     const track1 = new Container('track1').render();
     track1.classList.add('s');
     toggle1.append(shippingInput, switch1, track1);
+    const boxForDefault1 = new Container('default').render();
+    boxForDefault1.classList.add('add');
+    boxForDefault1.classList.add('width');
+    boxForDefault1.append(shippingLabel, toggle1);
+
     const billingLabel = new Label('billingLabel', 'Billing Address', 'billing-label').render();
     const billingInput = new Input('billingLabel', 0, 'billing-input', '', 'checkbox').render();
     const toggle2 = new Container('toggle2').render();
@@ -63,60 +67,56 @@ export default class ProfileNewAddress extends Component {
     switch2.classList.add('b');
     const track2 = new Container('track2').render();
     track2.classList.add('b');
-
     toggle2.append(billingInput, switch2, track2);
-    const boxSvg = new Container('box-svg').render();
-    boxSvg.classList.add('a');
-
-    const boxForDefault1 = new Container('default').render();
-    boxForDefault1.classList.add('checkbox-container-profile');
     const boxForDefault2 = new Container('default').render();
-    boxForDefault2.classList.add('checkbox-container-profile');
+    boxForDefault2.classList.add('add');
+    boxForDefault2.classList.add('width');
+    boxForDefault2.append(billingLabel, toggle2);
 
-    const checkboxContainerBilling = new Container('checkbox-container-profile').render();
-    const defaultBillingAddressLabel = new Label(
-      'bill-checkbox-profile',
-      'Set as default billing address?',
-      'profile-label-checkbox'
-    ).render();
-    const defaultBillingAddress = new Input(
-      'bill-checkbox-profile',
-      5,
-      'profile-input-checkbox',
-      '',
-      'checkbox'
-    ).render();
-    checkboxContainerBilling.append(defaultBillingAddressLabel, defaultBillingAddress);
+    const shippingDefLabel = new Label('shippingDLabel', 'Set as default shipping address?', 'shipping-label').render();
+    const shippingDefInput = new Input('shippingDLabel', 0, 'shipping-input', '', 'checkbox').render();
+    shippingDefInput.classList.add('shippingDef-input');
+    const toggle3 = new Container('toggle3').render();
+    const switch3 = new Container('switch3').render();
+    switch3.classList.add('s');
+    const track3 = new Container('track3').render();
+    track1.classList.add('s');
+    toggle3.append(shippingDefInput, switch3, track3);
+    const boxForDefault3 = new Container('default').render();
+    boxForDefault3.classList.add('add');
+    boxForDefault3.classList.add('width');
+    boxForDefault3.append(shippingDefLabel, toggle3);
 
-    const checkboxContainerShipping = new Container('checkbox-container-profile').render();
-    const defaultShippingAddressLabel = new Label(
-      'ship-checkbox-profile',
-      'Set as default shipping address?',
-      'profile-label-checkbox'
-    ).render();
-    const defaultShippingAddress = new Input(
-      'ship-checkbox-profile',
-      5,
-      'profile-input-checkbox',
-      '',
-      'checkbox'
-    ).render();
-    checkboxContainerShipping.append(defaultShippingAddressLabel, defaultShippingAddress);
+    const billingDefLabel = new Label('billingDLabel', 'Set as default billing address?', 'billing-label').render();
+    const billingDefInput = new Input('billingDLabel', 0, 'billing-input', '', 'checkbox').render();
+    billingDefInput.classList.add('billingDef-input');
+    const toggle4 = new Container('toggle4').render();
+    const switch4 = new Container('switch4').render();
+    switch4.classList.add('b');
+    const track4 = new Container('track4').render();
+    track4.classList.add('b');
+    toggle4.append(billingDefInput, switch4, track4);
+    const boxForDefault4 = new Container('default').render();
+    boxForDefault4.classList.add('add');
+    boxForDefault4.classList.add('width');
+    boxForDefault4.append(billingDefLabel, toggle4);
+
+    const boxForBillShipp = new Container('billship').render();
+    const boxForDefBillShipp = new Container('billshipDef').render();
+    boxForBillShipp.append(boxForDefault1, boxForDefault2);
+    boxForDefBillShipp.append(boxForDefault3, boxForDefault4);
 
     const boxDefs = new Container('defs').render();
-    boxDefs.append(boxForDefault1, boxForDefault2, checkboxContainerBilling, checkboxContainerShipping);
-    boxForDefault1.classList.add('add');
-    boxForDefault2.classList.add('add');
-    boxForDefault1.classList.add('width');
-    boxForDefault2.classList.add('width');
-    boxForDefault1.append(shippingLabel, toggle1);
-    boxForDefault2.append(billingLabel, toggle2);
+    boxDefs.classList.add('address');
+    boxDefs.append(boxForBillShipp, boxForDefBillShipp);
+
     const boxSave = new Container('save-n').render();
     const btnSave = new Button('Save', 'submit', 'save-new').render();
     boxSave.append(btnSave);
+    boxSave.classList.add('hide');
+    const boxSvg = new Container('box-svg').render();
     boxSvg.append(boxSave);
     boxSvg.classList.add('show');
-    boxSave.classList.add('hide');
 
     this.content.append(
       close,
