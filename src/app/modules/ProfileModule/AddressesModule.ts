@@ -68,12 +68,12 @@ export default class AddressesModule extends Component {
 
     const { city, country, id, postalCode, streetName, streetNumber } = address;
 
-    if (city && country && id && postalCode && streetName && streetNumber) {
+    if (city && country && id && postalCode && streetName) {
       countrySelect.value = country;
       postalCodeInput.value = postalCode;
       cityInput.value = city;
       streetNameInput.value = streetName;
-      streetNumInput.value = streetNumber;
+      streetNumInput.value = streetNumber || '';
       const boxAddress = doc;
       boxAddress.id = id;
 
@@ -134,7 +134,7 @@ export default class AddressesModule extends Component {
             postalCodeInput.value = postalCode;
             cityInput.value = city;
             streetNameInput.value = streetName;
-            streetNumInput.value = streetNumber;
+            streetNumInput.value = streetNumber || '';
             this.hideErr(eCity);
             this.hideErr(eCode);
             this.hideErr(eStreetName);
