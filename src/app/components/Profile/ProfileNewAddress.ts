@@ -102,7 +102,9 @@ export default class ProfileNewAddress extends Component {
     boxForDefault4.append(billingDefLabel, toggle4);
 
     const boxForBillShipp = new Container('billship').render();
+    boxForBillShipp.classList.add('addreses');
     const boxForDefBillShipp = new Container('billshipDef').render();
+    boxForDefBillShipp.classList.add('addreses');
     boxForBillShipp.append(boxForDefault1, boxForDefault2);
     boxForDefBillShipp.append(boxForDefault3, boxForDefault4);
 

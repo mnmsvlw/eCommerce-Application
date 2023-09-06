@@ -27,18 +27,22 @@ export default class AddressesModule extends Component {
 
   arrShipping!: string[];
 
-  fillData(content: HTMLElement): void {
-    const addresses = sdkClient.userInfo.addresses as Address[];
-    const boxes = content.querySelectorAll('.box-address');
-    boxes.forEach((box, i) => {
-      this.fillAddress(box, addresses[i]);
-      const address = box;
-      address.id = addresses[i].id as string;
-    });
-    content.addEventListener('click', (e) => {
-      const el = e.target as HTMLElement;
-      el.classList.contains('btnAddNewAddress') && this.addNewAddress();
-    });
+  async fillData(content: HTMLElement): Promise<void> {
+    const userRequest = await sdkClient.apiRoot.me().get().execute();
+    sdkClient.userInfo = userRequest.body;
+    setTimeout(() => {
+      const addresses = sdkClient.userInfo.addresses as Address[];
+      const boxes = content.querySelectorAll('.box-address');
+      boxes.forEach((box, i) => {
+        this.fillAddress(box, addresses[i]);
+        const address = box;
+        address.id = addresses[i].id as string;
+      });
+      content.addEventListener('click', (e) => {
+        const el = e.target as HTMLElement;
+        el.classList.contains('btnAddNewAddress') && this.addNewAddress();
+      });
+    }, 0);
   }
 
   fillAddress(doc: Element, address: Address): void {
@@ -58,6 +62,8 @@ export default class AddressesModule extends Component {
     const billDef = doc.querySelector('.billing-item-def') as HTMLInputElement;
     const checkboxShip = doc.querySelector('.shipping-input') as HTMLInputElement;
     const checkboxBill = doc.querySelector('.billing-input') as HTMLInputElement;
+    const checkboxBillDef = doc.querySelector('.billingDef-input') as HTMLInputElement;
+    const checkboxShipDef = doc.querySelector('.shippingDef-input') as HTMLInputElement;
 
     const { city, country, id, postalCode, streetName, streetNumber } = address;
 
@@ -79,20 +85,28 @@ export default class AddressesModule extends Component {
       this.arrShipping = sdkClient.userInfo.shippingAddressIds as string[];
       const bill = this.arrBilling?.filter((i) => i === id);
       const ship = this.arrShipping?.filter((i) => i === id);
-      bill.length === 1 && this.highlightAddressType(doc, '.billing-item');
-      ship.length === 1 && this.highlightAddressType(doc, '.shipping-item');
+
+      if (bill.length === 1) {
+        this.highlightAddressType(doc, '.billing-item');
+        checkboxBill.checked = true;
+      }
+
+      if (ship.length === 1) {
+        this.highlightAddressType(doc, '.shipping-item');
+        checkboxShip.checked = true;
+      }
 
       const shippId = sdkClient.userInfo.defaultShippingAddressId;
       const billId = sdkClient.userInfo.defaultBillingAddressId;
 
       if (shippId === id) {
         shippDef.classList.remove('hide');
-        checkboxShip.checked = true;
+        checkboxShipDef.checked = true;
       }
 
       if (billId === id) {
         billDef.classList.remove('hide');
-        checkboxBill.checked = true;
+        checkboxBillDef.checked = true;
       }
 
       this.listenInputs(doc, cityInput, '.errorCity');
