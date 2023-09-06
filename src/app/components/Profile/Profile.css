@@ -7,6 +7,7 @@
   font-family: 'Poppins', sans-serif;
   color: #ffffff;
   background-color: #050214;
+  min-height: 90vh;
 }
 
 .menu {
@@ -18,16 +19,15 @@
   border-right: 1px solid #c10c99;
   padding: 10vh 10vh 0 10vh;
   padding-bottom: 36.5vh;
+  min-height: 90vh;
 }
 
 .foto {
-  width: 115px;
-  height: 115px;
+  width: 15vw;
+  height: 15vh;
   background: url('../Profile/asset/ava.png') 100% 100% no-repeat;
-  background-size:
-    115px 115px,
-    auto,
-    100px;
+  background-size: contain;
+  background-position: center;
 }
 
 .profile {
@@ -73,7 +73,7 @@
 }
 
 .wrapp-form.address {
-  width: 100%;
+  width: 75%;
 }
 .first,
 .last,
@@ -103,12 +103,10 @@
   width: 20px;
   height: 20px;
   background: url('../Profile/asset/pen1.png') 100% 100% no-repeat;
-  background-size:
-    20px 20px,
-    auto,
-    20px;
+  background-size: contain;
   cursor: pointer;
   margin-top: 40px;
+  margin-left: 2px;
 }
 
 .change-first:hover,
@@ -316,25 +314,41 @@
     auto,
     30px;
 }
-
+.conteinerTypeAll {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
 .conteinerType {
   width: 100%;
   padding-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   margin-left: 10px;
   padding-right: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+.shipping-item-def,
+.billing-item-def {
+  font-size: 12px;
+  color: #c10c99;
+}
 
-.type-item {
+.shipping-item-def.hide,
+.billing-item-def.hide {
+  display: none;
+}
+
+/*.type-item {
   list-style-type: none;
   width: 40%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-}
+} */
 
 .countryPostalCode {
   width: 100%;
@@ -425,7 +439,7 @@
   justify-content: space-between;
   margin-top: 10px;
   font-size: 14px;
-  color: #c10c99;
+  color: rgb(193, 12, 153);
 }
 .default.add.width {
   width: 50%;
@@ -604,13 +618,14 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
+  gap: 5vw;
 }
 
 .billing-label {
-  padding-left: 60px;
+  padding-left: 50px;
 }
 .shipping-label {
-  padding-left: 40px;
+  padding-left: 30px;
 }
 
 @media (max-width: 1300px) {
@@ -870,7 +885,7 @@
     margin-right: 0;
     padding-right: 0;
   }
-  .type-item {
+  /*.type-item {
     font-size: 10px;
-  }
+  }*/
 }
