@@ -243,19 +243,20 @@ export default class AddressesModule extends Component {
 
         await changeDataCustomer([{ action: 'changeAddress', addressId: `${id}`, address: addressChange }]);
         await this.updateUserInfo();
-        await this.chandeDefoltAddres(doc, id);
+        await this.chandeTypeAddreses(doc, id);
       }
     } catch (err) {
       console.log(err);
     }
   }
 
-  async chandeDefoltAddres(doc: Element, id: string) {
-    const def = doc.querySelectorAll<HTMLInputElement>('input[type=checkbox]');
-    const defShipp = def[0].checked;
-    const defBill = def[1].checked;
+  async chandeTypeAddreses(doc: Element, id: string) {
+    // const checkboxShip = (doc.querySelector('.shipping-input') as HTMLInputElement).checked;
+    // const checkboxBill = (doc.querySelector('.billing-input') as HTMLInputElement).checked;
+    const checkboxBillDef = (doc.querySelector('.billingDef-input') as HTMLInputElement).checked;
+    const checkboxShipDef = (doc.querySelector('.shippingDef-input') as HTMLInputElement).checked;
 
-    if (defShipp === true) {
+    if (checkboxShipDef === true) {
       await changeDataCustomer([{ action: 'setDefaultShippingAddress', addressId: `${id}` }]);
       await this.updateUserInfo();
     } else {
@@ -263,7 +264,7 @@ export default class AddressesModule extends Component {
       await this.updateUserInfo();
     }
 
-    if (defBill === true) {
+    if (checkboxBillDef === true) {
       await changeDataCustomer([{ action: 'setDefaultBillingAddress', addressId: `${id}` }]);
       await this.updateUserInfo();
     } else {
