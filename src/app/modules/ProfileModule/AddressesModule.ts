@@ -144,8 +144,14 @@ export default class AddressesModule extends Component {
             checkboxBillDef.addEventListener('change', () => {
               checkboxBillDef.checked ? (checkboxBill.checked = true) : (checkboxBill.checked = false);
             });
+            checkboxBill.addEventListener('change', () => {
+              !checkboxBill.checked && (checkboxBillDef.checked = false);
+            });
             checkboxShipDef.addEventListener('change', () => {
               checkboxShipDef.checked ? (checkboxShip.checked = true) : (checkboxShip.checked = false);
+            });
+            checkboxShip.addEventListener('change', () => {
+              !checkboxShip.checked && (checkboxShipDef.checked = false);
             });
             saveBtn.classList.remove('hide');
             el.classList.add('change');
@@ -227,36 +233,6 @@ export default class AddressesModule extends Component {
   }
 
   async changeAddress(doc: Element, id: string) {
-    // try {
-    //   const countrySelect = doc.querySelector('.select-country') as HTMLSelectElement;
-    //   const postalCodeInput = doc.querySelector('.input-postalcode') as HTMLInputElement;
-    //   const cityInput = doc.querySelector('.input-city') as HTMLInputElement;
-    //   const streetNameInput = doc.querySelector('.input-street-name') as HTMLInputElement;
-    //   const streetNumInput = doc.querySelector('.input-street-num') as HTMLInputElement;
-    // const checkboxBillDef = (doc.querySelector('.billingDef-input') as HTMLInputElement).checked;
-    // const checkboxShipDef = (doc.querySelector('.shippingDef-input') as HTMLInputElement).checked;
-    //   if (
-    //     this.VRules.postalCode(postalCodeInput.value) === true &&
-    //     this.VRules.name(streetNameInput.value) === true &&
-    //     this.VRules.house(streetNumInput.value) === true &&
-    //     this.VRules.city(cityInput.value) === true
-    //   ) {
-    //     const addressChange: Address = {
-    //       streetName: `${streetNameInput.value}`,
-    //       streetNumber: `${streetNumInput.value}`,
-    //       postalCode: `${postalCodeInput.value}`,
-    //       city: `${cityInput.value}`,
-    //       country: `${countrySelect.value}`,
-    //     };
-
-    //     await changeDataCustomer([{ action: 'changeAddress', addressId: `${id}`, address: addressChange }]);
-    //     await this.updateUserInfo();
-    //     await this.chandeTypeAddreses(doc, id);
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
-
     try {
       const countrySelect = doc.querySelector('.select-country') as HTMLSelectElement;
       const postalCodeInput = doc.querySelector('.input-postalcode') as HTMLInputElement;
@@ -287,14 +263,8 @@ export default class AddressesModule extends Component {
             sdkClient.userInfo.version as number
           )
         ).body;
-        // const addedAddress = await changeDataCustomer([{ action: 'addAddress', address: addressChange }]);
-        setTimeout(async () => {
-          // const userRequest = await sdkClient.apiRoot.me().get().execute();
-          // sdkClient.userInfo = userRequest.body;
-          // const { addresses } = addedAddress.body;
-          // const address = addresses[addresses.length - 1] as Address;
-          // const { id } = address;
 
+        setTimeout(async () => {
           sdkClient.userInfo = (await changeDataCustomer([{ action: 'addAddress', address: addressChange }])).body;
           const addresses = sdkClient.userInfo.addresses as Address[];
           const address = addresses[addresses.length - 1] as Address;
@@ -372,31 +342,6 @@ export default class AddressesModule extends Component {
       this.showInfo(doc, apiError.message);
     }
   }
-
-  // async chandeTypeAddreses(doc: Element, id: string) {
-  //   // const checkboxShip = (doc.querySelector('.shipping-input') as HTMLInputElement).checked;
-  //   // const checkboxBill = (doc.querySelector('.billing-input') as HTMLInputElement).checked;
-  //   // const checkboxBillDef = (doc.querySelector('.billingDef-input') as HTMLInputElement).checked;
-  //   // const checkboxShipDef = (doc.querySelector('.shippingDef-input') as HTMLInputElement).checked;
-
-  //   if (checkboxShipDef === true) {
-  //     await changeDataCustomer([{ action: 'setDefaultShippingAddress', addressId: `${id}` }]);
-  //     await this.updateUserInfo();
-  //   } else {
-  //     await changeDataCustomer([{ action: 'removeShippingAddressId', addressId: `${id}` }]);
-  //     await this.updateUserInfo();
-  //   }
-
-  //   if (checkboxBillDef === true) {
-  //     await changeDataCustomer([{ action: 'setDefaultBillingAddress', addressId: `${id}` }]);
-  //     await this.updateUserInfo();
-  //   } else {
-  //     await changeDataCustomer([{ action: 'removeBillingAddressId', addressId: `${id}` }]);
-  //     await this.updateUserInfo();
-  //   }
-
-  //   this.showInfo(doc, 'Your address has been successfully changed!');
-  // }
 
   async updateUserInfo() {
     const userRequest = await sdkClient.apiRoot.me().get().execute();
