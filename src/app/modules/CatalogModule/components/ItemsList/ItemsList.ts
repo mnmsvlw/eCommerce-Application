@@ -9,12 +9,13 @@ export default class ItemsList extends Component {
   render = () => {
     const itemsListContainer = new Container('items-list-container');
     itemsListContainer.bindAsync(this.renderAsync);
+    this.setCatalogContainerListener(itemsListContainer);
     this.content = itemsListContainer.render();
     return this.content;
   };
 
-  setCatalogContainerListener = (container: HTMLElement) => {
-    container.addEventListener('click', (e: Event) => {
+  setCatalogContainerListener = (container: Container) => {
+    container.addListener('click', (e: Event) => {
       const target = e.target as HTMLElement;
       const closestCard = target.closest('.item-card') as HTMLElement;
 
@@ -89,6 +90,6 @@ export default class ItemsList extends Component {
       element.appendChild(new Container('no-items', 'No items found').render());
     }
 
-    this.setCatalogContainerListener(component);
+    // this.setCatalogContainerListener(component);
   };
 }
