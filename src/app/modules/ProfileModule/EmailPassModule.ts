@@ -1,9 +1,13 @@
+// import Path from '../../../types/enum';
 import { ApiError } from '../../../types/sdkTypes';
-import { changeDataCustomer, changePasswordCustomer, loginCustomer } from '../../api/authorization/Customer';
+import { changeDataCustomer, changePasswordCustomer } from '../../api/authorization/Customer';
 import sdkClient from '../../api/SdkClient';
 import Component from '../../components/Component';
 import ProfileEmailPass from '../../components/Profile/ProfileEmailPass';
+import SuccessfulMessage from '../../components/RegistrationForm/SuccessfulMessage/SuccessfulMessage';
+// import Container from '../../UI/Container';
 import Heading from '../../UI/Heading';
+// import redirect from '../../utils/redirect';
 import validateEmail from '../LoginModule/helpers/validateEmail';
 import isValidInput from '../LoginModule/helpers/validateInput';
 import validatePassword from '../LoginModule/helpers/validatePassword';
@@ -144,26 +148,26 @@ export default class EmailPassModule extends Component {
     if (validatePassword(this.newPass.value) === '') {
       try {
         const version = sdkClient.userInfo.version as number;
-        const email = sdkClient.userInfo.email as string;
+        // const email = sdkClient.userInfo.email as string;
         await changePasswordCustomer({
           version,
           currentPassword: `${this.passInput.value}`,
           newPassword: `${this.newPass.value}`,
         });
-        sdkClient.reset();
+        const modal = new SuccessfulMessage().render(
+          'Your password has been successfully changed! You need to login again with the new password'
+        );
+
+        const pageContainer = document.querySelector('.page-container') as HTMLElement;
+
+        if (pageContainer) {
+          pageContainer.append(modal);
+        }
+
         setTimeout(async () => {
-          sdkClient.setPasswordFlow(email, this.newPass.value);
-          await loginCustomer({ email, password: this.newPass.value });
-          const userRequest = await sdkClient.apiRoot.me().get().execute();
-          sdkClient.userInfo = userRequest.body;
-          arrChange.forEach((elem) => elem.classList.remove('change'));
-          this.saveBtn.classList.add('hide');
-          this.passInput.readOnly = true;
-          this.passLabel.textContent = 'Password';
-          this.passInput.value = '********';
-          this.changeNewPassBox.classList.remove('show');
-          this.showInfo('Your password has been successfully changed!');
-        }, 1000);
+          sdkClient.reset();
+          window.location.href = `${window.location.origin}/login/`;
+        }, 2000);
       } catch (error) {
         const apiError = error as ApiError;
         this.showInfo(apiError.message);
