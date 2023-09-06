@@ -119,36 +119,101 @@ export default class NewAddressModule extends Component {
         const { addresses } = addedAddress.body;
         const address = addresses[addresses.length - 1] as Address;
         const { id } = address;
-        this.billing.checked &&
-          (await changeDataCustomer(
-            [{ action: 'addBillingAddressId', addressId: `${id}` }],
-            sdkClient.userInfo.version as number
-          ).catch((error) => console.log(error)));
-        this.shipping.checked &&
-          (await changeDataCustomer(
-            [{ action: 'addShippingAddressId', addressId: `${id}` }],
-            sdkClient.userInfo.version as number
-          ).catch((error) => console.log(error)));
-        this.shippingDefault.checked &&
-          (await changeDataCustomer(
-            [
-              {
-                action: 'setDefaultShippingAddress',
-                addressId: `${id}`,
-              },
-            ],
-            sdkClient.userInfo.version as number
-          ).catch((error) => console.log(error)));
-        this.billingDefault.checked &&
-          (await changeDataCustomer(
-            [
-              {
-                action: 'setDefaultBillingAddress',
-                addressId: `${id}`,
-              },
-            ],
-            sdkClient.userInfo.version as number
-          ).catch((error) => console.log(error)));
+        // this.billing.checked &&
+        //   (await changeDataCustomer(
+        //     [{ action: 'addBillingAddressId', addressId: `${id}` }],
+        //     sdkClient.userInfo.version as number
+        //   ).catch((error) => console.log(error)));
+
+        if (this.billing.checked) {
+          try {
+            sdkClient.userInfo = (
+              await changeDataCustomer(
+                [{ action: 'addBillingAddressId', addressId: `${id}` }],
+                sdkClient.userInfo.version as number
+              )
+            ).body;
+          } catch (e) {
+            console.log(e);
+          }
+        }
+
+        // this.shipping.checked &&
+        //   (await changeDataCustomer(
+        //     [{ action: 'addShippingAddressId', addressId: `${id}` }],
+        //     sdkClient.userInfo.version as number
+        //   ).catch((error) => console.log(error)));
+
+        if (this.shipping.checked) {
+          try {
+            sdkClient.userInfo = (
+              await changeDataCustomer(
+                [{ action: 'addShippingAddressId', addressId: `${id}` }],
+                sdkClient.userInfo.version as number
+              )
+            ).body;
+          } catch (e) {
+            console.log(e);
+          }
+        }
+
+        // this.shippingDefault.checked &&
+        //   (await changeDataCustomer(
+        //     [
+        //       {
+        //         action: 'setDefaultShippingAddress',
+        //         addressId: `${id}`,
+        //       },
+        //     ],
+        //     sdkClient.userInfo.version as number
+        //   ).catch((error) => console.log(error)));
+
+        if (this.shippingDefault.checked) {
+          try {
+            sdkClient.userInfo = (
+              await changeDataCustomer(
+                [
+                  {
+                    action: 'setDefaultShippingAddress',
+                    addressId: `${id}`,
+                  },
+                ],
+                sdkClient.userInfo.version as number
+              )
+            ).body;
+          } catch (e) {
+            console.log(e);
+          }
+        }
+
+        // this.billingDefault.checked &&
+        //   (await changeDataCustomer(
+        //     [
+        //       {
+        //         action: 'setDefaultBillingAddress',
+        //         addressId: `${id}`,
+        //       },
+        //     ],
+        //     sdkClient.userInfo.version as number
+        //   ).catch((error) => console.log(error)));
+
+        if (this.billingDefault.checked) {
+          try {
+            sdkClient.userInfo = (
+              await changeDataCustomer(
+                [
+                  {
+                    action: 'setDefaultBillingAddress',
+                    addressId: `${id}`,
+                  },
+                ],
+                sdkClient.userInfo.version as number
+              )
+            ).body;
+          } catch (e) {
+            console.log(e);
+          }
+        }
 
         this.showInfo('Your new address has been successfully added!');
       }, 1000);
