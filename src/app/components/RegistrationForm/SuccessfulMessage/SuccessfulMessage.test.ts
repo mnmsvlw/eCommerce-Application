@@ -8,7 +8,7 @@ const cryptoMock: CryptoMock = {
 describe('Success message renders correct html elements', () => {
   crypto.randomUUID = cryptoMock.randomUUID;
 
-  const successMessage = new SuccessfulMessage().render();
+  const successMessage = new SuccessfulMessage().render('test');
 
   it('should return container element', () => {
     expect(successMessage.tagName).toBe('DIV');

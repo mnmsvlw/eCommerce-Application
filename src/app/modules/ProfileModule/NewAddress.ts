@@ -7,6 +7,7 @@ import Component from '../../components/Component';
 import ProfileNewAddress from '../../components/Profile/ProfileNewAddress';
 import Heading from '../../UI/Heading';
 import ValidationRules from '../RegistrationModule/validation/ValidationRules/ValidationRules';
+import redirect from '../../utils/redirect';
 
 export default class NewAddressModule extends Component {
   render = () => {
@@ -151,7 +152,7 @@ export default class NewAddressModule extends Component {
     this.content.append(info);
     const TIME = 3000;
     setTimeout(() => {
-      window.location.reload();
+      redirect('/profile/');
       info.remove();
     }, TIME);
   }

@@ -85,7 +85,7 @@ export default class RegistrationForm extends Component {
   };
 
   showSuccessMessage = () => {
-    const message = new SuccessfulMessage().render();
+    const message = new SuccessfulMessage().render('Registration successful!');
     const body = document.querySelector('body');
     const pageContainer = document.querySelector('.page-container') as HTMLElement;
 

@@ -7,6 +7,7 @@ import Container from '../../UI/Container';
 import Heading from '../../UI/Heading';
 import ValidationRules from '../RegistrationModule/validation/ValidationRules/ValidationRules';
 import NewAddressModule from './NewAddress';
+import redirect from '../../utils/redirect';
 
 export default class AddressesModule extends Component {
   render = () => {
@@ -269,7 +270,7 @@ export default class AddressesModule extends Component {
     doc.append(info);
     const TIME = 3000;
     setTimeout(() => {
-      window.location.reload();
+      redirect('/profile/');
       info.remove();
     }, TIME);
   }
