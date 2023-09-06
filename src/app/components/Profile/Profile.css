@@ -625,14 +625,20 @@
   top: -12%;
 }
 
-.defs {
+.defs.address {
+  width: 70%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.defs.addresses {
   width: 100%;
   display: flex;
   align-items: center;
-
+  flex-direction: column;
   justify-content: space-between;
 }
-
 .billship {
   width: 40%;
   display: flex;
@@ -646,12 +652,16 @@
   flex-direction: column;
   align-items: flex-start;
 }
+.billship.addreses,
+.billshipDef.addreses {
+  width: 100%;
+}
 
 .billing-label {
-  padding-left: 50px;
+  padding-left: 0;
 }
 .shipping-label {
-  padding-left: 30px;
+  padding-left: 0;
 }
 
 @media (max-width: 1300px) {
@@ -695,8 +705,8 @@
     margin: 40px;
   }
 
-  .defs {
-    width: 85%;
+  .defs.addresses {
+    width: 100%;
   }
   .defs.address {
     width: 100%;
@@ -710,6 +720,7 @@
 }
 
 @media (max-width: 980px) {
+
 
   .defs.address {
     width: 100%;
@@ -740,7 +751,7 @@
   .wrapp-form {
     width: 55%;
   }
-  .defs {
+  .defs.addresses {
     width: 100%;
   }
   .input-date,
@@ -848,7 +859,7 @@
     width: 70%;
   }
 
-  .defs {
+  .defs.addreses {
     width: 100%;
     flex-direction: column;
   }
@@ -950,7 +961,10 @@
     margin-right: 0;
     padding-right: 0;
   }
-  /*.type-item {
-    font-size: 10px;
-  }*/
+
+  .box-address {
+
+    padding: 10px;
+    margin: 5px;
+  }
 }
