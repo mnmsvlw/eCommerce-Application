@@ -141,6 +141,12 @@ export default class AddressesModule extends Component {
             this.hideErr(eStreetNum);
             saveBtn.classList.add('hide');
           } else {
+            checkboxBillDef.addEventListener('change', () => {
+              checkboxBillDef.checked ? (checkboxBill.checked = true) : (checkboxBill.checked = false);
+            });
+            checkboxShipDef.addEventListener('change', () => {
+              checkboxShipDef.checked ? (checkboxShip.checked = true) : (checkboxShip.checked = false);
+            });
             saveBtn.classList.remove('hide');
             el.classList.add('change');
             defs.forEach((d) => {
