@@ -53,6 +53,10 @@ export default class AddressesModule extends Component {
     const eStreetName = doc.querySelector('.errorStreetName') as HTMLElement;
     const eStreetNum = doc.querySelector('.errorStreetNum') as HTMLElement;
     const eCode = doc.querySelector('.errorCode') as HTMLElement;
+    const shippDef = doc.querySelector('.shipping-item-def') as HTMLInputElement;
+    const billDef = doc.querySelector('.billing-item-def') as HTMLInputElement;
+    const checkboxShip = doc.querySelector('.shipping-input') as HTMLInputElement;
+    const checkboxBill = doc.querySelector('.billing-input') as HTMLInputElement;
 
     const { city, country, id, postalCode, streetName, streetNumber } = address;
 
@@ -80,8 +84,15 @@ export default class AddressesModule extends Component {
       const shippId = sdkClient.userInfo.defaultShippingAddressId;
       const billId = sdkClient.userInfo.defaultBillingAddressId;
 
-      shippId === id && doc.querySelector('.shipping-item-def')?.classList.remove('hide');
-      billId === id && doc.querySelector('.billing-item-def')?.classList.remove('hide');
+      if (shippId === id) {
+        shippDef.classList.remove('hide');
+        checkboxShip.checked = true;
+      }
+
+      if (billId === id) {
+        billDef.classList.remove('hide');
+        checkboxBill.checked = true;
+      }
 
       this.listenInputs(doc, cityInput, '.errorCity');
       this.listenInputs(doc, postalCodeInput, '.errorCode');
@@ -97,10 +108,6 @@ export default class AddressesModule extends Component {
             defs.forEach((d) => {
               const def = d;
               def.classList.remove('add');
-              def.querySelectorAll<HTMLInputElement>('input[type=checkbox]').forEach((checkbox) => {
-                const check = checkbox;
-                check.checked = false;
-              });
             });
             allInput.forEach((x) => {
               const input = x;
