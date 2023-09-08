@@ -1,4 +1,6 @@
+import { ProductProjection } from '@commercetools/platform-sdk';
 import { addToEventList } from '../data/listenersList';
+import { addToDispatchList } from '../data/mountList';
 import ElementCreator from '../utils/ElementCreator';
 
 export default class Component {
@@ -9,16 +11,31 @@ export default class Component {
   constructor() {
     this.content = new ElementCreator({ tag: 'div' }).getElement();
     this.id = crypto.randomUUID();
-    this.init();
   }
 
-  init() {}
-
-  render(..._options: string[]) {
+  render(..._options: string[] | ProductProjection[]) {
     return this.content;
   }
 
+  renderAsync = async (_component: HTMLElement) => {
+    return new Promise((resolve) => {
+      resolve(null);
+    });
+  };
+
+  bindAsync = (renderAsync: (component: HTMLElement) => Promise<void>) => {
+    this.addListener('mount', (e: Event) => {
+      const target = e.target as HTMLElement;
+      renderAsync(target);
+    });
+    this.addDispatchEvent('mount');
+  };
+
   addListener(eventType: string, eventListener: (e: Event) => void) {
     addToEventList({ id: this.id, eventType, eventListener });
+  }
+
+  addDispatchEvent(eventType: string) {
+    addToDispatchList({ id: this.id, eventType });
   }
 }

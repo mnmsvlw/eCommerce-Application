@@ -4,14 +4,14 @@ import Component from '../../Component';
 import './SuccessfulMessage.css';
 
 export default class SuccessfulMessage extends Component {
-  render = () => {
+  render = (text: string) => {
     this.content = new Container('message-cover').render();
     const messageContainer = new Container('message-container-success').render();
 
     const messageHeader = new ElementCreator({
       tag: 'h2',
       classNames: 'message-header',
-      text: 'Registration successful!',
+      text,
     }).getElement();
 
     messageContainer.append(messageHeader);

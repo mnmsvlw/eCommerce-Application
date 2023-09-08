@@ -48,6 +48,8 @@
   },
   "dependencies": {
     "@commercetools/platform-sdk": "^4.11.0",
-    "@commercetools/sdk-client-v2": "^2.2.0"
+    "@commercetools/sdk-client-v2": "^2.2.0",
+    "dual-range-bar": "^1.0.3",
+    "swiper": "^10.2.0"
   }
 }

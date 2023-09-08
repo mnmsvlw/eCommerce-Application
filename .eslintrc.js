@@ -32,6 +32,8 @@ module.exports = {
     'no-debugger': 'off',
     'no-console': 0,
     'no-control-regex': 0,
+    'no-alert': 0,
+    '@typescript-eslint/no-unused-expressions': 'off',
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
     'import/extensions': [
@@ -55,6 +57,14 @@ module.exports = {
         next: ['block', 'block-like'],
       },
     ],
+    "import/no-extraneous-dependencies": [
+      "error", {
+         "devDependencies": false, 
+         "optionalDependencies": false, 
+         "peerDependencies": false, 
+         "packageDir": "./"
+      }
+  ],
   },
   plugins: ['@typescript-eslint', 'prettier', 'import'],
   ignorePatterns: ['.eslintrc.js', 'jest.config.ts'],
