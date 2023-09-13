@@ -50,6 +50,7 @@
 .item-card__price {
   display: flex;
   gap: 10px;
+  justify-content: space-between;
 }
 
 .item-card__price-discount-amount {
@@ -75,4 +76,26 @@
   font-weight: 600;
   font-size: 10px;
   color: #FFFFFF65;
+}
+
+.item-card__basket{
+  cursor: pointer;
+  background: url('./shopping_cart.png');
+  background-size: contain;
+  width: 25px;
+  height: 25px;
+}
+
+.item-card__basket:hover,
+.item-card__basket-remove:hover{
+  transform: scale(1.3);
+  transition: all ease 0.3s;
+}
+
+.item-card__basket-remove{
+  cursor: pointer;
+  background: url('./remove-icon.png');
+  background-size: contain;
+  width: 25px;
+  height: 25px;
 }

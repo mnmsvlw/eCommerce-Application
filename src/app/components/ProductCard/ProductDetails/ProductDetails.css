@@ -167,6 +167,24 @@
     font-weight: 800;
 }
 
+.add-to-basket__button-remove{
+    width: 50%;
+    border-radius: 23px;
+    color: #C10C99;
+    background-color: white;
+    border: 2px solid #C10C99;
+    cursor: pointer;
+    font-weight: 800;
+}
+
+.add-to-basket__button:hover {
+    background: #9a0a7b;
+}
+
+.add-to-basket__button-remove:hover{
+    background-color: rgb(162, 162, 162);
+}
+
 .product-card__description-header{
     color: #FFFAFA;
     font-family: 'Poppins', sans-serif;
@@ -331,6 +349,10 @@
     }
 
     .add-to-basket__button{
+        height: 45px;
+    }
+
+    .add-to-basket__button-remove{
         height: 45px;
     }
 

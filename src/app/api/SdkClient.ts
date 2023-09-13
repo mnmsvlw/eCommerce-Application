@@ -20,6 +20,8 @@ class SdkClient {
 
   activeCart?: Cart;
 
+  sdkClient: unknown;
+
   constructor() {
     this.isAuthorizedUser = false;
     this.userInfo = {};

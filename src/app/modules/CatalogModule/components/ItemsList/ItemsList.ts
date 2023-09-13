@@ -1,17 +1,51 @@
-import './ItemsList.css';
 import Container from '../../../../UI/Container';
 import sdkClient from '../../../../api/SdkClient';
 import Component from '../../../../components/Component';
 import ItemCard from '../../../../components/ItemCard/ItemCard';
 import redirect from '../../../../utils/redirect';
+import updateCartAddItem from '../../../../api/cart/updateCartAddItem';
+import './ItemsList.css';
+import getCart from '../../../../api/cart/getCart';
+import updateCartRemoveItem from '../../../../api/cart/updateCartRemoveItem';
 
 export default class ItemsList extends Component {
   render = () => {
     const itemsListContainer = new Container('items-list-container');
     itemsListContainer.bindAsync(this.renderAsync);
     this.setCatalogContainerListener(itemsListContainer);
+    this.setCatalogShoppingCartListener(itemsListContainer);
     this.content = itemsListContainer.render();
     return this.content;
+  };
+
+  setCatalogShoppingCartListener = (container: Container) => {
+    container.addListener('click', async (e: Event) => {
+      const target = e.target as HTMLElement;
+      const closestShoppingCart = target.closest('.item-card__basket') as HTMLElement;
+
+      if (closestShoppingCart) {
+        const { itemId } = closestShoppingCart.dataset;
+
+        if (itemId) {
+          updateCartAddItem(itemId);
+          redirect(`/items/`);
+        }
+      }
+
+      const removeFromCart = target.closest('.item-card__basket-remove') as HTMLElement;
+
+      if (removeFromCart) {
+        const { itemId } = removeFromCart.dataset;
+        const cartData = await getCart();
+        const lineItemId = cartData.results[0].lineItems.find((item) => item.productId === itemId)?.id;
+        console.log(itemId);
+
+        if (lineItemId) {
+          updateCartRemoveItem(lineItemId);
+          redirect(`/items/`);
+        }
+      }
+    });
   };
 
   setCatalogContainerListener = (container: Container) => {
@@ -19,7 +53,7 @@ export default class ItemsList extends Component {
       const target = e.target as HTMLElement;
       const closestCard = target.closest('.item-card') as HTMLElement;
 
-      if (closestCard) {
+      if (closestCard && !target.closest('.item-card__basket') && !target.closest('.item-card__basket-remove')) {
         const { itemId } = closestCard.dataset;
         redirect(`/items/${itemId}`);
       }
@@ -79,12 +113,19 @@ export default class ItemsList extends Component {
       itemsList = (await sdkClient.apiRoot.productProjections().search().get().execute()).body.results;
     }
 
+    const cartData = await getCart();
     const element = component;
     element.innerHTML = '';
 
     if (itemsList.length > 0) {
       itemsList.forEach((item) => {
-        component.appendChild(new ItemCard().render(item));
+        let productInCart = false;
+
+        if (cartData.results[0].lineItems.some((itemCart) => item.id === itemCart.productId)) {
+          productInCart = true;
+        }
+
+        component.appendChild(new ItemCard(productInCart).render(item));
       });
     } else {
       element.appendChild(new Container('no-items', 'No items found').render());

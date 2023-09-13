@@ -366,7 +366,7 @@ describe('ItemCard component renders correct html element', () => {
     lastModifiedAt: '2023-09-05T16:00:09.330Z',
   };
 
-  const itemCard = new ItemCard().render(itemObject);
+  const itemCard = new ItemCard(false).render(itemObject);
 
   it('should return DIV as a container element', () => {
     expect(itemCard.tagName).toBe('DIV');

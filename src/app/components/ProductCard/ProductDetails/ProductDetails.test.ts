@@ -46,7 +46,7 @@ const mockProductResponse: ProductProjection = {
 describe('Product Details Component', () => {
   crypto.randomUUID = cryptoMock.randomUUID;
 
-  const productDetails = new ProductDetails(mockProductResponse);
+  const productDetails = new ProductDetails(mockProductResponse, false);
   const productDetailsEl = productDetails.render();
 
   it('should initialize without errors', () => {

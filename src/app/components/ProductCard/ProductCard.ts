@@ -9,9 +9,12 @@ import 'swiper/css/bundle';
 export default class ProductCard extends Component {
   productData: ProductProjection;
 
-  constructor(data: ClientResponse<ProductProjection>) {
+  productInCart: boolean;
+
+  constructor(data: ClientResponse<ProductProjection>, productInCart: boolean) {
     super();
     this.productData = data.body;
+    this.productInCart = productInCart;
   }
 
   render = () => {
@@ -20,7 +23,7 @@ export default class ProductCard extends Component {
     const imageArr = this.productData.masterVariant.images as Image[];
     const innerSliderContainer = new InnerProductSlider(imageArr).render();
 
-    const productDetailsContainer = new ProductDetails(this.productData).render();
+    const productDetailsContainer = new ProductDetails(this.productData, this.productInCart).render();
 
     this.content.append(innerSliderContainer, productDetailsContainer);
     return this.content;
