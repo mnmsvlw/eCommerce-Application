@@ -5,6 +5,13 @@ import Component from '../Component';
 import ImageElement from '../../UI/Img';
 
 export default class ItemCard extends Component {
+  productInCart: boolean;
+
+  constructor(productInCart: boolean) {
+    super();
+    this.productInCart = productInCart;
+  }
+
   render = (itemInfo: ProductProjection) => {
     this.content = new Container('item-card').render();
     this.content.setAttribute('data-item-id', itemInfo.id);
@@ -41,7 +48,14 @@ export default class ItemCard extends Component {
       priceContainer.appendChild(discountedHeading);
     }
 
-    const basketContainer = new Container('item-card__basket').render();
+    let basketContainer;
+
+    if (this.productInCart === false) {
+      basketContainer = new Container('item-card__basket').render();
+    } else {
+      basketContainer = new Container('item-card__basket-remove').render();
+    }
+
     basketContainer.setAttribute('data-item-id', itemInfo.id);
 
     priceContainer.appendChild(priceHeading);
