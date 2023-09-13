@@ -1,3 +1,4 @@
+import updateCart from '../../api/cart/updateCart';
 import getProduct from '../../api/product/Product';
 import Component from '../../components/Component';
 import ProductCard from '../../components/ProductCard/ProductCard';
@@ -9,7 +10,7 @@ export default class ProductModule extends Component {
   render = () => {
     const productCardContainer = new Container('product-card__wrapper');
     productCardContainer.bindAsync(this.renderAsync);
-
+    this.setProductShoppingCartListener(productCardContainer);
     this.content = productCardContainer.render();
     return this.content;
   };
@@ -23,6 +24,7 @@ export default class ProductModule extends Component {
       if (productData?.statusCode === 200) {
         const productCard = new ProductCard(productData);
         const productCardContent = productCard.render();
+        productCardContent.setAttribute('data-item-id', itemId);
         component.appendChild(productCardContent);
         new SwiperSlider().init('.swiper');
       }
@@ -45,5 +47,18 @@ export default class ProductModule extends Component {
       console.log(error);
       return null;
     }
+  };
+
+  private setProductShoppingCartListener = (container: Container) => {
+    container.addListener('click', async (e: Event) => {
+      const target = e.target as HTMLElement;
+      const cardContainer = document.querySelector('.product-card__container') as HTMLElement;
+      const addToShoppingCart = target.closest('.add-to-basket__button') as HTMLElement;
+      const { itemId } = cardContainer.dataset;
+
+      if (addToShoppingCart && itemId) {
+        updateCart(itemId);
+      }
+    });
   };
 }

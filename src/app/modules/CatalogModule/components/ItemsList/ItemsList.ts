@@ -1,10 +1,10 @@
-import './ItemsList.css';
-import { Cart } from '@commercetools/platform-sdk';
 import Container from '../../../../UI/Container';
 import sdkClient from '../../../../api/SdkClient';
 import Component from '../../../../components/Component';
 import ItemCard from '../../../../components/ItemCard/ItemCard';
 import redirect from '../../../../utils/redirect';
+import updateCart from '../../../../api/cart/updateCart';
+import './ItemsList.css';
 
 export default class ItemsList extends Component {
   render = () => {
@@ -23,21 +23,10 @@ export default class ItemsList extends Component {
 
       if (closestShoppingCart) {
         const { itemId } = closestShoppingCart.dataset;
-        const currentCart = sdkClient.activeCart as Cart;
-        console.log(itemId);
-        sdkClient.activeCart = (
-          await sdkClient.apiRoot
-            .me()
-            .carts()
-            .withId({ ID: currentCart.id })
-            .post({
-              body: {
-                version: currentCart.version,
-                actions: [{ action: 'addLineItem', productId: String(itemId), variantId: 1, quantity: 1 }],
-              },
-            })
-            .execute()
-        ).body;
+
+        if (itemId) {
+          updateCart(itemId);
+        }
       }
     });
   };
