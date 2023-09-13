@@ -41,7 +41,11 @@ export default class ItemCard extends Component {
       priceContainer.appendChild(discountedHeading);
     }
 
+    const basketContainer = new Container('item-card__basket').render();
+    basketContainer.setAttribute('data-item-id', itemInfo.id);
+
     priceContainer.appendChild(priceHeading);
+    priceContainer.appendChild(basketContainer);
     imgContainer.appendChild(itemImage);
     textContainer.append(nameHeading, description, priceContainer);
     this.content.append(imgContainer, textContainer);

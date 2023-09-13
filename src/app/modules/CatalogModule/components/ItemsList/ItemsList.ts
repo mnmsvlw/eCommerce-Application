@@ -1,4 +1,5 @@
 import './ItemsList.css';
+import { Cart } from '@commercetools/platform-sdk';
 import Container from '../../../../UI/Container';
 import sdkClient from '../../../../api/SdkClient';
 import Component from '../../../../components/Component';
@@ -10,8 +11,35 @@ export default class ItemsList extends Component {
     const itemsListContainer = new Container('items-list-container');
     itemsListContainer.bindAsync(this.renderAsync);
     this.setCatalogContainerListener(itemsListContainer);
+    this.setCatalogShoppingCartListener(itemsListContainer);
     this.content = itemsListContainer.render();
     return this.content;
+  };
+
+  setCatalogShoppingCartListener = (container: Container) => {
+    container.addListener('click', async (e: Event) => {
+      const target = e.target as HTMLElement;
+      const closestShoppingCart = target.closest('.item-card__basket') as HTMLElement;
+
+      if (closestShoppingCart) {
+        const { itemId } = closestShoppingCart.dataset;
+        const currentCart = sdkClient.activeCart as Cart;
+        console.log(itemId);
+        sdkClient.activeCart = (
+          await sdkClient.apiRoot
+            .me()
+            .carts()
+            .withId({ ID: currentCart.id })
+            .post({
+              body: {
+                version: currentCart.version,
+                actions: [{ action: 'addLineItem', productId: String(itemId), variantId: 1, quantity: 1 }],
+              },
+            })
+            .execute()
+        ).body;
+      }
+    });
   };
 
   setCatalogContainerListener = (container: Container) => {
@@ -19,7 +47,7 @@ export default class ItemsList extends Component {
       const target = e.target as HTMLElement;
       const closestCard = target.closest('.item-card') as HTMLElement;
 
-      if (closestCard) {
+      if (closestCard && !target.closest('.item-card__basket')) {
         const { itemId } = closestCard.dataset;
         redirect(`/items/${itemId}`);
       }
