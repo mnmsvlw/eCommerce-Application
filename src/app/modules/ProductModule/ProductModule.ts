@@ -1,8 +1,11 @@
-import updateCart from '../../api/cart/updateCart';
+import getCart from '../../api/cart/getCart';
+import updateCartAddItem from '../../api/cart/updateCartAddItem';
+import updateCartRemoveItem from '../../api/cart/updateCartRemoveItem';
 import getProduct from '../../api/product/Product';
 import Component from '../../components/Component';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import Container from '../../UI/Container';
+import redirect from '../../utils/redirect';
 import SwiperSlider from '../../utils/Swiper';
 import NotFoundModule from '../NotFoundModule/NotFoundModule';
 
@@ -20,9 +23,15 @@ export default class ProductModule extends Component {
 
     try {
       const productData = await this.getProductData(itemId);
+      const cartData = await getCart();
+      let productInCart = false;
+
+      if (cartData.results[0].lineItems.some((item) => item.productId === itemId)) {
+        productInCart = true;
+      }
 
       if (productData?.statusCode === 200) {
-        const productCard = new ProductCard(productData);
+        const productCard = new ProductCard(productData, productInCart);
         const productCardContent = productCard.render();
         productCardContent.setAttribute('data-item-id', itemId);
         component.appendChild(productCardContent);
@@ -57,7 +66,17 @@ export default class ProductModule extends Component {
       const { itemId } = cardContainer.dataset;
 
       if (addToShoppingCart && itemId) {
-        updateCart(itemId);
+        updateCartAddItem(itemId);
+        redirect(`/items/${itemId}`);
+      }
+
+      const removeFromCart = target.closest('.add-to-basket__button-remove') as HTMLElement;
+      const cartData = await getCart();
+      const lineItemId = cartData.results[0].lineItems.find((item) => item.productId === itemId)?.id;
+
+      if (removeFromCart && lineItemId) {
+        updateCartRemoveItem(lineItemId);
+        redirect(`/items/${itemId}`);
       }
     });
   };

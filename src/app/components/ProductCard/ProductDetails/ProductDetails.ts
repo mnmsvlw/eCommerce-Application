@@ -12,9 +12,12 @@ import { SizeValue } from '../../../../types/productTypes';
 export default class ProductDetails extends Component {
   product: ProductProjection;
 
-  constructor(data: ProductProjection) {
+  productInCart: boolean;
+
+  constructor(data: ProductProjection, productInCart: boolean) {
     super();
     this.product = data;
+    this.productInCart = productInCart;
   }
 
   render = () => {
@@ -101,9 +104,19 @@ export default class ProductDetails extends Component {
     minusBtnElement.addEventListener('click', minusHandler);
     plusBtnElement.addEventListener('click', plusHandler);
 
-    const addToBasketBtn = new Button('Add to Cart', 'button', 'add-to-basket__button').render();
+    let addToBasketBtn;
 
-    btnContainer.append(quantatyBtn, addToBasketBtn);
+    if (this.productInCart === false) {
+      addToBasketBtn = new Button('Add to Cart', 'button', 'add-to-basket__button').render();
+    } else if (this.productInCart === true) {
+      addToBasketBtn = new Button('Remove from Cart', 'button', 'add-to-basket__button-remove').render();
+    }
+
+    btnContainer.append(quantatyBtn);
+
+    if (addToBasketBtn !== undefined) {
+      btnContainer.append(addToBasketBtn);
+    }
 
     const descriptionHeader = new Heading(3, 'product-card__description-header', 'Description').render();
     const productDescription = new ElementCreator({

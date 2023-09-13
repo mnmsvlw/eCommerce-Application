@@ -1,7 +1,7 @@
 import Button from '../../UI/Button';
 import Input from '../../UI/Input';
 import Component from '../../components/Component';
-import updateCart from '../../api/cart/updateCart';
+import updateCartAddItem from '../../api/cart/updateCartAddItem';
 
 export default class ExampleCartModule extends Component {
   render = () => {
@@ -10,7 +10,7 @@ export default class ExampleCartModule extends Component {
 
     addToCartButton.addListener('click', async () => {
       const itemId = document.querySelector('.item-id') as HTMLInputElement;
-      updateCart(itemId.value);
+      updateCartAddItem(itemId.value);
     });
 
     this.content.append(itemIdInput, addToCartButton.render());

@@ -3,7 +3,7 @@ import sdkClient from '../../../../api/SdkClient';
 import Component from '../../../../components/Component';
 import ItemCard from '../../../../components/ItemCard/ItemCard';
 import redirect from '../../../../utils/redirect';
-import updateCart from '../../../../api/cart/updateCart';
+import updateCartAddItem from '../../../../api/cart/updateCartAddItem';
 import './ItemsList.css';
 
 export default class ItemsList extends Component {
@@ -25,7 +25,7 @@ export default class ItemsList extends Component {
         const { itemId } = closestShoppingCart.dataset;
 
         if (itemId) {
-          updateCart(itemId);
+          updateCartAddItem(itemId);
         }
       }
     });
