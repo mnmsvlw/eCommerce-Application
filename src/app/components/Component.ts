@@ -2,6 +2,7 @@ import { ProductProjection } from '@commercetools/platform-sdk';
 import { addToEventList } from '../data/listenersList';
 import { addToDispatchList } from '../data/mountList';
 import ElementCreator from '../utils/ElementCreator';
+import { Person } from '../../types/personTypes';
 
 export default class Component {
   content: HTMLElement;
@@ -13,7 +14,7 @@ export default class Component {
     this.id = crypto.randomUUID();
   }
 
-  render(..._options: string[] | ProductProjection[]) {
+  render(..._options: string[] | ProductProjection[] | Person[]) {
     return this.content;
   }
 
