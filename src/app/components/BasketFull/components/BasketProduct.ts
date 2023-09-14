@@ -18,12 +18,13 @@ export default class BasketProduct extends Component {
       imgUrl = images[0].url;
     }
 
+    const productBox = new Container('productBox').render();
     const img = new Container('imgBox-product').render();
     const itemImage = new ImageElement(String(imgUrl), String(item.name['en-US']), 'img-product').render();
     img.append(itemImage);
 
     const title = new Container('title-product', `${item.name['en-US']}`).render();
-
+    productBox.append(img, title);
     const prices = item.variant.prices as Price[];
     const unitPriceBox = new Container('unitPriceBox').render();
 
@@ -81,7 +82,7 @@ export default class BasketProduct extends Component {
       redirect('/basket/');
     });
     removeBox.append(remove);
-    this.content.append(img, title, unitPriceBox, qty, totalPrice, removeBox);
+    this.content.append(productBox, unitPriceBox, qty, totalPrice, removeBox);
 
     return this.content;
   };
