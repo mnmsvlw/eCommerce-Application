@@ -1,4 +1,5 @@
 import { Route } from '../../types/routerTypes';
+import AboutUsPage from '../pages/AboutUsPage/AboutUsPage';
 import BasketPage from '../pages/BasketPage/BasketPage';
 import CatalogPage from '../pages/CatalogPage/CatalogPage';
 import ExampleCartPage from '../pages/ExampleCartPage/ExampleCartPage';
@@ -50,6 +51,11 @@ const routes: Route[] = [
     title: 'Example Cart | E-Commerce Application',
     path: /^\/cart\/$/,
     element: () => new ExampleCartPage(),
+  },
+  {
+    title: 'About Us | E-Commerce Application',
+    path: /^\/about-us\/$/,
+    element: () => new AboutUsPage(),
   },
   {
     title: 'Cart | E-Commerce Application',
