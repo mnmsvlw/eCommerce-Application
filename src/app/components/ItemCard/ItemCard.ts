@@ -53,7 +53,7 @@ export default class ItemCard extends Component {
     if (this.productInCart === false) {
       basketContainer = new Container('item-card__basket').render();
     } else {
-      basketContainer = new Container('item-card__basket-remove').render();
+      basketContainer = new Container('item-card__basket-remove', 'In Cart').render();
     }
 
     basketContainer.setAttribute('data-item-id', itemInfo.id);

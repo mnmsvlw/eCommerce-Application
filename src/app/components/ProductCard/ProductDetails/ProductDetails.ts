@@ -46,9 +46,6 @@ export default class ProductDetails extends Component {
         const cents = masterVariantPrice[0]?.value.centAmount.toString().slice(-2);
         productPriceValid.textContent = `$${amount}.${cents} USD`;
         productPrice.append(productPriceValid);
-      } else {
-        productPriceValid.textContent = `$${100}.00`;
-        productPrice.append(productPriceValid);
       }
     } else {
       productPriceValid.textContent = `$${100}.00`;
@@ -93,28 +90,40 @@ export default class ProductDetails extends Component {
 
       if (currentValue > 1) {
         quantatyNum.textContent = (currentValue - 1).toString();
+        quantatyNum.dataset.setId = (currentValue - 1).toString();
       }
     };
 
     const plusHandler = () => {
       const currentValue = parseInt(quantatyNum.textContent || '1', 10);
       quantatyNum.textContent = (currentValue + 1).toString();
+      quantatyNum.dataset.setId = (currentValue + 1).toString();
     };
 
-    minusBtnElement.addEventListener('click', minusHandler);
-    plusBtnElement.addEventListener('click', plusHandler);
-
     let addToBasketBtn;
+    let inCartInfo;
 
     if (this.productInCart === false) {
       addToBasketBtn = new Button('Add to Cart', 'button', 'add-to-basket__button').render();
+      minusBtnElement.addEventListener('click', minusHandler);
+      plusBtnElement.addEventListener('click', plusHandler);
+      minusBtnElement.classList.remove('button-inactive');
+      plusBtnElement.classList.remove('button-inactive');
+      quantatyNum.classList.remove('button-inactive');
     } else if (this.productInCart === true) {
       addToBasketBtn = new Button('Remove from Cart', 'button', 'add-to-basket__button-remove').render();
+      inCartInfo = new Container('product-card__info', 'This product has been added to the Cart').render();
+      minusBtnElement.classList.add('button-inactive');
+      plusBtnElement.classList.add('button-inactive');
+      quantatyNum.classList.add('button-inactive');
     }
 
     btnContainer.append(quantatyBtn);
 
-    if (addToBasketBtn !== undefined) {
+    if (addToBasketBtn && this.productInCart && inCartInfo) {
+      sizeContainer.append(inCartInfo);
+      btnContainer.append(addToBasketBtn);
+    } else if (addToBasketBtn !== undefined) {
       btnContainer.append(addToBasketBtn);
     }
 

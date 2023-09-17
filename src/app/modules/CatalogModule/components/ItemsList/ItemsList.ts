@@ -20,30 +20,34 @@ export default class ItemsList extends Component {
 
   setCatalogShoppingCartListener = (container: Container) => {
     container.addListener('click', async (e: Event) => {
-      const target = e.target as HTMLElement;
-      const closestShoppingCart = target.closest('.item-card__basket') as HTMLElement;
+      try {
+        const target = e.target as HTMLElement;
+        const closestShoppingCart = target.closest('.item-card__basket') as HTMLElement;
 
-      if (closestShoppingCart) {
-        const { itemId } = closestShoppingCart.dataset;
+        if (closestShoppingCart) {
+          const { itemId } = closestShoppingCart.dataset;
 
-        if (itemId) {
-          updateCartAddItem(itemId);
-          redirect(`/items/`);
+          if (itemId) {
+            updateCartAddItem(itemId);
+            redirect(`/items/`);
+          }
         }
-      }
 
-      const removeFromCart = target.closest('.item-card__basket-remove') as HTMLElement;
+        const removeFromCart = target.closest('.item-card__basket-remove') as HTMLElement;
 
-      if (removeFromCart) {
-        const { itemId } = removeFromCart.dataset;
-        const cartData = await getCart();
-        const lineItemId = cartData.results[0].lineItems.find((item) => item.productId === itemId)?.id;
-        console.log(itemId);
+        if (removeFromCart) {
+          const { itemId } = removeFromCart.dataset;
+          const cartData = await getCart();
+          const lineItemId = cartData.results[0].lineItems.find((item) => item.productId === itemId)?.id;
+          console.log(itemId);
 
-        if (lineItemId) {
-          updateCartRemoveItem(lineItemId);
-          redirect(`/items/`);
+          if (lineItemId) {
+            updateCartRemoveItem(lineItemId);
+            redirect(`/items/`);
+          }
         }
+      } catch (error) {
+        console.error(error);
       }
     });
   };
