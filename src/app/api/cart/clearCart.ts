@@ -1,7 +1,13 @@
-import { Cart } from '@commercetools/platform-sdk';
+import { Cart, MyCartUpdateAction } from '@commercetools/platform-sdk';
 import sdkClient from '../SdkClient';
 
-const updateCartAddItem = async (itemId: string, quantaty = 1, variant?: 1) => {
+/* export type Action = {
+  action: string;
+  lineItemId: string;
+  quantity: number;
+}; */
+
+const clearCart = async (actions: MyCartUpdateAction[]) => {
   const currentCart = sdkClient.activeCart as Cart;
   sdkClient.activeCart = (
     await sdkClient.apiRoot
@@ -11,11 +17,11 @@ const updateCartAddItem = async (itemId: string, quantaty = 1, variant?: 1) => {
       .post({
         body: {
           version: currentCart.version,
-          actions: [{ action: 'addLineItem', productId: String(itemId), variantId: variant, quantity: quantaty }],
+          actions,
         },
       })
       .execute()
   ).body;
 };
 
-export default updateCartAddItem;
+export default clearCart;
