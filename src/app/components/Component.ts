@@ -1,4 +1,4 @@
-import { ProductProjection } from '@commercetools/platform-sdk';
+import { Cart, LineItem, ProductProjection } from '@commercetools/platform-sdk';
 import { addToEventList } from '../data/listenersList';
 import { addToDispatchList } from '../data/mountList';
 import ElementCreator from '../utils/ElementCreator';
@@ -13,7 +13,7 @@ export default class Component {
     this.id = crypto.randomUUID();
   }
 
-  render(..._options: string[] | ProductProjection[]) {
+  render(..._options: string[] | ProductProjection[] | LineItem[] | Cart[]) {
     return this.content;
   }
 
