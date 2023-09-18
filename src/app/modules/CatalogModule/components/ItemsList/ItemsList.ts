@@ -72,11 +72,21 @@ export default class ItemsList extends Component {
         }
 
         if (itemId && selectedVariantId && closestAddToCartBtn) {
-          updateCartAddItem(itemId, 1, selectedVariantId);
+          await updateCartAddItem(itemId, 1, selectedVariantId);
           // redirect(`/items/`);
-          const catalogContainer = document.querySelector('.catalog-container') as HTMLElement;
-          const event = new Event('queryUpdated');
-          catalogContainer.dispatchEvent(event);
+
+          // const currentCart = sdkClient.activeCart as Cart;
+
+          // if (currentCart.lineItems.length > 0) {
+          //   const cartCounter = document.querySelector('.cart-counter') as HTMLElement;
+          //   const customEvent = new Event('cartChanged');
+          //   cartCounter.dispatchEvent(customEvent);
+          // }
+
+          // const catalogContainer = document.querySelector('.catalog-container') as HTMLElement;
+          // const event = new Event('queryUpdated');
+          // catalogContainer.dispatchEvent(event);
+          redirect(window.location.href.replace(window.location.origin, ''));
         } else if (itemId && closestAddToCartBtn) {
           const notice = document.querySelector('.info-size');
 
@@ -92,11 +102,20 @@ export default class ItemsList extends Component {
           const lineItemId = cartData.results[0].lineItems.find((item) => item.productId === itemId)?.id;
 
           if (lineItemId) {
-            updateCartRemoveItem(lineItemId);
+            await updateCartRemoveItem(lineItemId);
             // redirect(`/items/`);
-            const catalogContainer = document.querySelector('.catalog-container') as HTMLElement;
-            const event = new Event('queryUpdated');
-            catalogContainer.dispatchEvent(event);
+            // const currentCart = sdkClient.activeCart as Cart;
+
+            // if (currentCart.lineItems.length > 0) {
+            //   const cartCounter = document.querySelector('.cart-counter') as HTMLElement;
+            //   const customEvent = new Event('cartChanged');
+            //   cartCounter.dispatchEvent(customEvent);
+            // }
+
+            // const catalogContainer = document.querySelector('.catalog-container') as HTMLElement;
+            // const event = new Event('queryUpdated');
+            // catalogContainer.dispatchEvent(event);
+            redirect(window.location.href.replace(window.location.origin, ''));
           }
         }
       } catch (error) {

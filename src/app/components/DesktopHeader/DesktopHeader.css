@@ -56,6 +56,7 @@ header {
   font-family: 'Poppins', sans-serif;
   font-size: 20px;
   font-weight: 500;
+  transition: color .22s;
 }
 
 .nav-link:hover {
@@ -193,4 +194,39 @@ header {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.nav-link.cart-icon {
+  display: block;
+  width: 35px;
+  height: 35px;
+  position: relative;
+}
+
+.cart-svg {
+  width: 35px;
+  height: 35px;
+  -webkit-mask: url(./assets/cart.svg) no-repeat center;
+  mask: url(./assets/cart.svg) no-repeat center;
+  background-color: #FFF;
+  transition: background-color .22s;
+}
+
+.nav-link.cart-icon:hover .cart-svg {
+  background-color: #C10C99;
+}
+
+.cart-counter {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background-color: rgb(146, 10, 10);
+  color: #FFF;
+  border-radius: 50%;
+  bottom: -5px;
+  right: -5px;
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -1,4 +1,4 @@
-import { LineItem, Price, ProductProjection } from '@commercetools/platform-sdk';
+import { Cart, LineItem, Price, ProductProjection } from '@commercetools/platform-sdk';
 import Component from '../../Component';
 import Container from '../../../UI/Container';
 import Button from '../../../UI/Button';
@@ -76,21 +76,37 @@ export default class BasketProduct extends Component {
     const plusBtn = new Button('+', 'button', 'btn-plus').render();
     qty.append(minusBtn, qtyNum, plusBtn);
 
-    const minusHandler = () => {
+    const minusHandler = async () => {
       const currentValue = parseInt(qtyNum.textContent || '1', 10);
 
       // if (currentValue > 1) {
       qtyNum.textContent = (currentValue - 1).toString();
-      updateCartRemoveItem(item.id, 1);
+      await updateCartRemoveItem(item.id, 1);
       redirect('/basket/');
       // }
+
+      const currentCart = sdkClient.activeCart as Cart;
+
+      if (currentCart.lineItems.length > 0) {
+        const cartCounter = document.querySelector('.cart-counter') as HTMLElement;
+        const customEvent = new Event('cartChanged');
+        cartCounter.dispatchEvent(customEvent);
+      }
     };
 
-    const plusHandler = () => {
+    const plusHandler = async () => {
       const currentValue = parseInt('1', 10);
       qtyNum.textContent = (currentValue + 1).toString();
-      updateCartAddItem(product.id, currentValue, item.variant.id);
+      await updateCartAddItem(product.id, currentValue, item.variant.id);
       redirect('/basket/');
+
+      const currentCart = sdkClient.activeCart as Cart;
+
+      if (currentCart.lineItems.length > 0) {
+        const cartCounter = document.querySelector('.cart-counter') as HTMLElement;
+        const customEvent = new Event('cartChanged');
+        cartCounter.dispatchEvent(customEvent);
+      }
     };
 
     minusBtn.addEventListener('click', minusHandler);
@@ -99,9 +115,17 @@ export default class BasketProduct extends Component {
     const totalPrice = new Container('totalPrice-product', `$${item.totalPrice.centAmount / 100}`).render();
     const removeBox = new Container('removeBox').render();
     const remove = new Container('btn-remove').render();
-    remove.addEventListener('click', () => {
-      updateCartRemoveItem(item.id);
+    remove.addEventListener('click', async () => {
+      await updateCartRemoveItem(item.id);
       redirect('/basket/');
+
+      const currentCart = sdkClient.activeCart as Cart;
+
+      if (currentCart.lineItems.length > 0) {
+        const cartCounter = document.querySelector('.cart-counter') as HTMLElement;
+        const customEvent = new Event('cartChanged');
+        cartCounter.dispatchEvent(customEvent);
+      }
     });
     removeBox.append(remove);
     box.append(productBox, unitPriceBox, qty, totalPrice, removeBox);

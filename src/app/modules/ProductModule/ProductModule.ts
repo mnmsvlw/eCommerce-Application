@@ -1,4 +1,4 @@
-import { ClientResponse, ProductProjection } from '@commercetools/platform-sdk';
+import { Cart, ClientResponse, ProductProjection } from '@commercetools/platform-sdk';
 import { ApiError } from '../../../types/sdkTypes';
 import getCart from '../../api/cart/getCart';
 import updateCartAddItem from '../../api/cart/updateCartAddItem';
@@ -11,6 +11,7 @@ import Heading from '../../UI/Heading';
 import redirect from '../../utils/redirect';
 import SwiperSlider from '../../utils/Swiper';
 import NotFoundModule from '../NotFoundModule/NotFoundModule';
+import sdkClient from '../../api/SdkClient';
 
 export default class ProductModule extends Component {
   productData: ClientResponse<ProductProjection> | null;
@@ -110,8 +111,15 @@ export default class ProductModule extends Component {
         const { itemId } = cardContainer.dataset;
 
         if (addToShoppingCart && itemId && selectedVariantId) {
-          updateCartAddItem(itemId, quantatyProduct, selectedVariantId);
+          await updateCartAddItem(itemId, quantatyProduct, selectedVariantId);
           redirect(`/items/${itemId}`);
+          const currentCart = sdkClient.activeCart as Cart;
+
+          if (currentCart.lineItems.length > 0) {
+            const cartCounter = document.querySelector('.cart-counter') as HTMLElement;
+            const customEvent = new Event('cartChanged');
+            cartCounter.dispatchEvent(customEvent);
+          }
         } else if (addToShoppingCart && itemId) {
           const notice = document.querySelector('.info-size');
 
@@ -125,8 +133,16 @@ export default class ProductModule extends Component {
         const lineItemId = cartData.results[0].lineItems.find((item) => item.productId === itemId)?.id;
 
         if (removeFromCart && lineItemId) {
-          updateCartRemoveItem(lineItemId);
+          await updateCartRemoveItem(lineItemId);
           redirect(`/items/${itemId}`);
+
+          const currentCart = sdkClient.activeCart as Cart;
+
+          if (currentCart.lineItems.length > 0) {
+            const cartCounter = document.querySelector('.cart-counter') as HTMLElement;
+            const customEvent = new Event('cartChanged');
+            cartCounter.dispatchEvent(customEvent);
+          }
         }
       } catch (error) {
         const apiError = error as ApiError;
