@@ -311,6 +311,10 @@
   font-weight: 400;
 }
 
+.promoPrice.total {
+  margin-left: 35%;
+}
+
 .dis {
   color: #C10C99;
   font-weight: 800;

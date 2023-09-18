@@ -79,10 +79,11 @@ export default class BasketInfo extends Component {
       totalPrice = cart.totalPrice.centAmount / 100 / 0.9;
       const promoSubtotal = new Container('promoPrice', `$${totalPrice}`).render();
       const dis1 = new Container('dis', '-10% off').render();
-      const dis2 = new Container('dis', '-10% off').render();
+      // const dis2 = new Container('dis', '-10% off').render();
       const promoTotal = new Container('promoPrice', `$${totalPrice + 20}`).render();
+      promoTotal.classList.add('total');
       subtotal.append(textSubtotal, dis1, promoSubtotal, countSubtotal);
-      total.append(textTotal, dis2, promoTotal, countTotal);
+      total.append(textTotal, promoTotal, countTotal);
     } else if (isPromocode === 'No') {
       subtotal.append(textSubtotal, countSubtotal);
       total.append(textTotal, countTotal);
