@@ -11,6 +11,7 @@ import './LoginForm.css';
 export default class LoginForm extends Component {
   render = () => {
     this.content = new Container('wrapper').render();
+    const imageLeft = new Container('login-image').render();
     const formContainer = new Container('loginForm-container').render();
     const text = 'Sign in';
     const formHeader = new Heading(3, 'loginForm-header', text).render();
@@ -47,7 +48,7 @@ export default class LoginForm extends Component {
       passwordBox,
       loginButton
     );
-    this.content.append(formContainer);
+    this.content.append(imageLeft, formContainer);
 
     return this.content;
   };

@@ -32,23 +32,30 @@ export default class ItemsList extends Component {
         const target = e.target as HTMLElement;
         const closestItemCard = target.closest('.item-card') as HTMLElement;
         const closestAddToCartBtn = target.closest('.item-card__add-btn') as HTMLElement;
-        const sizeSelectionContainer = closestItemCard.querySelector('.item-card__size-selection') as HTMLElement;
+        const sizes = target.closest('.item-card__size-el-container') as HTMLElement;
+        const removeFromCartBtn = target.closest('.item-card__basket-remove') as HTMLElement;
         const { itemId } = closestItemCard.dataset;
         let selectedVariantId;
         let productData;
 
         if (itemId) {
-          productData = await (await getProduct(itemId)).body;
-          closestItemCard.append(new SizeSelection(productData).render());
+          productData = await getProduct(itemId);
+          closestItemCard.append(new SizeSelection(productData.body).render());
+        }
+
+        const sizeSelectionContainer = closestItemCard.querySelector('.item-card__size-selection') as HTMLElement;
+
+        if (!sizes && !closestAddToCartBtn && !removeFromCartBtn) {
+          console.log('btn inner clicked');
+          sizeSelectionContainer.classList.toggle('item-card__size-selection--flipped');
         }
 
         const sizeInputs = document.querySelectorAll('.item-card__size-input') as NodeListOf<HTMLInputElement>;
         const selectedSizeInput = Array.from(sizeInputs).find((input) => input.checked) as HTMLInputElement;
-        console.log('selectedSizeInput: ', selectedSizeInput);
 
         if (selectedSizeInput) {
           const selectedSize = selectedSizeInput.value;
-          const foundVariant = productData?.variants.find((variant) => {
+          const foundVariant = productData?.body.variants.find((variant) => {
             if (variant.attributes) {
               return variant.attributes.some((attribute) => {
                 const attributeName = attribute.name.toLowerCase();
@@ -62,15 +69,6 @@ export default class ItemsList extends Component {
           });
 
           selectedVariantId = foundVariant?.id;
-          console.log('selectedVariantId: ', selectedVariantId);
-        }
-
-        if (
-          !target.closest('.item-card__size-el-container') &&
-          !closestAddToCartBtn &&
-          !target.closest('.item-card__basket-remove')
-        ) {
-          sizeSelectionContainer?.classList.toggle('item-card__size-selection--flipped');
         }
 
         if (itemId && selectedVariantId && closestAddToCartBtn) {
