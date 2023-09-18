@@ -79,17 +79,17 @@ export default class BasketProduct extends Component {
     const minusHandler = () => {
       const currentValue = parseInt(qtyNum.textContent || '1', 10);
 
-      if (currentValue > 1) {
-        qtyNum.textContent = (currentValue - 1).toString();
-        updateCartRemoveItem(item.id);
-        redirect('/basket/');
-      }
+      // if (currentValue > 1) {
+      qtyNum.textContent = (currentValue - 1).toString();
+      updateCartRemoveItem(item.id, 1);
+      redirect('/basket/');
+      // }
     };
 
     const plusHandler = () => {
       const currentValue = parseInt('1', 10);
       qtyNum.textContent = (currentValue + 1).toString();
-      updateCartAddItem(item.id, currentValue);
+      updateCartAddItem(product.id, currentValue, item.variant.id);
       redirect('/basket/');
     };
 
