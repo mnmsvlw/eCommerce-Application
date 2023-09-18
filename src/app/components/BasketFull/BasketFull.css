@@ -1,3 +1,18 @@
+.basket-product-container.loader {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.promo-error {
+  color: red;
+  font-size: 14px;
+  position: absolute;
+  top: 100px;
+  width: 40%;
+}
+
 .basket-wrapper {
   width: 100%;
   display: flex;
@@ -198,12 +213,14 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  position: relative;
 }
 
 .promocode-info {
   display: flex;
   justify-content: center;
   height: 40px;
+  /* position: relative; */
 }
 
 .input-promocode {
@@ -710,5 +727,11 @@
     padding-top: 2vh;
     border-top: 2px solid white;
     font-size: 16px;
+  }
+ 
+  .promo-error {
+    position: static;
+    width: 60%;
+    text-align: center;
   }
 }

@@ -10,8 +10,8 @@ import sdkClient from '../../../api/SdkClient';
 
 export default class BasketProduct extends Component {
   render = (item: LineItem) => {
-    this.content = new Container('basket-product-container').render();
-    this.renderData(this.content, item);
+    this.content = new Container('basket-product-container loader').render();
+    this.renderData(this.content, item).then(() => this.content.classList.remove('loader'));
 
     return this.content;
   };

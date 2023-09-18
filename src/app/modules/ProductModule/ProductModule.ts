@@ -21,7 +21,7 @@ export default class ProductModule extends Component {
   }
 
   render = () => {
-    const productCardContainer = new Container('product-card__wrapper');
+    const productCardContainer = new Container('product-card__wrapper loader');
     productCardContainer.bindAsync(this.renderAsync);
     this.setProductShoppingCartListener(productCardContainer);
     this.content = productCardContainer.render();
@@ -53,6 +53,9 @@ export default class ProductModule extends Component {
         const notFoundModule = new NotFoundModule().render();
         rootElement.appendChild(notFoundModule);
       }
+
+      const productCardContainer = document.querySelector('.product-card__wrapper');
+      productCardContainer?.classList.remove('loader');
     } catch (e) {
       console.log(e);
     }
