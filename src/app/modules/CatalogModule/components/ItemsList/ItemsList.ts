@@ -73,7 +73,10 @@ export default class ItemsList extends Component {
 
         if (itemId && selectedVariantId && closestAddToCartBtn) {
           updateCartAddItem(itemId, 1, selectedVariantId);
-          redirect(`/items/`);
+          // redirect(`/items/`);
+          const catalogContainer = document.querySelector('.catalog-container') as HTMLElement;
+          const event = new Event('queryUpdated');
+          catalogContainer.dispatchEvent(event);
         } else if (itemId && closestAddToCartBtn) {
           const notice = document.querySelector('.info-size');
 
@@ -90,7 +93,10 @@ export default class ItemsList extends Component {
 
           if (lineItemId) {
             updateCartRemoveItem(lineItemId);
-            redirect(`/items/`);
+            // redirect(`/items/`);
+            const catalogContainer = document.querySelector('.catalog-container') as HTMLElement;
+            const event = new Event('queryUpdated');
+            catalogContainer.dispatchEvent(event);
           }
         }
       } catch (error) {
