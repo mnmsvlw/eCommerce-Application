@@ -1,4 +1,4 @@
-import { LineItem, Price } from '@commercetools/platform-sdk';
+import { LineItem, Price, ProductProjection } from '@commercetools/platform-sdk';
 import Component from '../../Component';
 import Container from '../../../UI/Container';
 import Button from '../../../UI/Button';
@@ -6,16 +6,31 @@ import ImageElement from '../../../UI/Img';
 import updateCartRemoveItem from '../../../api/cart/updateCartRemoveItem';
 import updateCartAddItem from '../../../api/cart/updateCartAddItem';
 import redirect from '../../../utils/redirect';
+import sdkClient from '../../../api/SdkClient';
 
 export default class BasketProduct extends Component {
   render = (item: LineItem) => {
     this.content = new Container('basket-product-container').render();
-    console.log('item', item);
-    const { images } = item.variant;
-    let imgUrl;
+    this.renderData(this.content, item);
 
-    if (images) {
-      imgUrl = images[0].url;
+    return this.content;
+  };
+
+  async renderData(box: HTMLElement, item: LineItem) {
+    const { productKey } = item;
+    let imgUrl;
+    let product: ProductProjection;
+
+    if (productKey) {
+      product = (await sdkClient.apiRoot.productProjections().withKey({ key: productKey }).get().execute()).body;
+      const { images } = product.masterVariant;
+
+      console.log('productData:', product);
+      console.log('new-item:', item);
+
+      if (images) {
+        imgUrl = images[0].url;
+      }
     }
 
     const productBox = new Container('productBox').render();
@@ -23,8 +38,15 @@ export default class BasketProduct extends Component {
     const itemImage = new ImageElement(String(imgUrl), String(item.name['en-US']), 'img-product').render();
     img.append(itemImage);
 
-    const title = new Container('title-product', `${item.name['en-US']}`).render();
-    productBox.append(img, title);
+    const nameBox = new Container('name-product').render();
+
+    if (item.variant.attributes) {
+      const size = new Container('size-product', `${item.variant.attributes[0].value.label}`).render();
+      const title = new Container('title-product', `${item.name['en-US']}`).render();
+      nameBox.append(title, size);
+    }
+
+    productBox.append(img, nameBox);
     const prices = item.variant.prices as Price[];
     const unitPriceBox = new Container('unitPriceBox').render();
 
@@ -67,7 +89,7 @@ export default class BasketProduct extends Component {
     const plusHandler = () => {
       const currentValue = parseInt('1', 10);
       qtyNum.textContent = (currentValue + 1).toString();
-      updateCartAddItem(item.productId, currentValue);
+      updateCartAddItem(item.id, currentValue);
       redirect('/basket/');
     };
 
@@ -82,8 +104,8 @@ export default class BasketProduct extends Component {
       redirect('/basket/');
     });
     removeBox.append(remove);
-    this.content.append(productBox, unitPriceBox, qty, totalPrice, removeBox);
+    box.append(productBox, unitPriceBox, qty, totalPrice, removeBox);
 
-    return this.content;
-  };
+    return box;
+  }
 }
