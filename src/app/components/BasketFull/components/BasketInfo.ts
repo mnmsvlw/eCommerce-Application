@@ -4,6 +4,8 @@ import Button from '../../../UI/Button';
 import Container from '../../../UI/Container';
 import Input from '../../../UI/Input';
 import Component from '../../Component';
+import sdkClient from '../../../api/SdkClient';
+import redirect from '../../../utils/redirect';
 
 export default class BasketInfo extends Component {
   render = (cart: Cart) => {
@@ -12,6 +14,41 @@ export default class BasketInfo extends Component {
     const promoBox = new Container('promocode-info').render();
     const enterPromo = new Input('', 20, 'input-promocode', 'Promocode', 'text').render();
     const btnPromo = new Button('Redeem', 'button', 'btn-promocode').render();
+    btnPromo.addEventListener('click', async () => {
+      console.log('sss');
+      const currentCart = sdkClient.activeCart as Cart;
+      const promoInput = document.querySelector('.input-promocode') as HTMLInputElement;
+
+      try {
+        sdkClient.activeCart = (
+          await sdkClient.apiRoot
+            .me()
+            .carts()
+            .withId({ ID: currentCart.id })
+            .post({
+              body: {
+                version: currentCart.version,
+                actions: [{ action: 'addDiscountCode', code: promoInput.value }],
+              },
+            })
+            .execute()
+        ).body;
+        redirect('/basket/');
+      } catch (e) {
+        if (e instanceof Error) {
+          const promoContainer = document.querySelector('.basket-info-conteiner') as HTMLElement;
+          const errorContainer = document.querySelector('.promo-error') as HTMLElement;
+
+          if (errorContainer) {
+            errorContainer.textContent = e.message;
+          } else {
+            const newErrorContainer = new Container('promo-error').render();
+            newErrorContainer.textContent = e.message;
+            promoContainer.prepend(newErrorContainer);
+          }
+        }
+      }
+    });
     promoBox.append(enterPromo, btnPromo);
 
     const checkBox = new Container('check-info').render();
