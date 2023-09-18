@@ -107,7 +107,6 @@ export default class ProductModule extends Component {
         const { itemId } = cardContainer.dataset;
 
         if (addToShoppingCart && itemId && selectedVariantId) {
-          console.log(quantatyProduct, selectedVariantId);
           updateCartAddItem(itemId, quantatyProduct, selectedVariantId);
           redirect(`/items/${itemId}`);
         } else if (addToShoppingCart && itemId) {

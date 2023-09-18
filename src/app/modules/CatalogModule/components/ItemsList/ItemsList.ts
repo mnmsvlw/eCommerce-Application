@@ -12,6 +12,9 @@ import updateCartAddItem from '../../../../api/cart/updateCartAddItem';
 import './ItemsList.css';
 import getCart from '../../../../api/cart/getCart';
 import updateCartRemoveItem from '../../../../api/cart/updateCartRemoveItem';
+import getProduct from '../../../../api/product/Product';
+import SizeSelection from './SizeSelection/SizeSelection';
+import Heading from '../../../../UI/Heading';
 
 export default class ItemsList extends Component {
   render = () => {
@@ -27,24 +30,65 @@ export default class ItemsList extends Component {
     container.addListener('click', async (e: Event) => {
       try {
         const target = e.target as HTMLElement;
-        const closestShoppingCart = target.closest('.item-card__basket') as HTMLElement;
+        const closestItemCard = target.closest('.item-card') as HTMLElement;
+        const closestAddToCartBtn = target.closest('.item-card__add-btn') as HTMLElement;
+        const sizeSelectionContainer = closestItemCard.querySelector('.item-card__size-selection') as HTMLElement;
+        const { itemId } = closestItemCard.dataset;
+        let selectedVariantId;
+        let productData;
 
-        if (closestShoppingCart) {
-          const { itemId } = closestShoppingCart.dataset;
+        if (itemId) {
+          productData = await (await getProduct(itemId)).body;
+          closestItemCard.append(new SizeSelection(productData).render());
+        }
 
-          if (itemId) {
-            updateCartAddItem(itemId);
-            redirect(`/items/`);
+        const sizeInputs = document.querySelectorAll('.item-card__size-input') as NodeListOf<HTMLInputElement>;
+        const selectedSizeInput = Array.from(sizeInputs).find((input) => input.checked) as HTMLInputElement;
+        console.log('selectedSizeInput: ', selectedSizeInput);
+
+        if (selectedSizeInput) {
+          const selectedSize = selectedSizeInput.value;
+          const foundVariant = productData?.variants.find((variant) => {
+            if (variant.attributes) {
+              return variant.attributes.some((attribute) => {
+                const attributeName = attribute.name.toLowerCase();
+                return (
+                  (attributeName === 'size' || attributeName === 'size-w') && attribute.value.label === selectedSize
+                );
+              });
+            }
+
+            return false;
+          });
+
+          selectedVariantId = foundVariant?.id;
+          console.log('selectedVariantId: ', selectedVariantId);
+        }
+
+        if (
+          !target.closest('.item-card__size-el-container') &&
+          !closestAddToCartBtn &&
+          !target.closest('.item-card__basket-remove')
+        ) {
+          sizeSelectionContainer?.classList.toggle('item-card__size-selection--flipped');
+        }
+
+        if (itemId && selectedVariantId && closestAddToCartBtn) {
+          updateCartAddItem(itemId, 1, selectedVariantId);
+          redirect(`/items/`);
+        } else if (itemId && closestAddToCartBtn) {
+          const notice = document.querySelector('.info-size');
+
+          if (!notice) {
+            this.showInfo(sizeSelectionContainer, 'Please select size');
           }
         }
 
         const removeFromCart = target.closest('.item-card__basket-remove') as HTMLElement;
 
         if (removeFromCart) {
-          const { itemId } = removeFromCart.dataset;
           const cartData = await getCart();
           const lineItemId = cartData.results[0].lineItems.find((item) => item.productId === itemId)?.id;
-          console.log(itemId);
 
           if (lineItemId) {
             updateCartRemoveItem(lineItemId);
@@ -62,7 +106,12 @@ export default class ItemsList extends Component {
       const target = e.target as HTMLElement;
       const closestCard = target.closest('.item-card') as HTMLElement;
 
-      if (closestCard && !target.closest('.item-card__basket') && !target.closest('.item-card__basket-remove')) {
+      if (
+        closestCard &&
+        !target.closest('.item-card__basket') &&
+        !target.closest('.item-card__basket-remove') &&
+        !target.closest('.item-card__size-selection--flipped')
+      ) {
         const { itemId } = closestCard.dataset;
         redirect(`/items/${itemId}`);
       }
@@ -220,4 +269,14 @@ export default class ItemsList extends Component {
       element.after(showMore);
     }
   };
+
+  showInfo(doc: HTMLElement, text: string) {
+    const info = new Heading(6, 'info-size', `${text}`).render();
+    doc.append(info);
+    const TIME = 3000;
+
+    setTimeout(() => {
+      info.remove();
+    }, TIME);
+  }
 }
