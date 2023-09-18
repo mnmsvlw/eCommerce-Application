@@ -41,7 +41,8 @@ export default class BasketProduct extends Component {
     const nameBox = new Container('name-product').render();
 
     if (item.variant.attributes) {
-      const size = new Container('size-product', `${item.variant.attributes[0].value.label}`).render();
+      const attributes = item.variant.attributes.filter((el) => el.name === 'size');
+      const size = new Container('size-product', `${attributes[0].value.label}`).render();
       const title = new Container('title-product', `${item.name['en-US']}`).render();
       nameBox.append(title, size);
     }
