@@ -5,7 +5,8 @@
   border: 2px solid #400834;
   font: 15px 'Inter', sans-serif;
   cursor: pointer;
-  transition: transform .3s;
+  transition: all ease 0.3s;
+  position: relative;
 }
 
 .item-card:hover {
@@ -90,7 +91,7 @@
 .item-card__basket:hover,
 .item-card__basket-remove:hover{
   transform: scale(1.2);
-  transition: all ease 0.3s;
+  transition: all ease 0.2s;
 }
 
 .item-card__basket-remove {
