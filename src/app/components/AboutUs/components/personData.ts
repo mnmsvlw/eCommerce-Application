@@ -28,7 +28,7 @@ const Vladimir: Person = {
   role: 'Team Lead',
   url: './fotoVladimir',
   biography:
-    'Bio: text text text ..... text text text ..... text text text ..... text text text ..... text text text ..... text text text ..... text text text ..... text text text ..... text text text ..... text text text ..... text text text ..... text text text .....',
+    'Bio: a 25-years-old medical professional with a programming background aspiring to become a programmer with a medical background.',
   gitLink: 'https://github.com/mnmsvlw',
   inLink: 'https://ru.linkedin.com/',
   contribution: `Played a crucial role as the team lead, overseeing the project's overall development. Responsibilities included setting up and managing API interactions, writing website routing, designing the project's architecture and basic classes, composing a substantial portion of the project's tests, and creating the catalog page along with all product filters.`,
