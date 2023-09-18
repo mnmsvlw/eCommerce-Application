@@ -158,6 +158,24 @@
     line-height: normal;
 }
 
+.info-size{
+  color: white;
+  border: 2px solid #c10c99;
+  border-radius: 10px;
+  background-color: #050214;
+  padding: 10px;
+}
+
+.product-card__info{
+    color: #c10c99;
+    font-size: 16px;
+}
+
+.button-inactive{
+    color: #666;
+    cursor: initial;
+}
+
 .add-to-basket__button{
     width: 40%;
     border-radius: 23px;

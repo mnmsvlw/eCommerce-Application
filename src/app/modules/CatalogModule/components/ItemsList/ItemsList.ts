@@ -1,3 +1,8 @@
+import {
+  CartPagedQueryResponse,
+  ClientResponse,
+  ProductProjectionPagedSearchResponse,
+} from '@commercetools/platform-sdk';
 import Container from '../../../../UI/Container';
 import sdkClient from '../../../../api/SdkClient';
 import Component from '../../../../components/Component';
@@ -7,6 +12,9 @@ import updateCartAddItem from '../../../../api/cart/updateCartAddItem';
 import './ItemsList.css';
 import getCart from '../../../../api/cart/getCart';
 import updateCartRemoveItem from '../../../../api/cart/updateCartRemoveItem';
+import getProduct from '../../../../api/product/Product';
+import SizeSelection from './SizeSelection/SizeSelection';
+import Heading from '../../../../UI/Heading';
 
 export default class ItemsList extends Component {
   render = () => {
@@ -20,30 +28,73 @@ export default class ItemsList extends Component {
 
   setCatalogShoppingCartListener = (container: Container) => {
     container.addListener('click', async (e: Event) => {
-      const target = e.target as HTMLElement;
-      const closestShoppingCart = target.closest('.item-card__basket') as HTMLElement;
-
-      if (closestShoppingCart) {
-        const { itemId } = closestShoppingCart.dataset;
+      try {
+        const target = e.target as HTMLElement;
+        const closestItemCard = target.closest('.item-card') as HTMLElement;
+        const closestAddToCartBtn = target.closest('.item-card__add-btn') as HTMLElement;
+        const sizes = target.closest('.item-card__size-el-container') as HTMLElement;
+        const removeFromCartBtn = target.closest('.item-card__basket-remove') as HTMLElement;
+        const { itemId } = closestItemCard.dataset;
+        let selectedVariantId;
+        let productData;
 
         if (itemId) {
-          updateCartAddItem(itemId);
-          redirect(`/items/`);
+          productData = await getProduct(itemId);
+          closestItemCard.append(new SizeSelection(productData.body).render());
         }
-      }
 
-      const removeFromCart = target.closest('.item-card__basket-remove') as HTMLElement;
+        const sizeSelectionContainer = closestItemCard.querySelector('.item-card__size-selection') as HTMLElement;
 
-      if (removeFromCart) {
-        const { itemId } = removeFromCart.dataset;
-        const cartData = await getCart();
-        const lineItemId = cartData.results[0].lineItems.find((item) => item.productId === itemId)?.id;
-        console.log(itemId);
-
-        if (lineItemId) {
-          updateCartRemoveItem(lineItemId);
-          redirect(`/items/`);
+        if (!sizes && !closestAddToCartBtn && !removeFromCartBtn) {
+          console.log('btn inner clicked');
+          sizeSelectionContainer.classList.toggle('item-card__size-selection--flipped');
         }
+
+        const sizeInputs = document.querySelectorAll('.item-card__size-input') as NodeListOf<HTMLInputElement>;
+        const selectedSizeInput = Array.from(sizeInputs).find((input) => input.checked) as HTMLInputElement;
+
+        if (selectedSizeInput) {
+          const selectedSize = selectedSizeInput.value;
+          const foundVariant = productData?.body.variants.find((variant) => {
+            if (variant.attributes) {
+              return variant.attributes.some((attribute) => {
+                const attributeName = attribute.name.toLowerCase();
+                return (
+                  (attributeName === 'size' || attributeName === 'size-w') && attribute.value.label === selectedSize
+                );
+              });
+            }
+
+            return false;
+          });
+
+          selectedVariantId = foundVariant?.id;
+        }
+
+        if (itemId && selectedVariantId && closestAddToCartBtn) {
+          updateCartAddItem(itemId, 1, selectedVariantId);
+          redirect(`/items/`);
+        } else if (itemId && closestAddToCartBtn) {
+          const notice = document.querySelector('.info-size');
+
+          if (!notice) {
+            this.showInfo(sizeSelectionContainer, 'Please select size');
+          }
+        }
+
+        const removeFromCart = target.closest('.item-card__basket-remove') as HTMLElement;
+
+        if (removeFromCart) {
+          const cartData = await getCart();
+          const lineItemId = cartData.results[0].lineItems.find((item) => item.productId === itemId)?.id;
+
+          if (lineItemId) {
+            updateCartRemoveItem(lineItemId);
+            redirect(`/items/`);
+          }
+        }
+      } catch (error) {
+        console.error(error);
       }
     });
   };
@@ -53,14 +104,47 @@ export default class ItemsList extends Component {
       const target = e.target as HTMLElement;
       const closestCard = target.closest('.item-card') as HTMLElement;
 
-      if (closestCard && !target.closest('.item-card__basket') && !target.closest('.item-card__basket-remove')) {
+      if (
+        closestCard &&
+        !target.closest('.item-card__basket') &&
+        !target.closest('.item-card__basket-remove') &&
+        !target.closest('.item-card__size-selection--flipped')
+      ) {
         const { itemId } = closestCard.dataset;
         redirect(`/items/${itemId}`);
       }
     });
   };
 
+  renderItemCard = (
+    itemsList: ClientResponse<ProductProjectionPagedSearchResponse>,
+    cartData: CartPagedQueryResponse,
+    component: HTMLElement
+  ) => {
+    itemsList.body.results.forEach((item) => {
+      let productInCart = false;
+
+      if (cartData.results[0].lineItems.some((itemCart) => item.id === itemCart.productId)) {
+        productInCart = true;
+      }
+
+      component.appendChild(new ItemCard(productInCart).render(item));
+    });
+  };
+
+  removeShowMoreElement = () => {
+    const showMoreElement = document.querySelector('.show-more') as HTMLElement;
+
+    if (showMoreElement) {
+      showMoreElement.remove();
+    }
+  };
+
   renderAsync = async (component: HTMLElement) => {
+    this.removeShowMoreElement();
+    const loader = new Container('loader').render();
+    component.appendChild(loader);
+
     const queryParams = new URLSearchParams(window.location.search);
     const filterParams: string[] = [];
     let sortParams = '';
@@ -100,37 +184,97 @@ export default class ItemsList extends Component {
     }
 
     if (queryArgs) {
-      itemsList = (
-        await sdkClient.apiRoot
-          .productProjections()
-          .search()
-          .get({
-            queryArgs,
-          })
-          .execute()
-      ).body.results;
+      itemsList = await sdkClient.apiRoot
+        .productProjections()
+        .search()
+        .get({
+          queryArgs: {
+            ...queryArgs,
+            limit: 18,
+          },
+        })
+        .execute();
     } else {
-      itemsList = (await sdkClient.apiRoot.productProjections().search().get().execute()).body.results;
+      itemsList = await sdkClient.apiRoot
+        .productProjections()
+        .search()
+        .get({
+          queryArgs: {
+            limit: 18,
+          },
+        })
+        .execute();
     }
 
     const cartData = await getCart();
     const element = component;
     element.innerHTML = '';
 
-    if (itemsList.length > 0) {
-      itemsList.forEach((item) => {
-        let productInCart = false;
-
-        if (cartData.results[0].lineItems.some((itemCart) => item.id === itemCart.productId)) {
-          productInCart = true;
-        }
-
-        component.appendChild(new ItemCard(productInCart).render(item));
-      });
+    if (itemsList.body.results.length > 0) {
+      this.renderItemCard(itemsList, cartData, component);
     } else {
       element.appendChild(new Container('no-items', 'No items found').render());
     }
 
-    // this.setCatalogContainerListener(component);
+    const totalCount = itemsList.body.total as number;
+
+    if (totalCount > itemsList.body.limit) {
+      const showMore = new Container('show-more', 'Show more').render();
+      let currentOffset = itemsList.body.offset;
+
+      showMore.addEventListener('click', async () => {
+        showMore.textContent = '';
+        showMore.classList.add('loader');
+        currentOffset += 18;
+
+        let nextItems;
+
+        if (queryArgs) {
+          nextItems = await sdkClient.apiRoot
+            .productProjections()
+            .search()
+            .get({
+              queryArgs: {
+                ...queryArgs,
+                limit: 18,
+                offset: currentOffset,
+              },
+            })
+            .execute();
+        } else {
+          nextItems = await sdkClient.apiRoot
+            .productProjections()
+            .search()
+            .get({
+              queryArgs: {
+                limit: 18,
+                offset: currentOffset,
+              },
+            })
+            .execute();
+        }
+
+        this.renderItemCard(nextItems, cartData, component);
+
+        if (currentOffset + 18 >= totalCount) {
+          showMore.remove();
+        }
+
+        showMore.textContent = 'Show more';
+        showMore.classList.remove('loader');
+      });
+
+      element.after(showMore);
+    }
   };
+
+  showInfo(doc: HTMLElement, text: string) {
+    const info = new Heading(6, 'info-size', `${text}`).render();
+    doc.append(info);
+    const TIME = 3000;
+
+    setTimeout(() => {
+      info.remove();
+    }, TIME);
+  }
 }

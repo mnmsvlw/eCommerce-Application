@@ -18,7 +18,7 @@ export default class DesktopHeader extends Component {
 
   render = () => {
     this.content = new Container('wrapp').render();
-    const logo = new Link('/', 'logo', 'Cool Name Pending...');
+    const logo = new Link('/', 'logo', 'SneakPeak');
     logo.addListener('click', this.linkOnClick);
     const container = new ElementCreator({ tag: 'nav', classNames: 'nav-desktop' }).getElement();
     const ul = new ElementCreator({ tag: 'ul', classNames: 'nav-list' }).getElement();

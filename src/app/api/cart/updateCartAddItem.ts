@@ -1,7 +1,7 @@
 import { Cart } from '@commercetools/platform-sdk';
 import sdkClient from '../SdkClient';
 
-const updateCartAddItem = async (itemId: string, quantaty = 1, variant?: 1) => {
+const updateCartAddItem = async (itemId: string, quantaty = 1, variant = 1) => {
   const currentCart = sdkClient.activeCart as Cart;
   sdkClient.activeCart = (
     await sdkClient.apiRoot

@@ -1,4 +1,4 @@
-const itemColors = ['Beige', 'Black', 'Blue', 'Multicolor', 'Pearl', 'White'];
+const itemColors = ['Beige', 'Black', 'Blue', 'Green', 'Multicolor', 'Pearl', 'Pink', 'Red', 'White', 'Yellow'];
 
 const itemSizes = [
   'US 4',

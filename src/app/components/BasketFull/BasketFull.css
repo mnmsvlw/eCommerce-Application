@@ -76,9 +76,17 @@
   border-radius: 5px;
 }
 
-.title-product {
+.name-product {
+  display: flex;
   flex: 1 1 85%;
   padding-left: 15px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.size-product {
+  color: #c10c99;
+  padding-left: 5px;
 }
 
 .unitPriceBox {
@@ -311,10 +319,11 @@
     background-color: white;
     border-radius: 5px;
   }
-  .title-product {
+  .name-product  {
     flex: 1 1 85%;
     padding-left: 5px;
   }
+
   .unitPriceBox {
     flex: 1 1 17%;
   }
