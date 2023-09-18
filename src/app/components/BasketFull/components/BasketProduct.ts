@@ -59,7 +59,7 @@ export default class BasketProduct extends Component {
 
       if (currentValue > 1) {
         qtyNum.textContent = (currentValue - 1).toString();
-        updateCartRemoveItem(item.id, 1);
+        updateCartRemoveItem(item.id);
         redirect('/basket/');
       }
     };

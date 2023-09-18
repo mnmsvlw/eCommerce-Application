@@ -1,3 +1,8 @@
+import {
+  CartPagedQueryResponse,
+  ClientResponse,
+  ProductProjectionPagedSearchResponse,
+} from '@commercetools/platform-sdk';
 import Container from '../../../../UI/Container';
 import sdkClient from '../../../../api/SdkClient';
 import Component from '../../../../components/Component';
@@ -64,7 +69,35 @@ export default class ItemsList extends Component {
     });
   };
 
+  renderItemCard = (
+    itemsList: ClientResponse<ProductProjectionPagedSearchResponse>,
+    cartData: CartPagedQueryResponse,
+    component: HTMLElement
+  ) => {
+    itemsList.body.results.forEach((item) => {
+      let productInCart = false;
+
+      if (cartData.results[0].lineItems.some((itemCart) => item.id === itemCart.productId)) {
+        productInCart = true;
+      }
+
+      component.appendChild(new ItemCard(productInCart).render(item));
+    });
+  };
+
+  removeShowMoreElement = () => {
+    const showMoreElement = document.querySelector('.show-more') as HTMLElement;
+
+    if (showMoreElement) {
+      showMoreElement.remove();
+    }
+  };
+
   renderAsync = async (component: HTMLElement) => {
+    this.removeShowMoreElement();
+    const loader = new Container('loader').render();
+    component.appendChild(loader);
+
     const queryParams = new URLSearchParams(window.location.search);
     const filterParams: string[] = [];
     let sortParams = '';
@@ -104,37 +137,87 @@ export default class ItemsList extends Component {
     }
 
     if (queryArgs) {
-      itemsList = (
-        await sdkClient.apiRoot
-          .productProjections()
-          .search()
-          .get({
-            queryArgs,
-          })
-          .execute()
-      ).body.results;
+      itemsList = await sdkClient.apiRoot
+        .productProjections()
+        .search()
+        .get({
+          queryArgs: {
+            ...queryArgs,
+            limit: 18,
+          },
+        })
+        .execute();
     } else {
-      itemsList = (await sdkClient.apiRoot.productProjections().search().get().execute()).body.results;
+      itemsList = await sdkClient.apiRoot
+        .productProjections()
+        .search()
+        .get({
+          queryArgs: {
+            limit: 18,
+          },
+        })
+        .execute();
     }
 
     const cartData = await getCart();
     const element = component;
     element.innerHTML = '';
 
-    if (itemsList.length > 0) {
-      itemsList.forEach((item) => {
-        let productInCart = false;
-
-        if (cartData.results[0].lineItems.some((itemCart) => item.id === itemCart.productId)) {
-          productInCart = true;
-        }
-
-        component.appendChild(new ItemCard(productInCart).render(item));
-      });
+    if (itemsList.body.results.length > 0) {
+      this.renderItemCard(itemsList, cartData, component);
     } else {
       element.appendChild(new Container('no-items', 'No items found').render());
     }
 
-    // this.setCatalogContainerListener(component);
+    const totalCount = itemsList.body.total as number;
+
+    if (totalCount > itemsList.body.limit) {
+      const showMore = new Container('show-more', 'Show more').render();
+      let currentOffset = itemsList.body.offset;
+
+      showMore.addEventListener('click', async () => {
+        showMore.textContent = '';
+        showMore.classList.add('loader');
+        currentOffset += 18;
+
+        let nextItems;
+
+        if (queryArgs) {
+          nextItems = await sdkClient.apiRoot
+            .productProjections()
+            .search()
+            .get({
+              queryArgs: {
+                ...queryArgs,
+                limit: 18,
+                offset: currentOffset,
+              },
+            })
+            .execute();
+        } else {
+          nextItems = await sdkClient.apiRoot
+            .productProjections()
+            .search()
+            .get({
+              queryArgs: {
+                limit: 18,
+                offset: currentOffset,
+              },
+            })
+            .execute();
+        }
+
+        this.renderItemCard(nextItems, cartData, component);
+
+        if (currentOffset + 18 >= totalCount) {
+          showMore.remove();
+        }
+
+        showMore.textContent = 'Show more';
+        showMore.classList.remove('loader');
+      });
+
+      element.after(showMore);
+    }
   };
 }
