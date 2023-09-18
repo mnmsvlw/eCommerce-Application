@@ -1,21 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
 .ourTeam-wrapper {
-display: flex;
-flex-direction: column;
-width: 30%;
-height: auto;
-border-radius: 30px;
-font-family: 'Poppins', sans-serif;
-border: 1px solid white;
-margin-bottom: 5vh;
-margin-right: 20px;
-margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  height: auto;
+  border-radius: 30px;
+  font-family: 'Poppins', sans-serif;
+  border: 1px solid white;
+  margin-bottom: 5vh;
+  margin-right: 20px;
+  margin-left: 20px;
+  font-size: 1.2vw;
 }
 
 .imgBox {
   width: 100%;
-  clip-path: polygon(0 0, 100% 0, 100% 80%,  0 90%);
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 0 90%);
 }
 
 .fotoPerson.kat {
@@ -30,7 +31,9 @@ margin-left: 20px;
   background: url('./assets/Vladimir.jpg') no-repeat;
 }
 
-.fotoPerson.kat, .fotoPerson.vika, .fotoPerson.vova {
+.fotoPerson.kat,
+.fotoPerson.vika,
+.fotoPerson.vova {
   background-size: 100%;
   width: 100%;
   height: 42vh;
@@ -47,19 +50,20 @@ margin-left: 20px;
   margin-top: -10vh;
   height: 11vh;
   clip-path: polygon(0% 30%, 100% 0, 100% 100%, 0 80%);
-  background-color: #C10C99;
+  background-color: #c10c99;
 }
 
 .bioBox-wrapp {
-  background-color: #D9D9D9;
+  background-color: #d9d9d9;
   color: black;
   padding: 10px;
-  padding-top: 55px;
+  padding-top: 60px;
   padding-bottom: 10px;
   margin-top: -50px;
   font-weight: 500;
   border-radius: 30px;
   border: 1px solid white;
+  font-size: 1.2vw;
 }
 
 .linkBox {
@@ -67,6 +71,10 @@ margin-left: 20px;
   height: 7vh;
   display: flex;
   align-items: center;
+}
+
+.linkBox.move {
+  padding-left: 1vw;
 }
 
 .iconGit {
@@ -85,36 +93,48 @@ margin-left: 20px;
   height: 38px;
   margin-left: 10px;
 }
+
+.iconIn.hide {
+  display: none;
+}
+
 @media (max-width: 1250px) {
-  .ourTeam-wrapper {
-    font-size: 12px;
-  }
   .ourTeam-wrapper {
     width: 90%;
   }
 }
+
 @media (max-width: 900px) {
   .ourTeam-wrapper {
     width: 70%;
   }
-  .fotoPerson.kat, .fotoPerson.vika, .fotoPerson.vova {
+
+  .fotoPerson.kat,
+  .fotoPerson.vika,
+  .fotoPerson.vova {
     height: 36vh;
   }
 }
 
 @media (max-width: 750px) {
-  .fotoPerson.kat, .fotoPerson.vika, .fotoPerson.vova {
+  .fotoPerson.kat,
+  .fotoPerson.vika,
+  .fotoPerson.vova {
     height: 52vh;
   }
 }
 
 @media (max-width: 630px) {
-  .fotoPerson.kat, .fotoPerson.vika, .fotoPerson.vova {
+  .fotoPerson.kat,
+  .fotoPerson.vika,
+  .fotoPerson.vova {
     height: 305px;
   }
 }
 @media (max-width: 450px) {
-  .fotoPerson.kat, .fotoPerson.vika, .fotoPerson.vova {
+  .fotoPerson.kat,
+  .fotoPerson.vika,
+  .fotoPerson.vova {
     height: 260px;
   }
 }

@@ -67,6 +67,7 @@
   padding-top: 20px;
   padding-bottom: 20px;
 }
+
 .img-product {
   width: 12vw;
   height: auto;
@@ -74,6 +75,7 @@
   background-color: white;
   border-radius: 5px;
 }
+
 .name-product {
   display: flex;
   flex: 1 1 85%;
@@ -681,6 +683,7 @@
     flex-direction: column;
     align-items: center;
   }
+
   .promocode-info {
     width: 50%;
     height: 25px;
@@ -691,6 +694,7 @@
   .btnCheckOut-info {
     height: 25px;
   }
+
   .check-info {
     width: 250px;
   }
