@@ -13,9 +13,10 @@ import Link from '../../UI/Link';
 
 export default class RegistrationForm extends Component {
   render = () => {
-    const form = new Form('/', 'post', 'regform');
-    this.content = form.render();
-    this.content.setAttribute('novalidate', '');
+    this.content = new Container('reg-form__wrapper').render();
+    const leftImage = new Container('reg-form__image').render();
+    const form = new Form('/', 'post', 'regform').render();
+    form.setAttribute('novalidate', '');
     const regWrapper = new Container('reg-wrapper').render();
     const formContainer = new Container('regform-container').render();
 
@@ -52,7 +53,9 @@ export default class RegistrationForm extends Component {
       regButton
     );
     regWrapper.append(formContainer);
-    this.content.appendChild(regWrapper);
+    form.appendChild(regWrapper);
+
+    this.content.append(leftImage, form);
 
     return this.content;
   };
