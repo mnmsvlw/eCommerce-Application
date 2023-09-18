@@ -31,3 +31,10 @@
         align-items: center;
     }
 }
+
+.product-card__wrapper.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}

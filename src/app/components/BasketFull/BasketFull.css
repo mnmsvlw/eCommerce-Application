@@ -1,3 +1,10 @@
+.basket-product-container.loader {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .basket-wrapper {
   width: 100%;
   display: flex;
