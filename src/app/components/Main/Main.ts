@@ -13,6 +13,10 @@ export default class MainComponent extends Component {
     const mainLink = new Link('/items/', 'main-link', 'Shop now').render();
     detailsContainer.append(mainHeader, mainLink);
     mainImage.append(detailsContainer);
+    const promocode = new Container(
+      'main-promocode',
+      'Discount 10% for your first order with propocode - FIRST10'
+    ).render();
 
     // const categoryContainer = new Container('main-category-container').render();
     // const categoryHeader = new Heading(2, 'category-header', 'Shop by category').render();
@@ -23,7 +27,7 @@ export default class MainComponent extends Component {
 
     // categoryContainer.append(categoryHeader, btnContainer);
 
-    this.content.append(mainImage);
+    this.content.append(promocode, mainImage);
 
     return this.content;
   };
