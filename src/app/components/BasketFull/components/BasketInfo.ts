@@ -53,11 +53,6 @@ export default class BasketInfo extends Component {
 
     const checkBox = new Container('check-info').render();
 
-    const subtotal = new Container('item-info').render();
-    const textSubtotal = new Container('text-item-info', 'Subtotal').render();
-    const countSubtotal = new Container('count-item-info', `$${cart.totalPrice.centAmount / 100}`).render();
-    subtotal.append(textSubtotal, countSubtotal);
-
     const shipping = new Container('item-info').render();
     const textShipping = new Container('text-item-info', 'Shipping fee').render();
     const countShipping = new Container('count-item-info', '$20').render();
@@ -69,11 +64,29 @@ export default class BasketInfo extends Component {
     const countPromocode = new Container('count-item-info', `${isPromocode}`).render();
     promocode.append(textPromocode, countPromocode);
 
+    const subtotal = new Container('item-info').render();
+    const textSubtotal = new Container('text-item-info', 'Subtotal').render();
+    const countSubtotal = new Container('count-item-info', `$${cart.totalPrice.centAmount / 100}`).render();
+
     const total = new Container('item-info').render();
-    total.classList.add('total');
     const textTotal = new Container('text-item-info-total', 'TOTAL').render();
+    total.classList.add('total');
     const countTotal = new Container('count-item-info-total', `$${cart.totalPrice.centAmount / 100 + 20}`).render();
-    total.append(textTotal, countTotal);
+
+    let totalPrice: number;
+
+    if (isPromocode === 'Yes') {
+      totalPrice = cart.totalPrice.centAmount / 100 / 0.9;
+      const promoSubtotal = new Container('promoPrice', `$${totalPrice}`).render();
+      const dis1 = new Container('dis', '-10% off').render();
+      const dis2 = new Container('dis', '-10% off').render();
+      const promoTotal = new Container('promoPrice', `$${totalPrice + 20}`).render();
+      subtotal.append(textSubtotal, dis1, promoSubtotal, countSubtotal);
+      total.append(textTotal, dis2, promoTotal, countTotal);
+    } else if (isPromocode === 'No') {
+      subtotal.append(textSubtotal, countSubtotal);
+      total.append(textTotal, countTotal);
+    }
 
     const btnCheckOut = new Button('Check out', 'button', 'btnCheckOut-info').render();
     checkBox.append(subtotal, shipping, promocode, total, btnCheckOut);
