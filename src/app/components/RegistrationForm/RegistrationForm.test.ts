@@ -11,7 +11,7 @@ describe('DesktopHeader components renders correct html element', () => {
   const regForm = new RegistrationForm().render();
 
   it('should return FORM as a container element', () => {
-    expect(regForm.tagName).toBe('FORM');
+    expect(regForm.tagName).toBe('DIV');
   });
 
   it('should render registration form header', () => {

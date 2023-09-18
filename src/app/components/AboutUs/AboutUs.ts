@@ -21,6 +21,8 @@ export default class AboutUs extends Component {
     kate.querySelector('.fotoPerson')?.classList.add('kat');
     const vova = new OurTeam().render(Vladimir);
     vova.querySelector('.fotoPerson')?.classList.add('vova');
+    vova.querySelector('.iconIn')?.classList.add('hide');
+    vova.querySelector('.linkBox')?.classList.add('move');
     boxTeam.append(kate, vova, vika);
     ourTeam.append(titleOur, boxTeam);
 

@@ -11,6 +11,7 @@ export default class MainComponent extends Component {
     const mainImage = new Container('main-image').render();
     const detailsContainer = new Container('image-details').render();
     const mainHeader = new Heading(1, 'main-header', 'Sneakers are our Passion').render();
+
     const mainLink = new Link('/items/', 'main-link', 'Shop now');
 
     const categoryContainer = new Container('main-category-container').render();
@@ -31,13 +32,18 @@ export default class MainComponent extends Component {
       });
     });
 
+    const promocode = new Container(
+      'main-promocode',
+      'Discount 10% for your first order with promocode - FIRST10'
+    ).render();
+
     detailsContainer.append(mainHeader, mainLink.render());
     mainImage.append(detailsContainer);
     btnContainer.append(menCategory.render(), womenCategory.render());
 
     categoryContainer.append(categoryHeader, btnContainer);
 
-    this.content.append(mainImage, categoryContainer);
+    this.content.append(promocode, mainImage, categoryContainer);
 
     return this.content;
   };
