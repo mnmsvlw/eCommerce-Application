@@ -71,6 +71,10 @@ font-size: 1.2vw;
   align-items: center;
 }
 
+.linkBox.move {
+  padding-left: 1vw;
+}
+
 .iconGit {
   cursor: pointer;
   background: url('./assets/git.png');
@@ -86,6 +90,10 @@ font-size: 1.2vw;
   width: 38px;
   height: 38px;
   margin-left: 10px;
+}
+
+.iconIn.hide {
+  display: none;
 }
 @media (max-width: 1250px) {
   .ourTeam-wrapper {
