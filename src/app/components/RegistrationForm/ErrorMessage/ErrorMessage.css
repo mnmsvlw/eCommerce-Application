@@ -1,0 +1,36 @@
+.message-cover{
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    background-color: rgba(0,0,0,0.5);
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .3s ease;
+}
+
+
+.message-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30vw;
+    height: 30vh;
+    background-color: white;
+    z-index: 2;
+    border-radius: 7px;
+    padding: 10px;
+    text-align: center;
+    border: 5px solid #C10C99;
+}
+
+.message-cover.hidden{
+    display: none;
+}
+
+.message-header__error{
+    font-size: 20px;
+    color: #C10C99;
+}

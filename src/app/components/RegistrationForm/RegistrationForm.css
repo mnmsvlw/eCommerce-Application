@@ -1,0 +1,284 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+.regform{
+    background-color: #050214;
+    display: flex;
+    align-items: flex-end;
+    justify-content: end;
+    width: 100%;
+    height: 100%;
+}
+
+.reg-wrapper{
+    display: flex;
+    margin-top: 12vh;
+    box-sizing: border-box;
+    background: #050214;
+    margin-right: 3vw;
+    margin-left: 3vw;
+    width: 40vw;
+    margin-bottom: 12vh;
+}
+
+.regform-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.regform-header{
+    color: #FFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin: 0 auto;
+    margin-bottom: 1.5rem;
+}
+
+.regform-text{
+    color: #FFFFFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-bottom: 0.5rem;
+}
+
+.regform-label{
+    color: #FFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-bottom: 0.5vh;
+    margin-top: 4vh;
+}
+
+.regform-input,
+.regform-select{
+    position: relative;
+    background-color:#050214;
+    color: #FFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    margin-bottom: 1vh;
+    border: none;
+    border-bottom: 2px solid #FFF; 
+    outline: none;
+}
+
+.regform-input::placeholder{
+    background-color:#050214;
+    color: rgba(255, 255, 255, 0.708);
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.regform-input:active{
+    border: none;
+}
+
+input::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+.login-btn-container{
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 2vh;
+}
+
+.regform-btn{
+    border-radius: 32px;
+    background: #C10C99;
+    box-shadow: 0px 4px 26px 0px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    width: 40vw;
+    height: 8vh;
+    color: #FFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-top: 8vh;
+}
+
+
+.regform-btn:hover{
+    background-color: #ff00c8;
+    color: #FFF;
+}
+
+.regform-btn:active{
+    background-color: white;
+    color: #C10C99;
+}
+
+.regform-login-btn{
+    outline: none;
+    text-decoration: none;
+    color: #C10C99;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-left: 10px;
+}
+
+.regform-login-btn:hover{
+    color: #ff00c8;
+}
+
+.regform-login-btn:active{
+    color: #FFFFFF;
+}
+
+.regform-adress__header{
+    color: #FFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin: 0px auto;
+    margin-top: 8vh;
+}
+
+.regform-container__shipping-address,
+.regform-container__billing-address,
+.regform-container__data{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: all 2s ease;
+    width: 40vw;
+}
+
+.regform-container__billing-address.hidden > *{
+    display: none;
+    transition: all 2s ease;
+}
+
+.regform-container__billing-address.hidden > .checkbox-container {
+    display: flex;
+}
+
+.checkbox-container{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2vh;
+}
+
+.regform-input[type='checkbox']{
+    margin-top: 1vh;
+}
+
+.regform-label-checkbox{
+    color: #FFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.reg-error{
+    color: #C10C99;
+    font-size: 11px;
+    display: inline-block;
+}
+
+.error{
+    outline: 0;
+    border-bottom: 2px solid #C10C99; 
+}
+
+.success{
+    outline: 0;
+    border-bottom: 2px solid green;
+}
+
+
+@media (max-width: 767px) {
+    .regform{
+        align-items: center;
+        justify-content: center;
+    }
+
+    .reg-wrapper{
+        width: 60vw;
+    }
+
+    .regform-container__shipping-address,
+    .regform-container__billing-address,
+    .regform-container__data{
+        width: 60vw;
+    }
+
+    .regform-btn{
+        width: 60vw;
+        height: 8vh;
+        font-size: 16px;
+    }
+
+}
+
+@media (max-width: 550px) {
+    .regform{
+        align-items: center;
+        justify-content: center;
+    }
+
+    .reg-wrapper{
+        width: 70vw;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .regform-container__shipping-address,
+    .regform-container__billing-address,
+    .regform-container__data{
+        width: 70vw;
+    }
+
+    .regform-text{
+        text-align: center;
+    }
+
+    .login-btn-container{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .regform-btn{
+        width: 70vw;
+        height: 8vh;
+        font-size: 14px;
+    }
+}
+  
+  
+  
+  

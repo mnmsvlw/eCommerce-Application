@@ -1,0 +1,20 @@
+.catalog-search {
+  width: 100%;
+  max-width: 860px;
+  border: 1px solid #FF00C8;
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 20px;
+  background-color: #050214;
+  margin-bottom: 10px;
+}
+
+.catalog-search::-moz-placeholder {
+  color: #FFFFFF60; 
+}
+
+.catalog-search::-webkit-input-placeholder {
+  color: #FFFFFF60; 
+}
