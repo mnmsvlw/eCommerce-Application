@@ -1,6 +1,8 @@
 # Online Shop "SneakPeak"
 #### (Rolling Scopes School eCommerce Application 2023q1)
 
+### [Deploy link](https://sneakpeak-store.netlify.app/)
+
 ### In this application you can:
 -   browse through a vast range of products, 
 -   view detailed descriptions of products
