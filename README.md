@@ -1,16 +1,19 @@
-# Online Shop "Cool Name Pending..." 🙃
+# Online Shop "SneakPeak"
 #### (Rolling Scopes School eCommerce Application 2023q1)
 
 ### In this application you can:
 -   browse through a vast range of products, 
 -   view detailed descriptions of products
 -   add their favorite items to the basket
--   proceed to checkout.
+-   use promoode to decreade the total price.
   
-### “Cool Name Pending...” includes features such as:
+### “SneakPeak” includes features such as:
 -   user registration and login 
 -   product search 
--   product categorization, and sorting.
+-   product categorization, filters and sorting
+-   opportunity to choose the size
+-   add, remove and change products in shopping cart
+-   use promocode
   
 ### The application includes pages such as:
 -   Login and Registration pages 
