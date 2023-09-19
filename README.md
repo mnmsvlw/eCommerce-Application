@@ -27,12 +27,27 @@
 ## Extensions required for development
 The Single Page Application (SPA) is powered by CommerceTools.
 - [TypeScript](https://www.typescriptlang.org/)
+  * Pros: Static typing, improved IDE support, enhanced code reliability.
+  * Cons: Development may take longer due to typing.
+
 - [Webpack](https://webpack.js.org/)
+  - Pros: Bundling and optimizing resources, modular system support.
+  - Cons: Configuration may require time.
 - [ESLint](https://eslint.org/)
+  - Pros: Automatic code style checking, potential error detection.
+  - Cons: Rule configuration required.
 - [Prettier](https://prettier.io/)
+  - Pros: Automatic code formatting, multi-language support.
+  - Cons: None.
 - [Jest](https://jestjs.io/)
+  - Pros: Easy-to-use JavaScript testing framework.
+  - Cons: May require additional learning.  
 - [Husky](https://typicode.github.io/husky/)
+  - Pros: Running scripts before commits, preventing faulty commits. For ex., we used it to run ESLint and Prettier to lint and format the code before each commit, ensuring code quality and consistent formatting.
+  - Cons: Configuration required.
 - [Swiper](https://swiperjs.com/get-started)
+  - Pros: Convenient library for creating sliders and carousels.
+  - Cons: Documentation study may be needed.
 ---
 ## Run Locally
 1. Install Node.js
