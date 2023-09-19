@@ -18,6 +18,11 @@ export default class BasketInfo extends Component {
       console.log('sss');
       const currentCart = sdkClient.activeCart as Cart;
       const promoInput = document.querySelector('.input-promocode') as HTMLInputElement;
+      let promoCode = promoInput.value;
+
+      if (promoCode === '') {
+        promoCode = 'empty';
+      }
 
       try {
         sdkClient.activeCart = (
@@ -28,7 +33,7 @@ export default class BasketInfo extends Component {
             .post({
               body: {
                 version: currentCart.version,
-                actions: [{ action: 'addDiscountCode', code: promoInput.value }],
+                actions: [{ action: 'addDiscountCode', code: promoCode }],
               },
             })
             .execute()
