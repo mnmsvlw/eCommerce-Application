@@ -32,6 +32,7 @@ The Single Page Application (SPA) is powered by CommerceTools.
 - [Prettier](https://prettier.io/)
 - [Jest](https://jestjs.io/)
 - [Husky](https://typicode.github.io/husky/)
+- [Swiper](https://swiperjs.com/get-started)
 ---
 ## Run Locally
 1. Install Node.js
