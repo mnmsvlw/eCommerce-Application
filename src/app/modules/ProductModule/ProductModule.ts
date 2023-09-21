@@ -153,11 +153,14 @@ export default class ProductModule extends Component {
 
   showInfo(doc: HTMLElement, text: string) {
     const info = new Heading(6, 'info-size', `${text}`).render();
-    doc.append(info);
-    const TIME = 3000;
 
-    setTimeout(() => {
-      info.remove();
-    }, TIME);
+    if (doc) {
+      doc.append(info);
+      const TIME = 3000;
+
+      setTimeout(() => {
+        info.remove();
+      }, TIME);
+    }
   }
 }

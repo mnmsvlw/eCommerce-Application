@@ -110,8 +110,8 @@ export default class BasketProduct extends Component {
       }
     };
 
-    minusBtn.addEventListener('click', minusHandler);
-    plusBtn.addEventListener('click', plusHandler);
+    minusBtn.addEventListener('click', minusHandler, { once: true });
+    plusBtn.addEventListener('click', plusHandler, { once: true });
 
     const totalPrice = new Container('totalPrice-product', `$${item.totalPrice.centAmount / 100}`).render();
     const removeBox = new Container('removeBox').render();
