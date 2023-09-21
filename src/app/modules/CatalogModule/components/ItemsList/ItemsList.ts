@@ -21,89 +21,76 @@ export default class ItemsList extends Component {
     const itemsListContainer = new Container('items-list-container');
     itemsListContainer.bindAsync(this.renderAsync);
     this.setCatalogContainerListener(itemsListContainer);
-    this.setCatalogShoppingCartListener(itemsListContainer);
+    // this.setCatalogShoppingCartListener(itemsListContainer);
     this.content = itemsListContainer.render();
     return this.content;
   };
 
-  setCatalogShoppingCartListener = (container: Container) => {
+  // setCatalogShoppingCartListener = (container: Container) => {
+  //   container.addListener('click', async (e: Event) => {});
+  // };
+
+  setCatalogContainerListener = (container: Container) => {
     container.addListener('click', async (e: Event) => {
-      try {
-        const target = e.target as HTMLElement;
-        const closestItemCard = target.closest('.item-card') as HTMLElement;
-        const closestAddToCartBtn = target.closest('.item-card__add-btn') as HTMLElement;
-        const sizes = target.closest('.item-card__size-el-container') as HTMLElement;
-        const removeFromCartBtn = target.closest('.item-card__basket-remove') as HTMLElement;
-        const { itemId } = closestItemCard.dataset;
-        let selectedVariantId;
-        let productData;
+      const targetMain = e.target as HTMLElement;
+      const closestCard = targetMain.closest('.item-card') as HTMLElement;
 
-        if (itemId) {
-          productData = await getProduct(itemId);
-          closestItemCard.append(new SizeSelection(productData.body).render());
-        }
+      if (
+        closestCard &&
+        !targetMain.closest('.item-card__basket') &&
+        !targetMain.closest('.item-card__basket-remove') &&
+        !targetMain.closest('.item-card__size-selection--flipped')
+      ) {
+        const { itemId } = closestCard.dataset;
+        redirect(`/items/${itemId}`);
+      } else {
+        try {
+          const target = e.target as HTMLElement;
+          const closestItemCard = target.closest('.item-card') as HTMLElement;
+          const closestAddToCartBtn = target.closest('.item-card__add-btn') as HTMLElement;
+          const sizes = target.closest('.item-card__size-el-container') as HTMLElement;
+          const removeFromCartBtn = target.closest('.item-card__basket-remove') as HTMLElement;
+          const { itemId } = closestItemCard.dataset;
+          let selectedVariantId;
+          let productData;
 
-        const sizeSelectionContainer = closestItemCard.querySelector('.item-card__size-selection') as HTMLElement;
-
-        if (!sizes && !closestAddToCartBtn && !removeFromCartBtn) {
-          console.log('btn inner clicked');
-          sizeSelectionContainer.classList.toggle('item-card__size-selection--flipped');
-        }
-
-        const sizeInputs = document.querySelectorAll('.item-card__size-input') as NodeListOf<HTMLInputElement>;
-        const selectedSizeInput = Array.from(sizeInputs).find((input) => input.checked) as HTMLInputElement;
-
-        if (selectedSizeInput) {
-          const selectedSize = selectedSizeInput.value;
-          const foundVariant = productData?.body.variants.find((variant) => {
-            if (variant.attributes) {
-              return variant.attributes.some((attribute) => {
-                const attributeName = attribute.name.toLowerCase();
-                return (
-                  (attributeName === 'size' || attributeName === 'size-w') && attribute.value.label === selectedSize
-                );
-              });
-            }
-
-            return false;
-          });
-
-          selectedVariantId = foundVariant?.id;
-        }
-
-        if (itemId && selectedVariantId && closestAddToCartBtn) {
-          await updateCartAddItem(itemId, 1, selectedVariantId);
-          // redirect(`/items/`);
-
-          // const currentCart = sdkClient.activeCart as Cart;
-
-          // if (currentCart.lineItems.length > 0) {
-          //   const cartCounter = document.querySelector('.cart-counter') as HTMLElement;
-          //   const customEvent = new Event('cartChanged');
-          //   cartCounter.dispatchEvent(customEvent);
-          // }
-
-          // const catalogContainer = document.querySelector('.catalog-container') as HTMLElement;
-          // const event = new Event('queryUpdated');
-          // catalogContainer.dispatchEvent(event);
-          redirect(window.location.href.replace(window.location.origin, ''));
-        } else if (itemId && closestAddToCartBtn) {
-          const notice = document.querySelector('.info-size');
-
-          if (!notice) {
-            this.showInfo(sizeSelectionContainer, 'Please select size');
+          if (itemId) {
+            productData = await getProduct(itemId);
+            closestItemCard.append(new SizeSelection(productData.body).render());
           }
-        }
 
-        const removeFromCart = target.closest('.item-card__basket-remove') as HTMLElement;
+          const sizeSelectionContainer = closestItemCard.querySelector('.item-card__size-selection') as HTMLElement;
 
-        if (removeFromCart) {
-          const cartData = await getCart();
-          const lineItemId = cartData.results[0].lineItems.find((item) => item.productId === itemId)?.id;
+          if (!sizes && !closestAddToCartBtn && !removeFromCartBtn) {
+            console.log('btn inner clicked');
+            sizeSelectionContainer.classList.toggle('item-card__size-selection--flipped');
+          }
 
-          if (lineItemId) {
-            await updateCartRemoveItem(lineItemId);
+          const sizeInputs = document.querySelectorAll('.item-card__size-input') as NodeListOf<HTMLInputElement>;
+          const selectedSizeInput = Array.from(sizeInputs).find((input) => input.checked) as HTMLInputElement;
+
+          if (selectedSizeInput) {
+            const selectedSize = selectedSizeInput.value;
+            const foundVariant = productData?.body.variants.find((variant) => {
+              if (variant.attributes) {
+                return variant.attributes.some((attribute) => {
+                  const attributeName = attribute.name.toLowerCase();
+                  return (
+                    (attributeName === 'size' || attributeName === 'size-w') && attribute.value.label === selectedSize
+                  );
+                });
+              }
+
+              return false;
+            });
+
+            selectedVariantId = foundVariant?.id;
+          }
+
+          if (itemId && selectedVariantId && closestAddToCartBtn) {
+            await updateCartAddItem(itemId, 1, selectedVariantId);
             // redirect(`/items/`);
+
             // const currentCart = sdkClient.activeCart as Cart;
 
             // if (currentCart.lineItems.length > 0) {
@@ -116,27 +103,40 @@ export default class ItemsList extends Component {
             // const event = new Event('queryUpdated');
             // catalogContainer.dispatchEvent(event);
             redirect(window.location.href.replace(window.location.origin, ''));
+          } else if (itemId && closestAddToCartBtn) {
+            const notice = document.querySelector('.info-size');
+
+            if (!notice) {
+              this.showInfo(sizeSelectionContainer, 'Please select size');
+            }
           }
+
+          const removeFromCart = target.closest('.item-card__basket-remove') as HTMLElement;
+
+          if (removeFromCart) {
+            const cartData = await getCart();
+            const lineItemId = cartData.results[0].lineItems.find((item) => item.productId === itemId)?.id;
+
+            if (lineItemId) {
+              await updateCartRemoveItem(lineItemId);
+              // redirect(`/items/`);
+              // const currentCart = sdkClient.activeCart as Cart;
+
+              // if (currentCart.lineItems.length > 0) {
+              //   const cartCounter = document.querySelector('.cart-counter') as HTMLElement;
+              //   const customEvent = new Event('cartChanged');
+              //   cartCounter.dispatchEvent(customEvent);
+              // }
+
+              // const catalogContainer = document.querySelector('.catalog-container') as HTMLElement;
+              // const event = new Event('queryUpdated');
+              // catalogContainer.dispatchEvent(event);
+              redirect(window.location.href.replace(window.location.origin, ''));
+            }
+          }
+        } catch (error) {
+          console.log(error);
         }
-      } catch (error) {
-        console.error(error);
-      }
-    });
-  };
-
-  setCatalogContainerListener = (container: Container) => {
-    container.addListener('click', (e: Event) => {
-      const target = e.target as HTMLElement;
-      const closestCard = target.closest('.item-card') as HTMLElement;
-
-      if (
-        closestCard &&
-        !target.closest('.item-card__basket') &&
-        !target.closest('.item-card__basket-remove') &&
-        !target.closest('.item-card__size-selection--flipped')
-      ) {
-        const { itemId } = closestCard.dataset;
-        redirect(`/items/${itemId}`);
       }
     });
   };
@@ -295,11 +295,14 @@ export default class ItemsList extends Component {
 
   showInfo(doc: HTMLElement, text: string) {
     const info = new Heading(6, 'info-size', `${text}`).render();
-    doc.append(info);
-    const TIME = 3000;
 
-    setTimeout(() => {
-      info.remove();
-    }, TIME);
+    if (doc) {
+      doc.append(info);
+      const TIME = 3000;
+
+      setTimeout(() => {
+        info.remove();
+      }, TIME);
+    }
   }
 }
