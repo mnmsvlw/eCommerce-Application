@@ -1,6 +1,7 @@
 import Container from '../../UI/Container';
 import Heading from '../../UI/Heading';
 import Link from '../../UI/Link';
+import redirect from '../../utils/redirect';
 import Component from '../Component';
 import './Main.css';
 
@@ -10,20 +11,39 @@ export default class MainComponent extends Component {
     const mainImage = new Container('main-image').render();
     const detailsContainer = new Container('image-details').render();
     const mainHeader = new Heading(1, 'main-header', 'Sneakers are our Passion').render();
-    const mainLink = new Link('/items/', 'main-link', 'Shop now').render();
-    detailsContainer.append(mainHeader, mainLink);
+
+    const mainLink = new Link('/items/', 'main-link', 'Shop now');
+
+    const categoryContainer = new Container('main-category-container').render();
+    const categoryHeader = new Heading(2, 'category-header', 'Shop by category').render();
+    const btnContainer = new Container('main-btn-container').render();
+    const menCategory = new Link('/items?categories.id=9e203bae-801d-44b8-8669-6594765cf2fd', 'main-link-cat', 'MEN');
+    const womenCategory = new Link(
+      '/items?categories.id=e2962327-93ea-455d-87ac-5424e3cbe9ba',
+      'main-link-cat',
+      'WOMEN'
+    );
+    [mainLink, menCategory, womenCategory].forEach((cat) => {
+      cat.addListener('click', (e: Event) => {
+        e.preventDefault();
+        const tar = e.target as HTMLElement;
+        const path = tar.getAttribute('href') as string;
+        redirect(path);
+      });
+    });
+
+    const promocode = new Container(
+      'main-promocode',
+      'Discount 10% for your first order with promocode - FIRST10'
+    ).render();
+
+    detailsContainer.append(mainHeader, mainLink.render());
     mainImage.append(detailsContainer);
+    btnContainer.append(menCategory.render(), womenCategory.render());
 
-    // const categoryContainer = new Container('main-category-container').render();
-    // const categoryHeader = new Heading(2, 'category-header', 'Shop by category').render();
-    // const btnContainer = new Container('main-btn-container').render();
-    // const menCategory = new Link('/items/', 'main-link-cat', 'MEN').render();
-    // const womenCategory = new Link('/items/', 'main-link-cat', 'WOMEN').render();
-    // btnContainer.append(menCategory, womenCategory);
+    categoryContainer.append(categoryHeader, btnContainer);
 
-    // categoryContainer.append(categoryHeader, btnContainer);
-
-    this.content.append(mainImage);
+    this.content.append(promocode, mainImage, categoryContainer);
 
     return this.content;
   };

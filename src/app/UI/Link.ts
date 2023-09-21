@@ -23,6 +23,7 @@ export default class Link extends Component {
       attributes: {
         href: this.href,
         id: this.id,
+        target: 'blank',
       },
     }).getElement();
     return this.content;

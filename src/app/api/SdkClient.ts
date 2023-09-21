@@ -1,4 +1,4 @@
-import { Customer, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import { Cart, Customer, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk/dist/declarations/src/generated/client/by-project-key-request-builder';
 import { ClientBuilder, PasswordAuthMiddlewareOptions, TokenStore, Client } from '@commercetools/sdk-client-v2';
 import myTokenCache from './CustomTokenCache';
@@ -17,6 +17,8 @@ class SdkClient {
   isAuthorizedUser: boolean;
 
   userInfo: Partial<Customer>;
+
+  activeCart?: Cart;
 
   constructor() {
     this.isAuthorizedUser = false;

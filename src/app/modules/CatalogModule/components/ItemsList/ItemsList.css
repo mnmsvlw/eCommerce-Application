@@ -13,3 +13,44 @@
   font-weight: 600;
   font-size: 20px;
 }
+
+.show-more {
+  width: 80px;
+  align-self: center;
+  margin-top: 25px;
+  cursor: pointer;
+  color: #FF00C8;
+  transition: color .22s;
+  font: 15px 'Inter', sans-serif;
+}
+
+.show-more:hover {
+  color: #9b047b;
+}
+
+.loader {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+
+.loader:after {
+  content: " ";
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #FF00C8;
+  border-color: #FF00C8 transparent #FF00C8 transparent;
+  animation: loading 1.2s linear infinite;
+}
+
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

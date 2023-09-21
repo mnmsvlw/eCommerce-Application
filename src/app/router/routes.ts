@@ -1,5 +1,8 @@
 import { Route } from '../../types/routerTypes';
+import AboutUsPage from '../pages/AboutUsPage/AboutUsPage';
+import BasketPage from '../pages/BasketPage/BasketPage';
 import CatalogPage from '../pages/CatalogPage/CatalogPage';
+import ExampleCartPage from '../pages/ExampleCartPage/ExampleCartPage';
 // import ItemPage from '../pages/ItemPage/ItemPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import LogoutPage from '../pages/LogoutPage/LogoutPage';
@@ -43,6 +46,21 @@ const routes: Route[] = [
     title: 'Product Card | E-Commerce Application',
     path: /^\/items\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\/$/,
     element: () => new ProductPage(),
+  },
+  {
+    title: 'Example Cart | E-Commerce Application',
+    path: /^\/cart\/$/,
+    element: () => new ExampleCartPage(),
+  },
+  {
+    title: 'About Us | E-Commerce Application',
+    path: /^\/about-us\/$/,
+    element: () => new AboutUsPage(),
+  },
+  {
+    title: 'Cart | E-Commerce Application',
+    path: /^\/basket\/$/,
+    element: () => new BasketPage(),
   },
 ];
 

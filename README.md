@@ -1,16 +1,21 @@
-# Online Shop "Cool Name Pending..." 🙃
+# Online Shop "SneakPeak"
 #### (Rolling Scopes School eCommerce Application 2023q1)
+
+### [Deploy link](https://sneakpeak-store.netlify.app/)
 
 ### In this application you can:
 -   browse through a vast range of products, 
 -   view detailed descriptions of products
 -   add their favorite items to the basket
--   proceed to checkout.
+-   use promoode to decreade the total price.
   
-### “Cool Name Pending...” includes features such as:
+### “SneakPeak” includes features such as:
 -   user registration and login 
 -   product search 
--   product categorization, and sorting.
+-   product categorization, filters and sorting
+-   opportunity to choose the size
+-   add, remove and change products in shopping cart
+-   use promocode
   
 ### The application includes pages such as:
 -   Login and Registration pages 
@@ -24,11 +29,27 @@
 ## Extensions required for development
 The Single Page Application (SPA) is powered by CommerceTools.
 - [TypeScript](https://www.typescriptlang.org/)
+  * Pros: Static typing, improved IDE support, enhanced code reliability.
+  * Cons: Development may take longer due to typing.
+
 - [Webpack](https://webpack.js.org/)
+  - Pros: Bundling and optimizing resources, modular system support.
+  - Cons: Configuration may require time.
 - [ESLint](https://eslint.org/)
+  - Pros: Automatic code style checking, potential error detection.
+  - Cons: Rule configuration required.
 - [Prettier](https://prettier.io/)
+  - Pros: Automatic code formatting, multi-language support.
+  - Cons: None.
 - [Jest](https://jestjs.io/)
+  - Pros: Easy-to-use JavaScript testing framework.
+  - Cons: May require additional learning.  
 - [Husky](https://typicode.github.io/husky/)
+  - Pros: Running scripts before commits, preventing faulty commits. For ex., we used it to run ESLint and Prettier to lint and format the code before each commit, ensuring code quality and consistent formatting.
+  - Cons: Configuration required.
+- [Swiper](https://swiperjs.com/get-started)
+  - Pros: Convenient library for creating sliders and carousels.
+  - Cons: Documentation study may be needed.
 ---
 ## Run Locally
 1. Install Node.js

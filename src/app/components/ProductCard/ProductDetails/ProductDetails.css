@@ -158,6 +158,24 @@
     line-height: normal;
 }
 
+.info-size{
+  color: white;
+  border: 2px solid #c10c99;
+  border-radius: 10px;
+  background-color: #050214;
+  padding: 10px;
+}
+
+.product-card__info{
+    color: #c10c99;
+    font-size: 16px;
+}
+
+.button-inactive{
+    color: #666;
+    cursor: initial;
+}
+
 .add-to-basket__button{
     width: 40%;
     border-radius: 23px;
@@ -165,6 +183,24 @@
     color: white;
     cursor: pointer;
     font-weight: 800;
+}
+
+.add-to-basket__button-remove{
+    width: 50%;
+    border-radius: 23px;
+    color: #C10C99;
+    background-color: white;
+    border: 2px solid #C10C99;
+    cursor: pointer;
+    font-weight: 800;
+}
+
+.add-to-basket__button:hover {
+    background: #9a0a7b;
+}
+
+.add-to-basket__button-remove:hover{
+    background-color: rgb(162, 162, 162);
 }
 
 .product-card__description-header{
@@ -331,6 +367,10 @@
     }
 
     .add-to-basket__button{
+        height: 45px;
+    }
+
+    .add-to-basket__button-remove{
         height: 45px;
     }
 

@@ -1,0 +1,75 @@
+.about-us-wrapp {
+  background-color: #050214;
+  color: #ffffff;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5vh 5vw;
+  position: relative;
+  min-height: 90vh;
+}
+
+.team {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.contribution,
+.collaboration {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.boxTeam,
+.boxContribution {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 70%;
+}
+
+.boxContribution {
+  align-items: flex-end;
+}
+
+.linkBoxRs {
+  margin: 0 auto;
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.iconRs {
+  cursor: pointer;
+  background: url('./components/assets/logo_rs.png') no-repeat;
+  background-size: 100%;
+  width: 120px;
+  height: 60px;
+}
+
+@media (max-width: 750px) {
+  .boxTeam,
+  .boxContribution {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+@media (max-width: 1250px) {
+  .boxTeam,
+  .boxContribution {
+    width: 100%;
+  }
+}
