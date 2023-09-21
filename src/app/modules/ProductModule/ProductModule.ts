@@ -11,6 +11,7 @@ import Heading from '../../UI/Heading';
 import redirect from '../../utils/redirect';
 import SwiperSlider from '../../utils/Swiper';
 import NotFoundModule from '../NotFoundModule/NotFoundModule';
+import SuccessfulMessage from '../../components/RegistrationForm/SuccessfulMessage/SuccessfulMessage';
 import sdkClient from '../../api/SdkClient';
 
 export default class ProductModule extends Component {
@@ -135,8 +136,15 @@ export default class ProductModule extends Component {
         if (removeFromCart && lineItemId) {
           await updateCartRemoveItem(lineItemId);
           redirect(`/items/${itemId}`);
-
           const currentCart = sdkClient.activeCart as Cart;
+          const sussesfulPopup = new SuccessfulMessage().render('The product has been removed successfully');
+          const body = document.querySelector('body');
+          const pageContainer = document.querySelector('.page-container') as HTMLElement;
+
+          if (pageContainer !== null && body !== null) {
+            pageContainer.append(sussesfulPopup);
+            this.closeModal(sussesfulPopup, body);
+          }
 
           if (currentCart.lineItems.length > 0) {
             const cartCounter = document.querySelector('.cart-counter') as HTMLElement;
@@ -146,7 +154,7 @@ export default class ProductModule extends Component {
         }
       } catch (error) {
         const apiError = error as ApiError;
-        this.showInfo(inputSizeContainer, `${apiError.message}`);
+        console.log(`${apiError.message}`);
       }
     });
   };
@@ -160,4 +168,12 @@ export default class ProductModule extends Component {
       info.remove();
     }, TIME);
   }
+
+  private closeModal = (targetEL: HTMLElement, body: HTMLBodyElement) => {
+    const localBody = body;
+    setTimeout(() => {
+      targetEL.classList.add('hidden');
+      localBody.style.overflow = 'initial';
+    }, 1000);
+  };
 }
